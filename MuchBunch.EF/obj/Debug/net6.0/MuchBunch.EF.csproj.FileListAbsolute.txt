@@ -1,0 +1,14 @@
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\bin\Debug\net6.0\MuchBunch.EF.deps.json
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\bin\Debug\net6.0\MuchBunch.EF.runtimeconfig.json
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\bin\Debug\net6.0\MuchBunch.EF.dll
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\bin\Debug\net6.0\MuchBunch.EF.pdb
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\MuchBunch.EF.csproj.AssemblyReference.cache
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\MuchBunch.EF.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\MuchBunch.EF.AssemblyInfoInputs.cache
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\MuchBunch.EF.AssemblyInfo.cs
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\MuchBunch.EF.csproj.CoreCompileInputs.cache
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\MuchBunch.EF.dll
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\refint\MuchBunch.EF.dll
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\MuchBunch.EF.pdb
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\MuchBunch.EF.genruntimeconfig.cache
+C:\Users\Jakov-PC\source\repos\MuchBunch\MuchBunch.EF\obj\Debug\net6.0\ref\MuchBunch.EF.dll
