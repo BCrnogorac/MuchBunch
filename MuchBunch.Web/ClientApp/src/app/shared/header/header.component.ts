@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { UserModel } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,8 @@ export class HeaderComponent implements OnInit {
   //user or roles info
   isAuthed: boolean = false;
   companyRole: boolean = false;
+  adminRole: boolean = false;
+  userCopy: UserModel;
 
   constructor(
     private httpClient: HttpClient,
@@ -27,13 +30,20 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.authService.user.subscribe((response) => {
+      console.log('Header user');
+      console.log(response);
+      this.userCopy = response;
+
       if (response == null) {
         this.authService.autoLogin();
       }
 
-      this.isAuthed = response != null;
-      this.companyRole = response?.role == 'Company';
+      this.isAuthed = this.authService.getUserProperty('role') != null;
+      this.companyRole = this.authService.getUserProperty('role') == 'company';
+      this.adminRole = this.authService.getUserProperty('role') == 'admin';
     });
+
+    this.updateUserProperties();
   }
 
   search(value: string): void {
@@ -58,5 +68,9 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/home']);
     this.message.success('Logged out.');
+  }
+
+  updateUserProperties() {
+    console.log(this.isAuthed, this.adminRole);
   }
 }

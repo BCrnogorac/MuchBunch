@@ -74,7 +74,14 @@ export class AuthService {
     );
     this.user.next(currentUser);
     console.log(this.user.value);
-    localStorage.setItem('tokenInfo', JSON.stringify({ currentUser }));
+    localStorage.setItem('tokenInfo', JSON.stringify(currentUser));
     console.log('Stored');
+  }
+
+  getUserProperty(property?: string): string {
+    if (this.user.value != null) {
+      return this.user.value[`${property}`];
+    }
+    return null;
   }
 }

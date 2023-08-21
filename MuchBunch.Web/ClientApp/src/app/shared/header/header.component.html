@@ -11,7 +11,12 @@
     Browse
   </li>
 
-  <li nz-submenu nzTitle="Add" nzIcon="plus-circle" *ngIf="companyRole">
+  <li
+    nz-submenu
+    nzTitle="Add"
+    nzIcon="plus-circle"
+    *ngIf="companyRole || adminRole"
+  >
     <ul>
       <li routerLink="/add-new-item" nz-menu-item>Add new item</li>
       <li routerLink="/add-new-bunch" nz-menu-item>Add new Bunch</li>
@@ -67,7 +72,7 @@
   >
     <ul>
       <li routerLink="/profile" nz-menu-item>Account</li>
-      <li routerLink="/inventory" nz-menu-item *ngIf="companyRole">
+      <li routerLink="/inventory" nz-menu-item *ngIf="companyRole || adminRole">
         Inventory
       </li>
       <li routerLink="/" nz-menu-item>My MuchBunches</li>
