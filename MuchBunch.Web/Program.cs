@@ -6,7 +6,6 @@ using MuchBunch.Service.Services;
 using MuchBunch.Service.Extensions;
 using System.Text;
 using MuchBunch.Service.Models;
-using MuchBunch.Service.Enums;
 using System.Security.Claims;
 
 namespace MuchBunch.Web
@@ -24,6 +23,18 @@ namespace MuchBunch.Web
             builder.Services.AddScoped<IdentityService>();
 
             var jwtSettings = builder.Configuration.GetSection<JwtSettings>(GlobalConstants.JWT_SETTINGS_KEY);
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: GlobalConstants.CORS_POLICY,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins(GlobalConstants.SPA_URL)
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod()
+                                      .AllowCredentials();
+                                  });
+            });
 
             builder.Services.AddAuthentication(x =>
             {
@@ -57,6 +68,7 @@ namespace MuchBunch.Web
 
             app.UseAuthentication();
             app.UseRouting();
+            app.UseCors(GlobalConstants.CORS_POLICY);
             app.UseAuthorization();
 
             app.MapControllers();

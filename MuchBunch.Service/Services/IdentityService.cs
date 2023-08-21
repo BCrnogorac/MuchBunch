@@ -4,6 +4,7 @@ using MuchBunch.Service.Enums;
 using MuchBunch.Service.Extensions;
 using MuchBunch.Service.Models;
 using MuchBunch.Service.Models.BM;
+using MuchBunch.Service.Models.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,7 +19,7 @@ namespace MuchBunch.Service.Services
             this.config = config;
         }
 
-        public string GetToken(TokenGenerationBM model)
+        public TokenDTO GetToken(TokenGenerationBM model)
         {
             var jwtSettings = config.GetSection<JwtSettings>(GlobalConstants.JWT_SETTINGS_KEY);
 
@@ -45,7 +46,7 @@ namespace MuchBunch.Service.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var generatedToken = tokenHandler.WriteToken(token);
 
-            return generatedToken;
+            return new TokenDTO { Token = generatedToken };
         }
     }
 }

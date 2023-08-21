@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MuchBunch.Service.Enums;
 using MuchBunch.Service.Models.BM;
+using MuchBunch.Service.Models.DTO;
 using MuchBunch.Service.Services;
 
 namespace MuchBunch.Web.Controllers
@@ -19,7 +20,7 @@ namespace MuchBunch.Web.Controllers
             this.identityService = identityService;
         }
 
-        [HttpGet("/token")]
+        [HttpGet("token")]
         public IActionResult GetJwtToken()
         {
             var model = new TokenGenerationBM() { Username = "hehe", Password = "asdasd" };
