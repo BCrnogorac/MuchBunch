@@ -19,7 +19,7 @@ namespace MuchBunch.Web.Controllers
             this.identityService = identityService;
         }
 
-        [HttpGet("/token")]
+        [HttpGet("token")]
         public IActionResult GetJwtToken()
         {
             var model = new TokenGenerationBM() { Username = "hehe", Password = "asdasd" };
