@@ -1,0 +1,11 @@
+[nz-form] {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form {
+  position: relative;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

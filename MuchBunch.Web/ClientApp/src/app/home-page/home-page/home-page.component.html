@@ -1,0 +1,41 @@
+<br />
+<nz-alert
+  nzType="warning"
+  [nzMessage]="alertTitle"
+  [nzDescription]="alertDecription"
+  [nzAction]="actionTemplate1"
+  *ngIf="companyUser"
+>
+  <ng-template #actionTemplate1>
+    <button
+      routerLink="/add-new-bunch"
+      nz-button
+      nzType="primary"
+      nzShape="circle"
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+    </button>
+  </ng-template>
+</nz-alert>
+
+<br />
+<div>
+  <nz-carousel nzAutoPlay>
+    <div nz-carousel-content *ngFor="let index of array">
+      <h3>{{ bundleTitle }}</h3>
+      <nz-card
+        nzHoverable
+        style="width: 240px; margin: auto"
+        [nzCover]="coverTemplate"
+      >
+        <nz-card-meta
+          [nzTitle]="bundleTitle"
+          nzDescription="www.instagram.com"
+        ></nz-card-meta>
+      </nz-card>
+      <ng-template #coverTemplate>
+        <img alt="board game" [src]="imgSrc" />
+      </ng-template>
+    </div>
+  </nz-carousel>
+</div>
