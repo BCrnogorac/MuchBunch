@@ -43,7 +43,7 @@ namespace MuchBunch.Web.Controllers
 
             var loginModel = new LoginBM()
             {
-                Username = model.Username,
+                Email = model.Email,
                 Password = model.Password,
             };
 

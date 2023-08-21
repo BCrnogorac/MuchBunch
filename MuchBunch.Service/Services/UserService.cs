@@ -25,7 +25,7 @@ namespace MuchBunch.Service.Services
 
         public TokenDTO? Login(LoginBM model)
         {
-            var user = dbContext.Users.Where(u => u.Name == model.Username).FirstOrDefault();
+            var user = dbContext.Users.Where(u => u.Email == model.Email).FirstOrDefault();
 
             if(user == null || !IsPasswordValid(model.Password, user.HashedPassword))
             {

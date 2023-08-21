@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserLoginBM } from '../models/userLoginBM.model';
+import { LoginBM } from '../models/BM/loginBM.model';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -11,7 +12,11 @@ import { AuthService } from '../services/auth.service';
 export class AuthComponent implements OnInit {
   public formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, public authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    public authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -25,12 +30,14 @@ export class AuthComponent implements OnInit {
   }
 
   submitForm(): void {
-    let formModel: UserLoginBM = this.formGroup.getRawValue();
+    let formModel: LoginBM = this.formGroup.getRawValue();
 
     if (this.formGroup.valid) {
-      // this.authService.login(formModel).subscribe((response) => {
-      //   console.log(response);
-      // });
+      this.authService.login(formModel).subscribe((token) => {
+        console.log(token);
+        this.authService.storeTokenToLocalStorage(token.token);
+        this.router.navigate(['/home']);
+      });
       this.authService.login(formModel);
     } else {
       Object.values(this.formGroup.controls).forEach((control) => {

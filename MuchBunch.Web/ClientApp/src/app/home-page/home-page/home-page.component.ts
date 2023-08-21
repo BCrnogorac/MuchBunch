@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-home-page',
@@ -18,7 +20,18 @@ export class HomePageComponent {
     'The next month we are rolling out brand new MuchBunch themed Halloween. Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum';
 
   //info about user
-  companyUser: boolean = true;
+  isAuthed: boolean = false;
+  companyRole: boolean = false;
 
-  ngOnInit(): void {}
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.authService.user.subscribe((response) => {
+      this.isAuthed = response != null;
+      this.companyRole = response?.role == 'Company';
+    });
+  }
 }

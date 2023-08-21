@@ -13,6 +13,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 import {
   StepBackwardOutline,
@@ -51,6 +52,7 @@ const icons: IconDefinition[] = [
     NzSelectModule,
     NzAlertModule,
     NzDividerModule,
+    NzMessageModule,
     NzIconModule.forChild(icons),
   ],
   exports: [
@@ -67,6 +69,7 @@ const icons: IconDefinition[] = [
     NzListModule,
     NzAlertModule,
     NzDividerModule,
+    NzMessageModule,
   ],
 })
 export class NgZorroModule {}

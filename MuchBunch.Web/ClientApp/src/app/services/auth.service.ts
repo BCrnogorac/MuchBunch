@@ -1,18 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserLoginBM } from '../models/userLoginBM.model';
-import { RegisterUserModel } from '../models/registerUser.model';
-import { TokenDto } from '../models/tokenDto.model';
+import { LoginBM } from '../models/BM/loginBM.model';
+import { RegisterBM } from '../models/BM/registerBM.model';
+import { TokenDto } from '../models/DTO/tokenDto.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private serviceBaseUrl = '';
-  //user = new BehaviorSubject<User>(null);
+  public user = new BehaviorSubject<UserModel | null>(null);
+  RoleClaimName =
+    'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
 
   constructor(
     public http: HttpClient,
@@ -22,17 +25,35 @@ export class AuthService {
     this.serviceBaseUrl = `${this.baseUrl}/api/user`;
   }
 
-  login(userModel: UserLoginBM): void {
-    //Observable<TokenDto> {
-    //return this.http.get<TokenDto>(`${this.serviceBaseUrl}/token`);
-    let token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJoZWhlIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE2OTIyNzQwMTgsImlzcyI6Imh0dHA6Ly93d3cubXVuY2hidW5jaC5jb20vYXBpIiwiYXVkIjoiaHR0cDovL3d3dy5tdW5jaGJ1bmNoLmNvbSJ9.27JNuhCZz7Wq_-w6sxUuWxs0z4grweY5ltyzNFSVwZw';
-    let tokenInfo = this.getDecodedAccessToken(token);
-    this.storeTokenToLocalStorage(tokenInfo);
+  login(loginModel: LoginBM): Observable<TokenDto> {
+    console.log(loginModel);
+    return this.http.post<TokenDto>(`${this.serviceBaseUrl}/login`, loginModel);
   }
 
-  register(registerUserModel: RegisterUserModel): void {
-    console.log(registerUserModel);
+  register(registerModel: RegisterBM): Observable<TokenDto> {
+    console.log(registerModel);
+    return this.http.post<TokenDto>(
+      `${this.serviceBaseUrl}/register`,
+      registerModel
+    );
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.clear();
+    this.user.next(null);
+    console.log('Local storage cleared.');
+  }
+
+  autoLogin() {
+    if (this.user.value == null) {
+      if (localStorage.getItem('tokenInfo') != null) {
+        let currentUser: UserModel = JSON.parse(
+          localStorage.getItem('tokenInfo')
+        );
+        this.user.next(currentUser);
+      }
+    }
   }
 
   getDecodedAccessToken(token: string): any {
@@ -45,13 +66,15 @@ export class AuthService {
   }
 
   storeTokenToLocalStorage(token: string): void {
-    localStorage.setItem('tokenInfo', JSON.stringify({ token: token }));
+    let decodedToken = this.getDecodedAccessToken(token);
+    let currentUser: UserModel = new UserModel(
+      decodedToken['sub'],
+      decodedToken['email'],
+      decodedToken[`${this.RoleClaimName}`]
+    );
+    this.user.next(currentUser);
+    console.log(this.user.value);
+    localStorage.setItem('tokenInfo', JSON.stringify({ currentUser }));
     console.log('Stored');
-  }
-
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.clear();
-    console.log('Local storage cleared.');
   }
 }

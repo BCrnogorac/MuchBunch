@@ -6,7 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { RegisterUserModel } from '../models/registerUser.model';
+import { RegisterBM } from '../models/BM/registerBM.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,11 @@ import { RegisterUserModel } from '../models/registerUser.model';
 export class RegisterComponent {
   public formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, public authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    public authService: AuthService,
+    private router: Router
+  ) {
     this.initForm();
   }
 
@@ -39,10 +44,15 @@ export class RegisterComponent {
   };
 
   submitForm(): void {
-    let formModel: RegisterUserModel = this.formGroup.getRawValue();
+    let formModel: RegisterBM = this.formGroup.getRawValue();
+    formModel.role = 'customer';
 
     if (this.formGroup.valid) {
-      this.authService.register(formModel);
+      this.authService.register(formModel).subscribe((token) => {
+        console.log(token);
+        this.authService.storeTokenToLocalStorage(token.token);
+        this.router.navigate(['/home']);
+      });
     } else {
       Object.values(this.formGroup.controls).forEach((control) => {
         if (control.invalid) {
