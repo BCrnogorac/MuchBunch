@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MuchBunch.Service.Models.BM
 {
-    public class TokenGenerationBM
+    public class LoginBM
     {
         public string Username { get; set; }
         public string Password { get; set; }

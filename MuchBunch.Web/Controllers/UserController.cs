@@ -4,6 +4,7 @@ using MuchBunch.Service.Enums;
 using MuchBunch.Service.Models.BM;
 using MuchBunch.Service.Models.DTO;
 using MuchBunch.Service.Services;
+using MuchBunch.Service.Validations;
 
 namespace MuchBunch.Web.Controllers
 {
@@ -12,19 +13,41 @@ namespace MuchBunch.Web.Controllers
     public class UserController : Controller
     {
         private readonly UserService userService;
-        private readonly IdentityService identityService;
+        private readonly ValidationService validationService;
 
-        public UserController(UserService userService, IdentityService identityService)
+        public UserController(UserService userService, ValidationService validationService)
         {
             this.userService = userService;
-            this.identityService = identityService;
+            this.validationService = validationService;
         }
 
-        [HttpGet("token")]
-        public IActionResult GetJwtToken()
+        [HttpPost("login")]
+        public IActionResult Login(LoginBM model)
         {
-            var model = new TokenGenerationBM() { Username = "hehe", Password = "asdasd" };
-            return Ok(identityService.GetToken(model));
+            var token = userService.Login(model);
+
+            return token != null ? Ok(token) : BadRequest();
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterBM model)
+        {
+            var result = await validationService.ValidateRegister(model);
+
+            if(!result.IsValid)
+            {
+                return BadRequest(result);
+            }
+
+            userService.Register(model);
+
+            var loginModel = new LoginBM()
+            {
+                Username = model.Username,
+                Password = model.Password,
+            };
+
+            return Ok(userService.Login(loginModel));
         }
 
         [HttpGet]

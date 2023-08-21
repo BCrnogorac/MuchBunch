@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MuchBunch.EF.Database.Models;
 using MuchBunch.Service.Enums;
 using MuchBunch.Service.Extensions;
 using MuchBunch.Service.Models;
@@ -19,15 +20,16 @@ namespace MuchBunch.Service.Services
             this.config = config;
         }
 
-        public TokenDTO GetToken(TokenGenerationBM model)
+        public TokenDTO GetToken(User user)
         {
             var jwtSettings = config.GetSection<JwtSettings>(GlobalConstants.JWT_SETTINGS_KEY);
 
             // Create claims
             var claims = new List<Claim>
             {
-                new (JwtRegisteredClaimNames.Sub, model.Username),
-                new Claim(ClaimTypes.Role, Role.Admin)
+                new (JwtRegisteredClaimNames.Sub, user.Name),
+                new (JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             // Create token credentials
