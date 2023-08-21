@@ -4,15 +4,10 @@
   [nzMessage]="alertTitle"
   [nzDescription]="alertDecription"
   [nzAction]="actionTemplate1"
-  *ngIf="companyRole"
+  *ngIf="companyRole || adminRole"
 >
   <ng-template #actionTemplate1>
-    <button
-      routerLink="/add-new-bunch"
-      nz-button
-      nzType="primary"
-      nzShape="circle"
-    >
+    <button routerLink="/add" nz-button nzType="primary" nzShape="circle">
       <span nz-icon nzType="plus" nzTheme="outline"></span>
     </button>
   </ng-template>

@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class AuthComponent implements OnInit {
   public formGroup: FormGroup;
 
+  btnLoading: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     public authService: AuthService,
@@ -33,9 +35,11 @@ export class AuthComponent implements OnInit {
     let formModel: LoginBM = this.formGroup.getRawValue();
 
     if (this.formGroup.valid) {
+      this.btnLoading = true;
       this.authService.login(formModel).subscribe((token) => {
         console.log(token);
         this.authService.storeTokenToLocalStorage(token.token);
+
         this.router.navigate(['/home']);
       });
       this.authService.login(formModel);

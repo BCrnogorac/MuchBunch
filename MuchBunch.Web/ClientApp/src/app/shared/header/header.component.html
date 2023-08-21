@@ -12,15 +12,12 @@
   </li>
 
   <li
-    nz-submenu
-    nzTitle="Add"
-    nzIcon="plus-circle"
+    routerLink="/administration"
     *ngIf="companyRole || adminRole"
+    nz-menu-item
   >
-    <ul>
-      <li routerLink="/add-new-item" nz-menu-item>Add new item</li>
-      <li routerLink="/add-new-bunch" nz-menu-item>Add new Bunch</li>
-    </ul>
+    <span nz-icon nzType="control" nzTheme="outline"></span>
+    Administration
   </li>
 
   <li routerLink="/about" nz-menu-item>
