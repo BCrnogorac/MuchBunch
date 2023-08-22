@@ -14,6 +14,13 @@ namespace MuchBunch.Service.Validations
             RuleForEach(x => x.SubTypes)
                 .MustAsync(async (model, ct) =>
                 {
+                    var exists = await dbContext.ProductSubTypes.AnyAsync(pt => pt.Id == model.Id, ct);
+                    return exists;
+                }).WithMessage(InvalidProductType);
+
+            RuleFor(x => x.Type)
+                .MustAsync(async (model, ct) =>
+                {
                     var exists = await dbContext.ProductTypes.AnyAsync(pt => pt.Id == model.Id, ct);
                     return exists;
                 }).WithMessage(InvalidProductType);

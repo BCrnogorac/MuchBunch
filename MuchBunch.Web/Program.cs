@@ -25,6 +25,7 @@ namespace MuchBunch.Web
             builder.Services.AddScoped<ValidationService>();
             builder.Services.AddScoped<ProductService>();
             builder.Services.AddScoped<ProductTypeService>();
+            builder.Services.AddScoped<ProductSubTypeService>();
             builder.Services.AddScoped<IdentityService>();
 
             var jwtSettings = builder.Configuration.GetSection<JwtSettings>(GlobalConstants.JWT_SETTINGS_KEY);

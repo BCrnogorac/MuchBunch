@@ -7,6 +7,7 @@
         public string ImageUrl { get; set; }
         public double Price { get; set; }
         public int Quantity { get; set; }
-        public List<ProductTypeDTO> ProductTypes { get; } = new List<ProductTypeDTO>();
+        public ProductTypeDTO Type { get; set; }
+        public IEnumerable<ProductTypeDTO> SubTypes { get; set; }
     }
 }
