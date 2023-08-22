@@ -21,10 +21,21 @@ namespace MuchBunch.Service.Services
             return await ValidateAsync(model, new InsertProductBMValidator(dbContext));
         }
 
-        public async Task<ValidationResult> ValidateInsertProductType(InsertProductTypeBM model)
+        public ValidationResult ValidateInsertProductType(InsertProductTypeBM model)
         {
-            return await ValidateAsync(model, new InsertProductTypeBMValidator(dbContext));
+            return Validate(model, new InsertProductTypeBMValidator());
         }
+
+        public async Task<ValidationResult> ValidateInsertProductSubType(InsertProductSubTypeBM model)
+        {
+            return await ValidateAsync(model, new InsertProductSubTypeBMValidator(dbContext));
+        }
+
+        public async Task<ValidationResult> ValidateEditProductSubType(EditProductSubTypeBM model)
+        {
+            return await ValidateAsync(model, new EditProductSubTypeBMValidator(dbContext));
+        }
+
 
         public async Task<ValidationResult> ValidateEditProductType(EditProductTypeBM model)
         {
@@ -36,6 +47,13 @@ namespace MuchBunch.Service.Services
             where U : AbstractValidator<T>
         {
             return await validator.ValidateAsync(model);
+        }
+
+        public static ValidationResult Validate<T, U>(T model, U validator)
+           where T : class
+           where U : AbstractValidator<T>
+        {
+            return validator.Validate(model);
         }
     }
 }

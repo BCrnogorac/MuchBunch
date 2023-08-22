@@ -23,23 +23,11 @@ namespace MuchBunch.Web.Controllers
             return Ok(productTypeService.GetProductParentTypes());
         }
 
-        [HttpGet("{id}/subtypes")]
-        public IActionResult GetProductSubTypes([FromRoute] int id)
-        {
-            return Ok(productTypeService.GetProductSubTypes(id));
-        }
-
-        [HttpGet("{id}/productsBySubtype")]
-        public IActionResult GetProductSubTypeProducts([FromRoute] int id)
-        {
-            return Ok(productTypeService.GetProductsForSubType(id));
-        }
-
 
         [HttpPost]
-        public async Task<IActionResult> InsertProductType(InsertProductTypeBM model)
+        public IActionResult InsertProductType(InsertProductTypeBM model)
         {
-            var result = await validationService.ValidateInsertProductType(model);
+            var result = validationService.ValidateInsertProductType(model);
 
             if (!result.IsValid)
             {
@@ -66,17 +54,10 @@ namespace MuchBunch.Web.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteProductType(EditProductTypeBM model)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProductType([FromRoute] int id)
         {
-            var result = await validationService.ValidateEditProductType(model);
-
-            if (!result.IsValid)
-            {
-                return BadRequest(result);
-            }
-
-            productTypeService.EditProductType(model);
+            productTypeService.DeleteProductType(id);
 
             return Ok();
         }

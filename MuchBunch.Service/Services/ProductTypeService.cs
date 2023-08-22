@@ -103,5 +103,16 @@ namespace MuchBunch.Service.Services
             dbContext.ProductTypes.Update(product);
             dbContext.SaveChanges();
         }
+
+        public void DeleteProductType(int id)
+        {
+            var product = dbContext.ProductTypes.FirstOrDefault(pt => pt.Id == id);
+
+            if (product != null)
+            {
+                dbContext.ProductTypes.Remove(product);
+                dbContext.SaveChanges();
+            }
+        }
     }
 }
