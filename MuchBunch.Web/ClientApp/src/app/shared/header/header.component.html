@@ -1,12 +1,12 @@
 <ul nz-menu nzMode="horizontal" style="background-color: #dbd9db">
   <span style="margin-left: 10px">MuchBunch</span>
 
-  <li routerLink="/home" nz-menu-item nzSelected>
+  <li routerLink="/home" nz-menu-item [nzSelected]="homeRoute">
     <span nz-icon nzType="home" nzTheme="outline"></span>
     Home
   </li>
 
-  <li routerLink="/browse" nz-menu-item>
+  <li routerLink="/browse" nz-menu-item [nzSelected]="browseRoute">
     <span nz-icon nzType="search" nzTheme="outline"></span>
     Browse
   </li>
@@ -15,12 +15,13 @@
     routerLink="/administration"
     *ngIf="companyRole || adminRole"
     nz-menu-item
+    [nzSelected]="administrationRoute"
   >
     <span nz-icon nzType="control" nzTheme="outline"></span>
     Administration
   </li>
 
-  <li routerLink="/about" nz-menu-item>
+  <li routerLink="/about" nz-menu-item [nzSelected]="aboutRoute">
     <span nz-icon nzType="info-circle" nzTheme="outline"></span>
     About
   </li>
@@ -49,18 +50,27 @@
     nz-menu-item
     style="float: right"
     *ngIf="!isAuthed"
+    [nzSelected]="registerRoute"
   >
     <span nz-icon nzType="mail"></span>
     Register
   </li>
 
-  <li routerLink="/auth" nz-menu-item style="float: right" *ngIf="!isAuthed">
+  <li
+    routerLink="/auth"
+    nz-menu-item
+    style="float: right"
+    *ngIf="!isAuthed"
+    [nzSelected]="loginRoute"
+  >
     <span nz-icon nzType="login" nzTheme="outline"></span>
     Sign In
   </li>
 
   <li
     nz-submenu
+    nz-menu-item
+    [nzSelected]="profileRoute"
     nzTitle="Profile"
     nzIcon="user"
     nzPlacement="bottomRight"

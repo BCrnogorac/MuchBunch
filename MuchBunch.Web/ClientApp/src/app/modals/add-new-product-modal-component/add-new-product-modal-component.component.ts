@@ -8,7 +8,10 @@ import {
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { ProductSubtypeBM } from 'src/app/models/BM/productSubtypeBM.model';
+import { ProductTypeBM } from 'src/app/models/BM/productTypeBM.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-add-new-product-modal-component',
@@ -18,24 +21,23 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AddNewProductModalComponentComponent implements OnInit {
   public formGroup: FormGroup;
 
-  //todo: delete when model is added
-  public types: string[] = ['board game', 'book', 'accessories', 'miniatures'];
-  public subtypes: string[] = [
-    'board game',
-    'book',
-    'accessories',
-    'miniatures',
-  ];
+  public selectedType: any = null;
+  public shouldRestartSubtypes: boolean = false;
+
+  public types: ProductTypeBM[];
+  public subtypes: ProductSubtypeBM[] = [];
 
   constructor(
     private fb: FormBuilder,
-    public authService: AuthService,
-    private router: Router,
+    private productService: ProductService,
     private modalRef: NzModalRef,
     private message: NzMessageService
   ) {}
 
   ngOnInit() {
+    this.productService.getTypes().subscribe((response) => {
+      this.types = response;
+    });
     this.initForm();
   }
 
@@ -44,7 +46,7 @@ export class AddNewProductModalComponentComponent implements OnInit {
       name: ['', Validators.required],
       imgURL: ['', Validators.required],
       type: ['', Validators.required],
-      subtype: [],
+      subtype: [null, Validators.required],
       price: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     });
@@ -53,12 +55,12 @@ export class AddNewProductModalComponentComponent implements OnInit {
   getFormValues(): void {
     if (this.formGroup.valid) {
       let formModel = this.formGroup.getRawValue();
-      console.log(formModel);
-
-      //todo: ovo u subscribeu od metode
-      this.modalRef.triggerOk();
-      this.modalRef.destroy();
-      this.message.success('Successfully added.');
+      let productName = formModel.name;
+      this.productService.addNewProduct(formModel).subscribe(() => {
+        this.modalRef.triggerOk();
+        this.modalRef.destroy();
+        this.message.success(`Product ${productName} was successfully added.`);
+      });
     } else {
       Object.values(this.formGroup.controls).forEach((control) => {
         if (control.invalid) {
@@ -66,6 +68,18 @@ export class AddNewProductModalComponentComponent implements OnInit {
           control.updateValueAndValidity({ onlySelf: true });
         }
       });
+    }
+  }
+
+  onSelectedType(type: ProductTypeBM) {
+    if (type != null) {
+      this.formGroup.get('subtype').setValue(null);
+      this.productService
+        .getSubtypesByParentId(type.id)
+        .subscribe((response) => {
+          this.subtypes = response;
+          console.log(this.subtypes);
+        });
     }
   }
 }

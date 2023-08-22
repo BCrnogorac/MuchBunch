@@ -20,7 +20,7 @@ export class AddComponent implements OnInit {
       nzWidth: 900,
       nzFooter: null,
       nzBodyStyle: {
-        height: '400px',
+        height: '420px',
       },
     });
   }
