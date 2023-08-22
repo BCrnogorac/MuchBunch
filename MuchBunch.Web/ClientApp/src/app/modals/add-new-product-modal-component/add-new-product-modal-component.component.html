@@ -1,14 +1,14 @@
 <form nz-form [formGroup]="formGroup">
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>Product Name</nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
       <input nz-input formControlName="name" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>Image URL</nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
       <input
         nz-input
         formControlName="imgURL"
@@ -19,16 +19,18 @@
 
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>Type</nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
       <nz-select
         nzShowSearch
         nzAllowClear
         nzPlaceHolder="Select a product type"
         formControlName="type"
+        [(ngModel)]="selectedType"
+        (ngModelChange)="onSelectedType(selectedType)"
       >
         <nz-option
           *ngFor="let type of types"
-          [nzLabel]="type"
+          [nzLabel]="type.name"
           [nzValue]="type"
         ></nz-option>
       </nz-select>
@@ -36,8 +38,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7">Sub-type</nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-label [nzSpan]="7" nzRequired>Sub-type</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
       <nz-select
         nzShowSearch
         [nzShowArrow]="true"
@@ -48,7 +50,7 @@
       >
         <nz-option
           *ngFor="let subtype of subtypes"
-          [nzLabel]="subtype"
+          [nzLabel]="subtype.name"
           [nzValue]="subtype"
         ></nz-option>
       </nz-select>
@@ -58,7 +60,7 @@
   <div style="display: flex; margin-left: 170px">
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Price</nz-form-label>
-      <nz-form-control [nzSpan]="10">
+      <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">
         <div style="display: flex">
           <input nz-input formControlName="price" type="number" />
           <span
@@ -73,7 +75,7 @@
 
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Quantity</nz-form-label>
-      <nz-form-control [nzSpan]="10">
+      <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">
         <input nz-input formControlName="quantity" type="number" />
       </nz-form-control>
     </nz-form-item>
@@ -82,6 +84,6 @@
 
 <nz-divider></nz-divider>
 
-<div nz-modal-footer style="float: right; height: 100px">
+<div nz-modal-footer style="float: right; height: 300px">
   <button nz-button nzType="primary" (click)="getFormValues()">Submit</button>
 </div>
