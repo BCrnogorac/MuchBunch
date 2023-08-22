@@ -17,7 +17,6 @@ namespace MuchBunch.Service.Validations
                     var exists = await dbContext.ProductTypes.AnyAsync(pt => pt.Id == model, ct);
                     return exists;
                 }).WithMessage(InvalidParent);
-
         }
     }
 }

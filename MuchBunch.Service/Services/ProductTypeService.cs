@@ -14,18 +14,27 @@ namespace MuchBunch.Service.Services
         {
         }
 
-        public IEnumerable<ProductTypeDTO> GetProductTypes()
+        public IEnumerable<ProductTypeWithSubtypesDTO> GetProductTypes()
         {
             var productTypes = dbContext.ProductTypes
-                .Select(pt => new ProductTypeDTO()
+                .Select(pt => new ProductTypeWithSubtypesDTO()
                 {
                     Id = pt.Id,
                     Name = pt.Name,
-                    SubTypes = mapper.Map<List<ProductTypeDTO>>(pt.SubTypes)
+                    SubTypes = mapper.Map<List<ProductTypeWithSubtypesDTO>>(pt.SubTypes)
                 });
 
 
             return productTypes;
+        }
+
+        public IEnumerable<ProductTypeDTO> GetProductParentTypes()
+        {
+            var productTypes = dbContext.ProductTypes
+                .Where(pt => pt.ParentId == null);
+
+
+            return mapper.Map<IEnumerable<ProductTypeDTO>>(productTypes);
         }
 
         public ProductTypeProductsDTO GetProductsForType(int id)

@@ -8,6 +8,7 @@ namespace MuchBunch.Service
     {
         public MappingProfile()
         {
+            CreateMap<ProductType, ProductTypeWithSubtypesDTO>();
             CreateMap<ProductType, ProductTypeDTO>();
             CreateMap<Product, ProductDTO>();
         }

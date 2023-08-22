@@ -26,18 +26,16 @@ namespace MuchBunch.Service.Services
             return await ValidateAsync(model, new InsertProductTypeBMValidator(dbContext));
         }
 
+        public async Task<ValidationResult> ValidateEditProductType(EditProductTypeBM model)
+        {
+            return await ValidateAsync(model, new EditProductTypeBMValidator(dbContext));
+        }
+
         public async static Task<ValidationResult> ValidateAsync<T, U>(T model, U validator)
             where T : class
             where U : AbstractValidator<T>
         {
             return await validator.ValidateAsync(model);
-        }
-
-        public static ValidationResult Validate<T, U>(T model, U validator)
-            where T : class
-            where U : AbstractValidator<T>
-        {
-            return validator.Validate(model);
         }
     }
 }

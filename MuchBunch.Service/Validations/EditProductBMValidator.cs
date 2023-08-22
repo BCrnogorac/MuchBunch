@@ -5,11 +5,12 @@ using MuchBunch.Service.Models.BM;
 
 namespace MuchBunch.Service.Validations
 {
-    public class InsertProductBMValidator : AbstractValidator<InsertProductBM>
+    public class EditProductBMValidator : AbstractValidator<EditProductBM>
     {
         private const string InvalidProductType = "One of given ProductTypeIds is invalid!";
+        private const string InvalidId = "Product with given Id does not exist!";
 
-        public InsertProductBMValidator(MBDBContext dbContext)
+        public EditProductBMValidator(MBDBContext dbContext)
         {
             RuleForEach(x => x.ProductTypeIds)
                 .MustAsync(async (model, ct) =>
@@ -17,6 +18,13 @@ namespace MuchBunch.Service.Validations
                     var exists = await dbContext.ProductTypes.AnyAsync(pt => pt.Id == model, ct);
                     return exists;
                 }).WithMessage(InvalidProductType);
+
+            RuleFor(x => x.Id)
+                .MustAsync(async (id, ct) =>
+                {
+                    var exists = await dbContext.Products.AnyAsync(pt => pt.Id == id, ct);
+                    return exists;
+                }).WithMessage(InvalidId);
         }
     }
 }
