@@ -14,6 +14,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 import {
   StepBackwardOutline,
@@ -54,6 +55,7 @@ const icons: IconDefinition[] = [
     NzDividerModule,
     NzMessageModule,
     NzModalModule,
+    NzCollapseModule,
     NzIconModule.forChild(icons),
   ],
   exports: [
@@ -72,6 +74,7 @@ const icons: IconDefinition[] = [
     NzDividerModule,
     NzMessageModule,
     NzModalModule,
+    NzCollapseModule,
   ],
 })
 export class NgZorroModule {}

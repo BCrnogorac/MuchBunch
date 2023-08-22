@@ -8,6 +8,7 @@ import { AboutComponent } from './about/about.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { InventoryComponent } from './account/inventory/inventory.component';
 import { AddComponent } from './add/add.component';
+import { productTypeResolver } from './resolvers/product-type.resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,7 +23,13 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'administration', component: AddComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'inventory', component: InventoryComponent },
+  {
+    path: 'inventory',
+    component: InventoryComponent,
+    resolve: {
+      types: productTypeResolver,
+    },
+  },
 ];
 
 @NgModule({

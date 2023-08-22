@@ -21,6 +21,7 @@ export class ProductService {
   }
 
   addNewProduct(product: ProductBM): Observable<ProductBM> {
+    console.log(product);
     return this.http.post<ProductBM>(`${this.serviceBaseUrl}`, product);
   }
 
@@ -30,7 +31,15 @@ export class ProductService {
 
   getSubtypesByParentId(parentId: number): Observable<ProductSubtypeBM[]> {
     return this.http.get<ProductSubtypeBM[]>(
-      `${this.serviceBaseUrl}type/${parentId}/subtypes`
+      `${this.serviceBaseUrl}subtype/${parentId}`
     );
+  }
+
+  getProducts(): Observable<ProductBM[]> {
+    return this.http.get<ProductBM[]>(`${this.serviceBaseUrl}`);
+  }
+
+  getProductsByType(id: number): Observable<ProductBM[]> {
+    return this.http.get<ProductBM[]>(`${this.serviceBaseUrl}/type/${id}`);
   }
 }

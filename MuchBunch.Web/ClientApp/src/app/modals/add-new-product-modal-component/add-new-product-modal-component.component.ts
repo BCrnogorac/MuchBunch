@@ -44,9 +44,9 @@ export class AddNewProductModalComponentComponent implements OnInit {
   initForm(): void {
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
-      imgURL: ['', Validators.required],
+      imageUrl: ['', Validators.required],
       type: ['', Validators.required],
-      subtype: [null, Validators.required],
+      subtypes: [null, Validators.required],
       price: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     });
@@ -72,8 +72,9 @@ export class AddNewProductModalComponentComponent implements OnInit {
   }
 
   onSelectedType(type: ProductTypeBM) {
+    console.log(type);
     if (type != null) {
-      this.formGroup.get('subtype').setValue(null);
+      this.formGroup.get('subtypes').setValue(null);
       this.productService
         .getSubtypesByParentId(type.id)
         .subscribe((response) => {
