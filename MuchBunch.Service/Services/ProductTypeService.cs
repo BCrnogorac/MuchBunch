@@ -37,6 +37,15 @@ namespace MuchBunch.Service.Services
             return mapper.Map<IEnumerable<ProductTypeDTO>>(productTypes);
         }
 
+        public IEnumerable<ProductTypeDTO> GetProductSubTypes()
+        {
+            var productTypes = dbContext.ProductTypes
+                .Where(pt => pt.ParentId != null);
+
+
+            return mapper.Map<IEnumerable<ProductTypeDTO>>(productTypes);
+        }
+
         public ProductTypeProductsDTO GetProductsForType(int id)
         {
             var productType = dbContext.ProductTypes.Include(pt => pt.Products).Where(pt => pt.Id == id).FirstOrDefault();
