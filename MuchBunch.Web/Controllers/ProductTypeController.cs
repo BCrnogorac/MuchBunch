@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MuchBunch.Service.Models.BM;
 using MuchBunch.Service.Services;
 
 namespace MuchBunch.Web.Controllers
@@ -8,10 +9,12 @@ namespace MuchBunch.Web.Controllers
     public class ProductTypeController : Controller
     {
         private readonly ProductTypeService productTypeService;
+        private readonly ValidationService validationService;
 
-        public ProductTypeController(ProductTypeService productTypeService)
+        public ProductTypeController(ProductTypeService productTypeService, ValidationService validationService)
         {
             this.productTypeService = productTypeService;
+            this.validationService = validationService;
         }
 
         [HttpGet]
@@ -20,10 +23,26 @@ namespace MuchBunch.Web.Controllers
             return Ok(productTypeService.GetProductTypes());
         }
 
-        [HttpPost]
-        public IActionResult GetProductTypeProducts([FromBody] int value)
+
+        [HttpGet("id")]
+        public IActionResult GetProductTypeProducts([FromBody] int id)
         {
-            return Ok(productTypeService.GetProductsForType(value));
+            return Ok(productTypeService.GetProductsForType(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InsertProductType(InsertProductTypeBM model)
+        {
+            var result = await validationService.ValidateInsertProductType(model);
+
+            if (!result.IsValid)
+            {
+                return BadRequest(result);
+            }
+
+            productTypeService.InsertProductType(model);
+
+            return Ok();
         }
     }
 }

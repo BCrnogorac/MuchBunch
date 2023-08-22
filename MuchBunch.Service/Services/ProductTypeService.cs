@@ -2,6 +2,8 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MuchBunch.EF.Database;
+using MuchBunch.EF.Database.Models;
+using MuchBunch.Service.Models.BM;
 using MuchBunch.Service.Models.DTO;
 
 namespace MuchBunch.Service.Services
@@ -17,6 +19,7 @@ namespace MuchBunch.Service.Services
             var productTypes = dbContext.ProductTypes
                 .Select(pt => new ProductTypeDTO()
                 {
+                    Id = pt.Id,
                     Name = pt.Name,
                     SubTypes = mapper.Map<List<ProductTypeDTO>>(pt.SubTypes)
                 });
@@ -43,6 +46,18 @@ namespace MuchBunch.Service.Services
 
 
             return productsDTO;
+        }
+
+        public void InsertProductType(InsertProductTypeBM model)
+        {
+            var productTypeModel = new ProductType()
+            {
+                Name = model.Name,
+                ParentId = model.ParentId
+            };
+
+            dbContext.ProductTypes.Add(productTypeModel);
+            dbContext.SaveChanges();
         }
     }
 }
