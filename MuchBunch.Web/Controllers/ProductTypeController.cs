@@ -29,10 +29,10 @@ namespace MuchBunch.Web.Controllers
             return Ok(productTypeService.GetProductSubTypes(id));
         }
 
-        [HttpGet("id")]
-        public IActionResult GetProductTypeProducts([FromBody] int id)
+        [HttpGet("{id}/productsBySubtype")]
+        public IActionResult GetProductSubTypeProducts([FromRoute] int id)
         {
-            return Ok(productTypeService.GetProductsForType(id));
+            return Ok(productTypeService.GetProductsForSubType(id));
         }
 
 
@@ -61,7 +61,22 @@ namespace MuchBunch.Web.Controllers
                 return BadRequest(result);
             }
 
-            productTypeService.InsertProductType(model);
+            productTypeService.EditProductType(model);
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProductType(EditProductTypeBM model)
+        {
+            var result = await validationService.ValidateEditProductType(model);
+
+            if (!result.IsValid)
+            {
+                return BadRequest(result);
+            }
+
+            productTypeService.EditProductType(model);
 
             return Ok();
         }

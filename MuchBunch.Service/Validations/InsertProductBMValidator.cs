@@ -11,10 +11,10 @@ namespace MuchBunch.Service.Validations
 
         public InsertProductBMValidator(MBDBContext dbContext)
         {
-            RuleForEach(x => x.ProductTypeIds)
+            RuleForEach(x => x.SubTypes)
                 .MustAsync(async (model, ct) =>
                 {
-                    var exists = await dbContext.ProductTypes.AnyAsync(pt => pt.Id == model, ct);
+                    var exists = await dbContext.ProductTypes.AnyAsync(pt => pt.Id == model.Id, ct);
                     return exists;
                 }).WithMessage(InvalidProductType);
         }

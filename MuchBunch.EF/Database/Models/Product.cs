@@ -11,6 +11,8 @@ namespace MuchBunch.EF.Database.Models
         public string ImageUrl { get; set; }
         public double Price { get; set; }
         public int Quantity { get; set; }
-        public ICollection<ProductType> ProductTypes { get; set; }
+        public int TypeId { get; set; }
+        public ProductType Type { get; set; }
+        public ICollection<ProductSubType>? SubTypes { get; set; }
     }
 }

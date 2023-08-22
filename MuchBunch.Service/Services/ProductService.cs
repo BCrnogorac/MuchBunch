@@ -4,6 +4,7 @@ using MuchBunch.EF.Database;
 using MuchBunch.EF.Database.Models;
 using MuchBunch.Service.Models.BM;
 using MuchBunch.Service.Models.DTO;
+using System.Data;
 
 namespace MuchBunch.Service.Services
 {
@@ -13,17 +14,19 @@ namespace MuchBunch.Service.Services
         {
         }
 
-        public IEnumerable<ProductDTO> GetProducts()
+        public IEnumerable<ProductTypeBM> GetProducts()
         {
-            var products = dbContext.Products.Include(p => p.ProductTypes);
-            return mapper.Map<IEnumerable<ProductDTO>>(products);
+            var products = dbContext.Products.Include(p => p.SubTypes).Include(p => p.Type);
+            return mapper.Map<IEnumerable<ProductTypeBM>>(products);
         }
 
         public void InsertProduct(InsertProductBM model)
         {
-            var productTypeModels = model.ProductTypeIds
-                .Select(id =>
-                    dbContext.ProductTypes.FirstOrDefault(i => i.Id == id)).ToList();
+            var productTypeModels = model.SubTypes
+                .Select(subtype =>
+                    dbContext.ProductSubTypes.FirstOrDefault(i => i.Id == subtype.Id)).ToList();
+
+            var parent = dbContext.ProductTypes.FirstOrDefault(i => i.Id == model.Type.Id);
 
             var product = new Product()
             {
@@ -31,7 +34,8 @@ namespace MuchBunch.Service.Services
                 Name = model.Name,
                 Price = model.Price,
                 Quantity = model.Quantity,
-                ProductTypes = productTypeModels
+                Type = parent,
+                SubTypes = productTypeModels
             };
 
             dbContext.Products.Add(product);

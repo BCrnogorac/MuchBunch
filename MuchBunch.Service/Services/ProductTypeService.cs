@@ -30,16 +30,14 @@ namespace MuchBunch.Service.Services
 
         public IEnumerable<ProductTypeDTO> GetProductParentTypes()
         {
-            var productTypes = dbContext.ProductTypes
-                .Where(pt => pt.ParentId == null);
-
+            var productTypes = dbContext.ProductTypes;
 
             return mapper.Map<IEnumerable<ProductTypeDTO>>(productTypes);
         }
 
         public IEnumerable<ProductTypeDTO> GetProductSubTypes(int id)
         {
-            var productTypes = dbContext.ProductTypes
+            var productTypes = dbContext.ProductSubTypes
                 .Where(pt => pt.ParentId == id);
 
 
@@ -59,7 +57,27 @@ namespace MuchBunch.Service.Services
             {
                 Id = productType.Id,
                 Name = productType.Name,
-                Products = mapper.Map<IEnumerable<ProductDTO>>(productType.Products)
+                Products = mapper.Map<IEnumerable<ProductTypeBM>>(productType.Products)
+            };
+
+
+            return productsDTO;
+        }
+
+        public ProductTypeProductsDTO GetProductsForSubType(int id)
+        {
+            var productType = dbContext.ProductSubTypes.Include(pt => pt.Products).Where(pt => pt.Id == id).FirstOrDefault();
+
+            if (productType == null)
+            {
+                return null;
+            }
+
+            var productsDTO = new ProductTypeProductsDTO()
+            {
+                Id = productType.Id,
+                Name = productType.Name,
+                Products = mapper.Map<IEnumerable<ProductTypeBM>>(productType.Products)
             };
 
 
@@ -71,10 +89,18 @@ namespace MuchBunch.Service.Services
             var productTypeModel = new ProductType()
             {
                 Name = model.Name,
-                ParentId = model.ParentId
             };
 
             dbContext.ProductTypes.Add(productTypeModel);
+            dbContext.SaveChanges();
+        }
+
+        public void EditProductType(EditProductTypeBM model)
+        {
+            var product = dbContext.ProductTypes.Find(model.Id);
+            product.Name = model.Name;
+
+            dbContext.ProductTypes.Update(product);
             dbContext.SaveChanges();
         }
     }

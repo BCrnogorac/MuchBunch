@@ -16,7 +16,7 @@ namespace MuchBunch.Service.Validations
                 .MustAsync(async (id, ct) =>
                 {
                     var exists = await dbContext.ProductTypes.AnyAsync(pt => pt.Id == id, ct);
-                    return exists;
+                    return exists || id is null;
                 }).WithMessage(InvalidParent);
 
             RuleFor(x => x.Id)

@@ -10,7 +10,8 @@ namespace MuchBunch.Service
         {
             CreateMap<ProductType, ProductTypeWithSubtypesDTO>();
             CreateMap<ProductType, ProductTypeDTO>();
-            CreateMap<Product, ProductDTO>();
+            CreateMap<ProductSubType, ProductTypeDTO>();
+            CreateMap<Product, ProductTypeBM>();
         }
     }
 }
