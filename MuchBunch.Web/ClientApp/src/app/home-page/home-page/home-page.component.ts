@@ -22,6 +22,7 @@ export class HomePageComponent {
   //info about user
   isAuthed: boolean = false;
   companyRole: boolean = false;
+  adminRole: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -30,8 +31,9 @@ export class HomePageComponent {
 
   ngOnInit() {
     this.authService.user.subscribe((response) => {
-      this.isAuthed = response != null;
-      this.companyRole = response?.role == 'Company';
+      this.isAuthed = this.authService.getUserProperty('role') != null;
+      this.companyRole = this.authService.getUserProperty('role') == 'company';
+      this.adminRole = this.authService.getUserProperty('role') == 'admin';
     });
   }
 }

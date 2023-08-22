@@ -6,7 +6,6 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -14,6 +13,7 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 import {
   StepBackwardOutline,
@@ -53,6 +53,7 @@ const icons: IconDefinition[] = [
     NzAlertModule,
     NzDividerModule,
     NzMessageModule,
+    NzModalModule,
     NzIconModule.forChild(icons),
   ],
   exports: [
@@ -70,6 +71,7 @@ const icons: IconDefinition[] = [
     NzAlertModule,
     NzDividerModule,
     NzMessageModule,
+    NzModalModule,
   ],
 })
 export class NgZorroModule {}

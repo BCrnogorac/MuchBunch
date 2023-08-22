@@ -5,10 +5,9 @@ import { RegisterComponent } from './register/register.component';
 import { HomePageComponent } from './home-page/home-page/home-page.component';
 import { BrowseComponent } from './browse/browse.component';
 import { AboutComponent } from './about/about.component';
-import { AddNewBunchComponent } from './add/add-new-bunch/add-new-bunch.component';
 import { ProfileComponent } from './account/profile/profile.component';
-import { AddNewItemComponent } from './add/add-new-item/add-new-item.component';
 import { InventoryComponent } from './account/inventory/inventory.component';
+import { AddComponent } from './add/add.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,8 +20,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'browse', component: BrowseComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'add-new-bunch', component: AddNewBunchComponent },
-  { path: 'add-new-item', component: AddNewItemComponent },
+  { path: 'administration', component: AddComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'inventory', component: InventoryComponent },
 ];

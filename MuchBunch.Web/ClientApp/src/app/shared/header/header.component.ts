@@ -19,7 +19,6 @@ export class HeaderComponent implements OnInit {
   isAuthed: boolean = false;
   companyRole: boolean = false;
   adminRole: boolean = false;
-  userCopy: UserModel;
 
   constructor(
     private httpClient: HttpClient,
@@ -30,10 +29,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.authService.user.subscribe((response) => {
-      console.log('Header user');
-      console.log(response);
-      this.userCopy = response;
-
       if (response == null) {
         this.authService.autoLogin();
       }
@@ -42,8 +37,6 @@ export class HeaderComponent implements OnInit {
       this.companyRole = this.authService.getUserProperty('role') == 'company';
       this.adminRole = this.authService.getUserProperty('role') == 'admin';
     });
-
-    this.updateUserProperties();
   }
 
   search(value: string): void {
@@ -68,9 +61,5 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/home']);
     this.message.success('Logged out.');
-  }
-
-  updateUserProperties() {
-    console.log(this.isAuthed, this.adminRole);
   }
 }

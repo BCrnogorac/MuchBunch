@@ -18,10 +18,10 @@ import { RegisterComponent } from './register/register.component';
 import { HomePageComponent } from './home-page/home-page/home-page.component';
 import { BrowseComponent } from './browse/browse.component';
 import { AboutComponent } from './about/about.component';
-import { AddNewBunchComponent } from './add/add-new-bunch/add-new-bunch.component';
 import { ProfileComponent } from './account/profile/profile.component';
-import { AddNewItemComponent } from './add/add-new-item/add-new-item.component';
 import { InventoryComponent } from './account/inventory/inventory.component';
+import { AddComponent } from './add/add.component';
+import { AddNewProductModalComponentComponent } from './modals/add-new-product-modal-component/add-new-product-modal-component.component';
 
 registerLocaleData(en);
 
@@ -35,10 +35,10 @@ registerLocaleData(en);
     HomePageComponent,
     BrowseComponent,
     AboutComponent,
-    AddNewBunchComponent,
     ProfileComponent,
-    AddNewItemComponent,
     InventoryComponent,
+    AddComponent,
+    AddNewProductModalComponentComponent,
   ],
   imports: [
     BrowserModule,
