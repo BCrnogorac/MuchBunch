@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MuchBunch.EF.Database;
 using MuchBunch.Service;
-using MuchBunch.Service.Services;
 using MuchBunch.Service.Extensions;
-using System.Text;
 using MuchBunch.Service.Models;
+using MuchBunch.Service.Services;
 using System.Security.Claims;
+using System.Text;
 
 namespace MuchBunch.Web
 {
@@ -19,8 +19,12 @@ namespace MuchBunch.Web
             // Add services
             builder.Services.AddControllers();
             builder.Services.AddDbContext<MBDBContext>();
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<ValidationService>();
+            builder.Services.AddScoped<ProductService>();
+            builder.Services.AddScoped<ProductTypeService>();
             builder.Services.AddScoped<IdentityService>();
 
             var jwtSettings = builder.Configuration.GetSection<JwtSettings>(GlobalConstants.JWT_SETTINGS_KEY);

@@ -1,12 +1,8 @@
-﻿using FluentValidation.Results;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using MuchBunch.EF.Database;
 using MuchBunch.EF.Database.Models;
-using MuchBunch.Service.Enums;
 using MuchBunch.Service.Models.BM;
 using MuchBunch.Service.Models.DTO;
-using MuchBunch.Service.Validations;
 using System.Security.Cryptography;
 
 namespace MuchBunch.Service.Services
@@ -14,7 +10,8 @@ namespace MuchBunch.Service.Services
     public class UserService : BaseService
     {
         private IdentityService identityService;
-        public UserService(MBDBContext dbContext, IdentityService identityService) : base(dbContext) { 
+        public UserService(IdentityService identityService, MBDBContext dbContext, IMapper mapperConfiguration) : base(dbContext, mapperConfiguration)
+        {
             this.identityService = identityService;
         }
 
@@ -27,7 +24,7 @@ namespace MuchBunch.Service.Services
         {
             var user = dbContext.Users.Where(u => u.Email == model.Email).FirstOrDefault();
 
-            if(user == null || !IsPasswordValid(model.Password, user.HashedPassword))
+            if (user == null || !IsPasswordValid(model.Password, user.HashedPassword))
             {
                 return null;
             }

@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MuchBunch.EF.Database.Models;
-using MuchBunch.Service.Enums;
 using MuchBunch.Service.Extensions;
 using MuchBunch.Service.Models;
-using MuchBunch.Service.Models.BM;
 using MuchBunch.Service.Models.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -16,7 +14,8 @@ namespace MuchBunch.Service.Services
     {
 
         private IConfiguration config;
-        public IdentityService(IConfiguration config) {
+        public IdentityService(IConfiguration config)
+        {
             this.config = config;
         }
 

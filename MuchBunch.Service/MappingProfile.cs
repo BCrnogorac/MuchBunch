@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MuchBunch.EF.Database.Models;
-using MuchBunch.Service.Models.BM;
+using MuchBunch.Service.Models.DTO;
 
 namespace MuchBunch.Service
 {
@@ -8,7 +8,8 @@ namespace MuchBunch.Service
     {
         public MappingProfile()
         {
-            
+            CreateMap<ProductType, ProductTypeDTO>();
+            CreateMap<Product, ProductDTO>();
         }
     }
 }
