@@ -36,6 +36,10 @@ namespace MuchBunch.Service.Services
             return await ValidateAsync(model, new EditProductSubTypeBMValidator(dbContext));
         }
 
+        public async Task<ValidationResult> ValidateEditProduct(EditProductBM model)
+        {
+            return await ValidateAsync(model, new EditProductBMValidator(dbContext));
+        }
 
         public async Task<ValidationResult> ValidateEditProductType(EditProductTypeBM model)
         {

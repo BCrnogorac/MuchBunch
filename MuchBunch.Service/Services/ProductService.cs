@@ -20,6 +20,13 @@ namespace MuchBunch.Service.Services
             return mapper.Map<IEnumerable<ProductDTO>>(products);
         }
 
+        public IEnumerable<ProductDTO> GetProductsByTypeId(int id)
+        {
+            var products = dbContext.Products.Where(p => p.TypeId == id).Include(p => p.SubTypes);
+
+            return mapper.Map<IEnumerable<ProductDTO>>(products);
+        }
+
         public void InsertProduct(InsertProductBM model)
         {
             var subTypesIds = model.SubTypes.Select(e => e.Id).ToList();
@@ -39,6 +46,24 @@ namespace MuchBunch.Service.Services
 
             dbContext.Products.Add(product);
 
+            dbContext.SaveChanges();
+        }
+
+        public void EditProduct(EditProductBM model)
+        {
+            var product = dbContext.Products.FirstOrDefault(i => i.Id == model.Id);
+
+            if (product == null)
+            {
+                return;
+            }
+
+            product.Price = model.Price;
+            product.Quantity = model.Quantity;
+            product.ImageUrl = model.ImageUrl;
+            product.Name = model.Name;
+
+            dbContext.Products.Update(product);
             dbContext.SaveChanges();
         }
     }

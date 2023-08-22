@@ -2,6 +2,6 @@
 {
     public class EditProductBM : InsertProductBM
     {
-        public int Id;
+        public int Id { get; set; }
     }
 }
