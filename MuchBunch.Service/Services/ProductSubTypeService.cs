@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MuchBunch.EF.Database;
 using MuchBunch.Service.Models.DTO;
 
@@ -11,10 +12,11 @@ namespace MuchBunch.Service.Services
 
         }
 
-        public IEnumerable<ProductTypeDTO> GetProductSubTypesById(int id)
+        public IEnumerable<ProductTypeDTO> GetProductSubTypesById(int parentId)
         {
-            var productTypes = dbContext.ProductSubTypes
-                .Where(x => x.ParentId == id)
+            var parentType = dbContext.ProductTypes.Include(x => x.SubTypes)
+                .FirstOrDefault(x => x.Id == parentId);
+            var subTypes = parentType.SubTypes
                 .Select(pt => new ProductTypeDTO()
                 {
                     Id = pt.Id,
@@ -22,7 +24,7 @@ namespace MuchBunch.Service.Services
                 });
 
 
-            return productTypes;
+            return subTypes;
         }
     }
 }

@@ -16,11 +16,11 @@ namespace MuchBunch.Web.Controllers
             this.validationService = validationService;
         }
 
-        //[HttpGet("{id}/")]
-        //public IActionResult GetProductSubTypes([FromRoute] int id)
-        //{
-        //    //return Ok(productSubTypeService.GetProductSubTypes(id));
-        //}
+        [HttpGet("{id}")]
+        public IActionResult GetProductSubTypesById([FromRoute] int id)
+        {
+            return Ok(productSubTypeService.GetProductSubTypesById(id));
+        }
 
     }
 }
