@@ -30,7 +30,7 @@ namespace MuchBunch.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertProduct(InsertProductBM model)
+        public async Task<IActionResult> InsertProduct([FromBody] InsertProductBM model)
         {
             var result = await validationService.ValidateInsertProduct(model);
 
@@ -45,7 +45,7 @@ namespace MuchBunch.Web.Controllers
         }
 
         [HttpPost("edit")]
-        public async Task<IActionResult> EditProduct(EditProductBM model)
+        public async Task<IActionResult> EditProduct([FromBody] EditProductBM model)
         {
             var result = await validationService.ValidateEditProduct(model);
 
@@ -57,6 +57,13 @@ namespace MuchBunch.Web.Controllers
             productService.EditProduct(model);
 
             return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProduct([FromRoute] int id)
+        {
+            productService.DeleteProduct(id);
+            return NoContent();
         }
     }
 }

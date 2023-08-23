@@ -29,39 +29,48 @@ namespace MuchBunch.Service.Services
 
         public void InsertProduct(InsertProductBM model)
         {
-            var subTypesIds = model.SubTypes.Select(e => e.Id).ToList();
-            var productSubTypes = dbContext.ProductSubTypes.Where(i => subTypesIds.Contains(i.Id)).ToList();
-
-            var parent = dbContext.ProductTypes.First(i => i.Id == model.Type.Id);
-
-            var product = new Product()
-            {
-                ImageUrl = model.ImageUrl,
-                Name = model.Name,
-                Price = model.Price,
-                Quantity = model.Quantity,
-                Type = parent,
-                SubTypes = productSubTypes
-            };
-
-            dbContext.Products.Add(product);
-
-            dbContext.SaveChanges();
+            UpsertProduct(new Product(), model);
         }
 
         public void EditProduct(EditProductBM model)
         {
-            var product = dbContext.Products.FirstOrDefault(i => i.Id == model.Id);
+            var product = dbContext.Products.Include(p => p.SubTypes).Include(p => p.Type).FirstOrDefault(i => i.Id == model.Id);
+            UpsertProduct(product, model);
+        }
 
+        public void DeleteProduct(int id)
+        {
+            var product = dbContext.Products.Find(id);
+
+            if (product != null)
+            {
+                dbContext.Products.Remove(product);
+                dbContext.SaveChanges();
+            }
+        }
+
+        private void UpsertProduct(Product? product, InsertProductBM model)
+        {
             if (product == null)
             {
                 return;
             }
 
+            var newSubTypesIds = model.SubTypes.Select(st => st.Id).ToList();
+            var newSubTypes = dbContext.ProductSubTypes.Where(i => newSubTypesIds.Contains(i.Id)).ToList();
+
+            var newType = dbContext.ProductTypes.Find(model.Type.Id);
+
+            // In case of Update
+            product?.SubTypes?.Clear();
+
+            // Update Product
             product.Price = model.Price;
             product.Quantity = model.Quantity;
             product.ImageUrl = model.ImageUrl;
             product.Name = model.Name;
+            product.SubTypes = newSubTypes;
+            product.Type = newType;
 
             dbContext.Products.Update(product);
             dbContext.SaveChanges();

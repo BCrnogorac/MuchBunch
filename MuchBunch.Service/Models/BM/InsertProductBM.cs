@@ -9,6 +9,6 @@ namespace MuchBunch.Service.Models.BM
         public double Price { get; set; }
         public int Quantity { get; set; }
         public ProductTypeBM Type { get; set; }
-        public IEnumerable<ProductTypeBM> SubTypes { get; set; }
+        public IEnumerable<EditProductSubTypeBM> SubTypes { get; set; }
     }
 }
