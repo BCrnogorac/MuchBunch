@@ -1,1 +1,34 @@
-<p>inventory works!</p>
+<br /><br />
+<h1 style="margin-left: 50px">Your Inventory.</h1>
+<br />
+
+<div style="margin-left: 70px">
+  <nz-collapse nzGhost nzAccordion>
+    <nz-collapse-panel
+      *ngFor="let productType of productTypes"
+      [nzHeader]="productType.name"
+      [nzActive]="false"
+      style="font-size: 20px"
+      (click)="onSelectedPanel(productType.id)"
+    >
+      <p style="margin: 0; display: flex">
+        <nz-card
+          *ngFor="let product of products"
+          nzHoverable
+          style="width: 160px; margin-right: 20px"
+          [nzCover]="coverTemplate"
+          [nzActions]="[actionEdit]"
+        >
+          <ng-template #coverTemplate>
+            <img alt="example" [src]="product.imageUrl" style="height: 170px" />
+          </ng-template>
+          <ng-template #actionEdit>
+            <span nz-icon nzType="edit"></span>
+          </ng-template>
+
+          <nz-card-meta [nzTitle]="product.name"></nz-card-meta>
+        </nz-card>
+      </p>
+    </nz-collapse-panel>
+  </nz-collapse>
+</div>
