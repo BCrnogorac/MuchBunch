@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MuchBunch.EF.Database;
 
@@ -10,9 +11,11 @@ using MuchBunch.EF.Database;
 namespace MuchBunch.EF.Migrations
 {
     [DbContext(typeof(MBDBContext))]
-    partial class MBDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230824174954_AddUserProducts")]
+    partial class AddUserProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

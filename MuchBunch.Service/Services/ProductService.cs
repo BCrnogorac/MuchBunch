@@ -16,7 +16,7 @@ namespace MuchBunch.Service.Services
 
         public IEnumerable<ProductDTO> GetProducts()
         {
-            var products = dbContext.Products.Include(p => p.SubTypes).Include(p => p.Type);
+            var products = dbContext.Products.Include(p => p.SubTypes).Include(p => p.Type).Include(p => p.Company);
             return mapper.Map<IEnumerable<ProductDTO>>(products);
         }
 
@@ -61,6 +61,8 @@ namespace MuchBunch.Service.Services
 
             var newType = dbContext.ProductTypes.Find(model.Type.Id);
 
+            var company = dbContext.Users.Find(model.CompanyId);
+
             // In case of Update
             product?.SubTypes?.Clear();
 
@@ -71,6 +73,7 @@ namespace MuchBunch.Service.Services
             product.Name = model.Name;
             product.SubTypes = newSubTypes;
             product.Type = newType;
+            product.Company = company;
 
             dbContext.Products.Update(product);
             dbContext.SaveChanges();

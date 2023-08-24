@@ -54,6 +54,13 @@ namespace MuchBunch.Web.Controllers
             return Ok(userService.GetUsers());
         }
 
+        //[Authorize(Roles = Role.Company)]
+        [HttpGet("{id}/products")]
+        public IActionResult GetCompanyProductsByUserId(int id)
+        {
+            return Ok(userService.GetCompanyProducts(id));
+        }
+
         [Authorize(Roles = Role.Admin)]
         [HttpGet("userProtected")]
         public IActionResult GetUsersProtected()

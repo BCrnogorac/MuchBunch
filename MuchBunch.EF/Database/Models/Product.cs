@@ -13,6 +13,8 @@ namespace MuchBunch.EF.Database.Models
         public int Quantity { get; set; }
         public int TypeId { get; set; }
         public ProductType Type { get; set; }
+        public int CompanyId { get; set; }
+        public User Company { get; set; }
         public ICollection<ProductSubType>? SubTypes { get; set; }
     }
 }

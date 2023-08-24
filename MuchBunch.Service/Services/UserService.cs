@@ -21,6 +21,20 @@ namespace MuchBunch.Service.Services
             return mapper.Map<IEnumerable<UserDTO>>(dbContext.Users.Include(u => u.Role));
         }
 
+
+        public IEnumerable<ProductDTO> GetCompanyProducts(int id)
+        {
+            var products = dbContext.Users
+                .Include(u => u.Products)
+                    .ThenInclude(p => p.Type)
+                .Include(u => u.Products)
+                    .ThenInclude(p => p.SubTypes)
+                .FirstOrDefault(u => u.Id == id)?.Products;
+
+            return mapper.Map<IEnumerable<ProductDTO>>(products);
+        }
+
+
         public TokenDTO? Login(LoginBM model)
         {
             var user = dbContext.Users.Include(p => p.Role).Where(u => u.Email == model.Email).FirstOrDefault();
