@@ -19,22 +19,17 @@ namespace MuchBunch.EF.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
-                .HasMany(e => e.SubTypes)
-                .WithMany(e => e.Products);
-
-            modelBuilder.Entity<Product>()
                 .HasOne(e => e.Type)
                 .WithMany(e => e.Products)
                 .HasForeignKey(e => e.TypeId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<ProductSubType>()
                 .HasOne(e => e.Parent)
                 .WithMany(e => e.SubTypes)
                 .HasForeignKey(e => e.ParentId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
