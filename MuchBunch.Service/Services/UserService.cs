@@ -34,6 +34,24 @@ namespace MuchBunch.Service.Services
             return mapper.Map<IEnumerable<ProductDTO>>(products);
         }
 
+        public void DeleteUser(int id)
+        {
+            var user = dbContext.Users
+                .Include(u => u.Products)
+                .Include(u => u.Bunches)
+                .FirstOrDefault(u => u.Id == id);
+
+            if (user != null)
+            {
+                // OnDelete Cascade
+                user.Products?.Clear();
+                user.Bunches?.Clear();
+
+                dbContext.Users.Remove(user);
+                dbContext.SaveChanges();
+            }
+        }
+
 
         public TokenDTO? Login(LoginBM model)
         {

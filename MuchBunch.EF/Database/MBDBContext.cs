@@ -10,6 +10,8 @@ namespace MuchBunch.EF.Database
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<ProductSubType> ProductSubTypes { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Bunch> Bunches { get; set; }
+        public DbSet<Theme> Theme { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,6 +32,18 @@ namespace MuchBunch.EF.Database
                 .HasForeignKey(e => e.ParentId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Product>()
+                .HasOne(e => e.Company)
+                .WithMany(e => e.Products)
+                .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Bunch>()
+                .HasOne(e => e.Company)
+                .WithMany(e => e.Bunches)
+                .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

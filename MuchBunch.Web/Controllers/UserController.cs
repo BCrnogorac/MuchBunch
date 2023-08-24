@@ -61,6 +61,13 @@ namespace MuchBunch.Web.Controllers
             return Ok(userService.GetCompanyProducts(id));
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(int id)
+        {
+            userService.DeleteUser(id);
+            return NoContent();
+        }
+
         [Authorize(Roles = Role.Admin)]
         [HttpGet("userProtected")]
         public IActionResult GetUsersProtected()

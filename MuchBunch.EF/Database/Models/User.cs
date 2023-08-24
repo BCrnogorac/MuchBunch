@@ -16,5 +16,6 @@ namespace MuchBunch.EF.Database.Models
         public int RoleId { get; set; }
         public Role Role { get; set; }
         public ICollection<Product>? Products { get; set; }
+        public ICollection<Bunch>? Bunches { get; set; }
     }
 }

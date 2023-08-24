@@ -1,9 +1,9 @@
 ﻿namespace MuchBunch.EF.Database.Models
 {
-    public class Role
+    public class Theme
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<User>? Users { get; set; }
+        public ICollection<Bunch> Bunches { get; set; }
     }
 }
