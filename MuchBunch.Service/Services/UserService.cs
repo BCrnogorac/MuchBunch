@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MuchBunch.EF.Database;
 using MuchBunch.EF.Database.Models;
 using MuchBunch.Service.Models.BM;
@@ -15,14 +16,14 @@ namespace MuchBunch.Service.Services
             this.identityService = identityService;
         }
 
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<UserDTO> GetUsers()
         {
-            return dbContext.Users;
+            return mapper.Map<IEnumerable<UserDTO>>(dbContext.Users.Include(u => u.Role));
         }
 
         public TokenDTO? Login(LoginBM model)
         {
-            var user = dbContext.Users.Where(u => u.Email == model.Email).FirstOrDefault();
+            var user = dbContext.Users.Include(p => p.Role).Where(u => u.Email == model.Email).FirstOrDefault();
 
             if (user == null || !IsPasswordValid(model.Password, user.HashedPassword))
             {
@@ -39,7 +40,7 @@ namespace MuchBunch.Service.Services
                 Name = model.Username,
                 Email = model.Email,
                 HashedPassword = HashPassword(model.Password),
-                Role = model.Role
+                RoleId = model.RoleId
             };
 
             dbContext.Users.Add(user);

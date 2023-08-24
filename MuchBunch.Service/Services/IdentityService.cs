@@ -28,7 +28,7 @@ namespace MuchBunch.Service.Services
             {
                 new (JwtRegisteredClaimNames.Sub, user.Name),
                 new (JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Role, user.Role.Name)
             };
 
             // Create token credentials

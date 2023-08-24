@@ -11,6 +11,8 @@ namespace MuchBunch.Service.Services
     {
         public ValidationService(MBDBContext dbContext, IMapper mapperConfiguration) : base(dbContext, mapperConfiguration) { }
 
+        #region Insert
+
         public async Task<ValidationResult> ValidateRegister(RegisterBM model)
         {
             return await ValidateAsync(model, new RegisterBMValidator(dbContext));
@@ -31,6 +33,19 @@ namespace MuchBunch.Service.Services
             return await ValidateAsync(model, new InsertProductSubTypeBMValidator(dbContext));
         }
 
+        public async Task<ValidationResult> ValidateInsertRole(RoleBM model)
+        {
+            return await ValidateAsync(model, new InsertRoleBMValidator<RoleBM>(dbContext));
+        }
+
+        #endregion
+
+        #region Edit
+        public async Task<ValidationResult> ValidateEditRole(EditRoleBM model)
+        {
+            return await ValidateAsync(model, new EditRoleBMValidator(dbContext));
+        }
+
         public async Task<ValidationResult> ValidateEditProductSubType(EditProductSubTypeBM model)
         {
             return await ValidateAsync(model, new EditProductSubTypeBMValidator(dbContext));
@@ -45,6 +60,8 @@ namespace MuchBunch.Service.Services
         {
             return await ValidateAsync(model, new EditProductTypeBMValidator(dbContext));
         }
+        #endregion
+
 
         public async static Task<ValidationResult> ValidateAsync<T, U>(T model, U validator)
             where T : class

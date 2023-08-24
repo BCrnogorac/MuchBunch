@@ -18,22 +18,15 @@ namespace MuchBunch.Service.Services
         {
             var subtypes = dbContext.ProductSubTypes.Include(x => x.Parent);
 
-            return mapper.Map<IEnumerable<ProductSubTypeWithParentDTO>>(subtypes);
+            return mapper.Map<IEnumerable<ProductTypeDTO>>(subtypes);
         }
 
         public IEnumerable<ProductTypeDTO> GetProductSubTypesById(int parentId)
         {
-            var parentType = dbContext.ProductTypes.Include(x => x.SubTypes)
-                .FirstOrDefault(x => x.Id == parentId);
-            var subTypes = parentType?.SubTypes
-                .Select(pt => new ProductTypeDTO()
-                {
-                    Id = pt.Id,
-                    Name = pt.Name,
-                });
+            var subtypes = dbContext.ProductTypes.Include(x => x.SubTypes)
+                .FirstOrDefault(x => x.Id == parentId)?.SubTypes;
 
-
-            return subTypes;
+            return mapper.Map<IEnumerable<ProductTypeDTO>>(subtypes);
         }
 
         public void InsertProductSubType(InsertProductSubTypeBM model)

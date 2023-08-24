@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MuchBunch.Service.Enums;
 using MuchBunch.Service.Models.BM;
-using MuchBunch.Service.Models.DTO;
 using MuchBunch.Service.Services;
-using MuchBunch.Service.Validations;
 
 namespace MuchBunch.Web.Controllers
 {
@@ -34,7 +32,7 @@ namespace MuchBunch.Web.Controllers
         {
             var result = await validationService.ValidateRegister(model);
 
-            if(!result.IsValid)
+            if (!result.IsValid)
             {
                 return BadRequest(result);
             }

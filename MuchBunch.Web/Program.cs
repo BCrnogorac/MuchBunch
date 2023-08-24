@@ -21,12 +21,13 @@ namespace MuchBunch.Web
             builder.Services.AddDbContext<MBDBContext>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-            builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<IdentityService>();
             builder.Services.AddScoped<ValidationService>();
+            builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<ProductService>();
             builder.Services.AddScoped<ProductTypeService>();
             builder.Services.AddScoped<ProductSubTypeService>();
-            builder.Services.AddScoped<IdentityService>();
+            builder.Services.AddScoped<RoleService>();
 
             var jwtSettings = builder.Configuration.GetSection<JwtSettings>(GlobalConstants.JWT_SETTINGS_KEY);
 

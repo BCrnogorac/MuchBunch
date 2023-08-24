@@ -9,6 +9,7 @@ namespace MuchBunch.EF.Database
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<ProductSubType> ProductSubTypes { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -24,7 +24,7 @@ namespace MuchBunch.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetProductSubTypesById([FromRoute] int id)
+        public IActionResult GetProductSubTypesByParentId([FromRoute] int id)
         {
             return Ok(productSubTypeService.GetProductSubTypesById(id));
         }

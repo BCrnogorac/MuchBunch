@@ -11,9 +11,11 @@ namespace MuchBunch.Service
             CreateMap<ProductType, ProductTypeWithSubtypesDTO>();
             CreateMap<ProductType, ProductTypeDTO>();
             CreateMap<ProductSubType, ProductTypeDTO>();
-            CreateMap<ProductSubType, ProductSubTypeWithParentDTO>();
             CreateMap<Product, ProductTypeBM>();
             CreateMap<Product, ProductDTO>();
+            CreateMap<Role, RoleDTO>();
+            CreateMap<User, UserDTO>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name));
         }
     }
 }
