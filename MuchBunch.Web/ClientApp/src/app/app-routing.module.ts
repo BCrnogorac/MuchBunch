@@ -9,6 +9,7 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { InventoryComponent } from './account/inventory/inventory.component';
 import { AddComponent } from './add/add.component';
 import { productTypeResolver } from './resolvers/product-type.resolver';
+import { CodebooksComponent } from './account/codebooks/codebooks.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const routes: Routes = [
       types: productTypeResolver,
     },
   },
+  { path: 'codebooks', component: CodebooksComponent },
 ];
 
 @NgModule({

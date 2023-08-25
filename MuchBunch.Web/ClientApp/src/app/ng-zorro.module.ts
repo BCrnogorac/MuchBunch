@@ -15,6 +15,11 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import {
   StepBackwardOutline,
@@ -56,6 +61,12 @@ const icons: IconDefinition[] = [
     NzMessageModule,
     NzModalModule,
     NzCollapseModule,
+    NzTabsModule,
+    NzPaginationModule,
+    NzTreeViewModule,
+    NzTableModule,
+    ScrollingModule,
+    NzMenuModule,
     NzIconModule.forChild(icons),
   ],
   exports: [
@@ -75,6 +86,11 @@ const icons: IconDefinition[] = [
     NzMessageModule,
     NzModalModule,
     NzCollapseModule,
+    NzTabsModule,
+    NzPaginationModule,
+    NzTreeViewModule,
+    NzTableModule,
+    ScrollingModule,
   ],
 })
 export class NgZorroModule {}

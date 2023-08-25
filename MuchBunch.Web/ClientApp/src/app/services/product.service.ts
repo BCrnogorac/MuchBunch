@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ProductBM } from '../models/BM/productBM.model';
 import { ProductTypeBM } from '../models/BM/productTypeBM.model';
 import { ProductSubtypeBM } from '../models/BM/productSubtypeBM.model';
+import { InsertProductTypeBM } from '../models/BM/insertProductTypeBM.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,6 @@ export class ProductService {
   }
 
   addNewProduct(product: ProductBM): Observable<ProductBM> {
-    console.log(product);
     return this.http.post<ProductBM>(`${this.serviceBaseUrl}`, product);
   }
 
@@ -41,5 +41,23 @@ export class ProductService {
 
   getProductsByType(id: number): Observable<ProductBM[]> {
     return this.http.get<ProductBM[]>(`${this.serviceBaseUrl}/type/${id}`);
+  }
+
+  addNewType(type: InsertProductTypeBM): Observable<InsertProductTypeBM> {
+    return this.http.post<InsertProductTypeBM>(
+      `${this.serviceBaseUrl}Type`,
+      type
+    );
+  }
+
+  editType(type: ProductTypeBM): Observable<ProductTypeBM> {
+    return this.http.post<ProductTypeBM>(
+      `${this.serviceBaseUrl}Type/edit`,
+      type
+    );
+  }
+
+  removeType(typeId: number): Observable<void> {
+    return this.http.delete<void>(`${this.serviceBaseUrl}Type/${typeId}`);
   }
 }

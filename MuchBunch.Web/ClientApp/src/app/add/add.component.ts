@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd/modal';
 import { AddNewProductModalComponentComponent } from '../modals/add-new-product-modal-component/add-new-product-modal-component.component';
 

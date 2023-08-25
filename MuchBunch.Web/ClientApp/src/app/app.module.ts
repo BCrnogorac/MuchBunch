@@ -22,6 +22,7 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { InventoryComponent } from './account/inventory/inventory.component';
 import { AddComponent } from './add/add.component';
 import { AddNewProductModalComponentComponent } from './modals/add-new-product-modal-component/add-new-product-modal-component.component';
+import { CodebooksComponent } from './account/codebooks/codebooks.component';
 
 registerLocaleData(en);
 
@@ -39,6 +40,7 @@ registerLocaleData(en);
     InventoryComponent,
     AddComponent,
     AddNewProductModalComponentComponent,
+    CodebooksComponent,
   ],
   imports: [
     BrowserModule,

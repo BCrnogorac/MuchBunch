@@ -72,14 +72,12 @@ export class AddNewProductModalComponentComponent implements OnInit {
   }
 
   onSelectedType(type: ProductTypeBM) {
-    console.log(type);
     if (type != null) {
       this.formGroup.get('subtypes').setValue(null);
       this.productService
         .getSubtypesByParentId(type.id)
         .subscribe((response) => {
           this.subtypes = response;
-          console.log(this.subtypes);
         });
     }
   }

@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { UserModel } from 'src/app/models/user.model';
 import { filter } from 'rxjs';
 
 @Component({
@@ -134,6 +133,15 @@ export class HeaderComponent implements OnInit {
             this.profileRoute = false;
             break;
           case '/profile':
+            this.homeRoute = false;
+            this.browseRoute = false;
+            this.administrationRoute = false;
+            this.aboutRoute = false;
+            this.registerRoute = false;
+            this.loginRoute = false;
+            this.profileRoute = true;
+            break;
+          case '/codebooks':
             this.homeRoute = false;
             this.browseRoute = false;
             this.administrationRoute = false;
