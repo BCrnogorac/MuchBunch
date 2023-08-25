@@ -11,7 +11,7 @@ namespace MuchBunch.EF.Database
         public DbSet<ProductSubType> ProductSubTypes { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Bunch> Bunches { get; set; }
-        public DbSet<Theme> Theme { get; set; }
+        public DbSet<Theme> Themes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

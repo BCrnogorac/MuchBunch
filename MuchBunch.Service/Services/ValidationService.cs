@@ -38,9 +38,29 @@ namespace MuchBunch.Service.Services
             return await ValidateAsync(model, new InsertRoleBMValidator<RoleBM>(dbContext));
         }
 
+        public async Task<ValidationResult> ValidateInsertTheme(InsertThemeBM model)
+        {
+            return await ValidateAsync(model, new InsertThemeValidator<InsertThemeBM>(dbContext));
+        }
+
+        public async Task<ValidationResult> ValidateInsertBunch(InsertBunchBM model)
+        {
+            return await ValidateAsync(model, new InsertBunchValidator<InsertBunchBM>(dbContext));
+        }
+
         #endregion
 
         #region Edit
+        public async Task<ValidationResult> ValidateEditBunch(EditBunchBM model)
+        {
+            return await ValidateAsync(model, new EditBunchValidator(dbContext));
+        }
+
+        public async Task<ValidationResult> ValidateEditTheme(EditThemeBM model)
+        {
+            return await ValidateAsync(model, new EditThemeValidator(dbContext));
+        }
+
         public async Task<ValidationResult> ValidateEditRole(EditRoleBM model)
         {
             return await ValidateAsync(model, new EditRoleBMValidator(dbContext));

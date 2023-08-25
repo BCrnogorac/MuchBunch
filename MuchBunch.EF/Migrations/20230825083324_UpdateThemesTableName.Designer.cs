@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MuchBunch.EF.Database;
 
@@ -11,9 +12,11 @@ using MuchBunch.EF.Database;
 namespace MuchBunch.EF.Migrations
 {
     [DbContext(typeof(MBDBContext))]
-    partial class MBDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230825083324_UpdateThemesTableName")]
+    partial class UpdateThemesTableName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace MuchBunch.EF.Migrations
 
                     b.HasIndex("ProductsId");
 
-                    b.ToTable("BunchProduct", (string)null);
+                    b.ToTable("BunchProduct");
                 });
 
             modelBuilder.Entity("MuchBunch.EF.Database.Models.Bunch", b =>
@@ -68,7 +71,7 @@ namespace MuchBunch.EF.Migrations
 
                     b.HasIndex("ThemeId");
 
-                    b.ToTable("Bunches", (string)null);
+                    b.ToTable("Bunches");
                 });
 
             modelBuilder.Entity("MuchBunch.EF.Database.Models.Product", b =>
@@ -105,7 +108,7 @@ namespace MuchBunch.EF.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("MuchBunch.EF.Database.Models.ProductSubType", b =>
@@ -127,7 +130,7 @@ namespace MuchBunch.EF.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("ProductSubTypes", (string)null);
+                    b.ToTable("ProductSubTypes");
                 });
 
             modelBuilder.Entity("MuchBunch.EF.Database.Models.ProductType", b =>
@@ -144,7 +147,7 @@ namespace MuchBunch.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductTypes", (string)null);
+                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("MuchBunch.EF.Database.Models.Role", b =>
@@ -161,7 +164,7 @@ namespace MuchBunch.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("MuchBunch.EF.Database.Models.Theme", b =>
@@ -178,7 +181,7 @@ namespace MuchBunch.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Themes", (string)null);
+                    b.ToTable("Themes");
                 });
 
             modelBuilder.Entity("MuchBunch.EF.Database.Models.User", b =>
@@ -208,7 +211,7 @@ namespace MuchBunch.EF.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ProductProductSubType", b =>
@@ -223,7 +226,7 @@ namespace MuchBunch.EF.Migrations
 
                     b.HasIndex("SubTypesId");
 
-                    b.ToTable("ProductProductSubType", (string)null);
+                    b.ToTable("ProductProductSubType");
                 });
 
             modelBuilder.Entity("BunchProduct", b =>
