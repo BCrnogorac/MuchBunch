@@ -27,10 +27,10 @@ namespace MuchBunch.Service.Validations
                     return !exists;
                 }).WithMessage(ExistingUsername);
 
-            RuleFor(model => model.RoleId)
-                .Must(roleId =>
+            RuleFor(model => model.Role)
+                .Must(roleName =>
                 {
-                    var exists = dbContext.Roles.Find(roleId);
+                    var exists = dbContext.Roles.FirstOrDefault(role => role.Name == roleName);
                     return exists != null;
                 }).WithMessage(InvalidRole);
         }

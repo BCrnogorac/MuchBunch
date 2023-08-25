@@ -67,12 +67,14 @@ namespace MuchBunch.Service.Services
 
         public void Register(RegisterBM model)
         {
+            var role = dbContext.Roles.First(r => r.Name == model.Role);
+
             var user = new User()
             {
                 Name = model.Username,
                 Email = model.Email,
                 HashedPassword = HashPassword(model.Password),
-                RoleId = model.RoleId
+                RoleId = role.Id
             };
 
             dbContext.Users.Add(user);
