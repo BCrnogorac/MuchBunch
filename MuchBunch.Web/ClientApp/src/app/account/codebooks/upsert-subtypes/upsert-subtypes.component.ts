@@ -122,8 +122,6 @@ export class UpsertSubtypesComponent {
         subtypename,
         this.selectedType.id
       );
-      console.log(subtype);
-
       this.productService.addNewSubtype(subtype).subscribe(() => {
         this.removeField(this.listOfControl.find((e) => e.id === controlId));
         this.onSelectedType(this.selectedType);

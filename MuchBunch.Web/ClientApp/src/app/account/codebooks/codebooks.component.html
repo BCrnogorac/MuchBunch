@@ -15,5 +15,9 @@
     <nz-tab nzTitle="MuchBunch Themes">
       <app-upsert-themes></app-upsert-themes>
     </nz-tab>
+
+    <nz-tab nzTitle="User Roles" *ngIf="isAdmin">
+      <app-upsert-roles></app-upsert-roles>
+    </nz-tab>
   </nz-tabset>
 </div>

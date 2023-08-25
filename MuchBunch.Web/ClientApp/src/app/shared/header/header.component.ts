@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   isAuthed: boolean = false;
   companyRole: boolean = false;
   adminRole: boolean = false;
-  username: string;
+  username: string = '';
 
   homeRoute: boolean = true;
   browseRoute: boolean = false;
@@ -40,8 +40,10 @@ export class HeaderComponent implements OnInit {
     this.authService.user.subscribe((response) => {
       if (response == null) {
         this.authService.autoLogin();
+      } else {
+        this.username = response.name;
       }
-      this.username = response.name;
+
       this.isAuthed = this.authService.getUserProperty('role') != null;
       this.companyRole = this.authService.getUserProperty('role') == 'company';
       this.adminRole = this.authService.getUserProperty('role') == 'admin';

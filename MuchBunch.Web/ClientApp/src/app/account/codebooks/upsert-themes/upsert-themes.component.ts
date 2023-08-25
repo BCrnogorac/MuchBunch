@@ -54,7 +54,6 @@ export class UpsertThemesComponent {
   listOfControl: Array<{ id: number; controlInstance: string }> = [];
 
   addField(controlInstance?: string): void {
-    console.log('pocetak funkcije');
     const id =
       this.listOfControl.length > 0
         ? this.listOfControl[this.listOfControl.length - 1].id + 1
@@ -64,8 +63,6 @@ export class UpsertThemesComponent {
       id,
       controlInstance: `${controlInstance}`,
     };
-
-    console.log(control);
 
     let index = this.listOfControl.push(control);
     this.formGroup.addControl(
@@ -105,8 +102,6 @@ export class UpsertThemesComponent {
     let themename: string = this.formGroup.get(
       `${this.listOfControl.find((e) => e.id === controlId).controlInstance}`
     ).value;
-
-    console.log(this.isEditMode);
 
     if (this.isEditMode == false) {
       let theme: ThemeBM = new ThemeBM(themename);

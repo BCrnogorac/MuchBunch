@@ -1,0 +1,81 @@
+<div style="width: 1000px">
+  <nz-list nzBordered nzHeader="User Roles">
+    <cdk-virtual-scroll-viewport itemSize="73" class="demo-infinite-container">
+      <nz-list-item *ngFor="let role of roles">
+        {{ role.name }}
+        <button
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          (click)="editForm(role)"
+        >
+          <span
+            nz-icon
+            nzType="edit"
+            nzTheme="outline"
+            style="align-items: right"
+          ></span>
+        </button>
+      </nz-list-item>
+      <nz-list-item *ngFor="let control of listOfControl; let i = index">
+        <form
+          nz-form
+          [formGroup]="formGroup"
+          style="display: flex; width: 100%; margin-bottom: -20px"
+        >
+          <nz-form-item style="width: inherit">
+            <nz-form-control nzRequired>
+              <input
+                class="passenger-input"
+                nz-input
+                [formControlName]="control.controlInstance"
+                style="margin-right: 10px"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control>
+              <button
+                nz-button
+                nzType="primary"
+                nzShape="circle"
+                style="float: right; margin-right: 10px; margin-left: 10px"
+                (click)="submitForm(control.id)"
+              >
+                <span nz-icon nzType="check" nzTheme="outline"></span>
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control>
+              <button
+                nz-button
+                nzType="primary"
+                nzDanger="true"
+                nzShape="circle"
+              >
+                <span
+                  nz-icon
+                  nzType="minus"
+                  nzTheme="outline"
+                  style="align-items: right"
+                  (click)="deleteButton(control, $event)"
+                ></span>
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-list-item>
+
+      <br />
+      <br />
+      <br />
+      <span id="scrollIntoView"></span>
+    </cdk-virtual-scroll-viewport>
+    <nz-list-footer>
+      <button nz-button nzType="dashed" nzBlock (click)="addField()">
+        <span nz-icon nzType="plus" nzTheme="outline"></span> Add new User Role.
+      </button>
+    </nz-list-footer>
+  </nz-list>
+</div>

@@ -49,7 +49,6 @@ export class RegisterComponent {
 
     if (this.formGroup.valid) {
       this.authService.register(formModel).subscribe((token) => {
-        console.log(token);
         this.authService.storeTokenToLocalStorage(token.token);
         this.router.navigate(['/home']);
       });

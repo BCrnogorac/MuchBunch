@@ -7,6 +7,7 @@ import { TokenDto } from '../models/DTO/tokenDto.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { UserModel } from '../models/user.model';
+import { RoleDTO } from '../models/DTO/roleDto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,12 +27,10 @@ export class AuthService {
   }
 
   login(loginModel: LoginBM): Observable<TokenDto> {
-    console.log(loginModel);
     return this.http.post<TokenDto>(`${this.serviceBaseUrl}/login`, loginModel);
   }
 
   register(registerModel: RegisterBM): Observable<TokenDto> {
-    console.log(registerModel);
     return this.http.post<TokenDto>(
       `${this.serviceBaseUrl}/register`,
       registerModel
@@ -73,7 +72,6 @@ export class AuthService {
       decodedToken[`${this.RoleClaimName}`]
     );
     this.user.next(currentUser);
-    console.log(this.user.value);
     localStorage.setItem('tokenInfo', JSON.stringify(currentUser));
     console.log('Stored');
   }

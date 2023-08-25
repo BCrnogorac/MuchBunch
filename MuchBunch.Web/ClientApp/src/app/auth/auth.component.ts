@@ -37,7 +37,6 @@ export class AuthComponent implements OnInit {
     if (this.formGroup.valid) {
       this.btnLoading = true;
       this.authService.login(formModel).subscribe((token) => {
-        console.log(token);
         this.authService.storeTokenToLocalStorage(token.token);
 
         this.router.navigate(['/home']);

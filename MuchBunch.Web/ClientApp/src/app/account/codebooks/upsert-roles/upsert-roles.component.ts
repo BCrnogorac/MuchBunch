@@ -7,36 +7,32 @@ import {
 } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { InsertProductTypeBM } from 'src/app/models/BM/insertProductTypeBM.model';
-import { ProductSubtypeBM } from 'src/app/models/BM/productSubtypeBM.model';
-import { ProductTypeBM } from 'src/app/models/BM/productTypeBM.model';
-import { ProductService } from 'src/app/services/product.service';
+import { InsertRoleBM } from 'src/app/models/BM/insertRoleBM.model';
+import { RoleDTO } from 'src/app/models/DTO/roleDto.model';
+import { RolesService } from 'src/app/services/role.service';
 
 @Component({
-  selector: 'app-upsert-types',
-  templateUrl: './upsert-types.component.html',
-  styleUrls: ['./upsert-types.component.css'],
+  selector: 'app-upsert-roles',
+  templateUrl: './upsert-roles.component.html',
+  styleUrls: ['./upsert-roles.component.css'],
 })
-export class UpsertTypesComponent {
+export class UpsertRolesComponent {
   public formGroup: FormGroup;
 
-  public types: ProductTypeBM[];
-  public subtypes: ProductSubtypeBM[] = [];
-
-  public selectedType: ProductTypeBM;
+  public roles: RoleDTO[];
 
   public isEditMode: boolean = false;
-  public currentType: ProductTypeBM;
+  public currentRole: RoleDTO;
 
   constructor(
-    private productService: ProductService,
+    private roleService: RolesService,
     private fb: FormBuilder,
     private message: NzMessageService,
     private modalService: NzModalService
   ) {}
 
   ngOnInit(): void {
-    this.getProductTypes();
+    this.getRoles();
     this.initForm();
   }
 
@@ -46,22 +42,10 @@ export class UpsertTypesComponent {
     });
   }
 
-  getProductTypes() {
-    this.productService.getTypes().subscribe((response) => {
-      this.types = response;
-      this.selectedType = this.types[0];
-      this.onSelectedType(this.selectedType);
+  getRoles() {
+    this.roleService.getRoles().subscribe((response) => {
+      this.roles = response;
     });
-  }
-
-  onSelectedType(type: ProductTypeBM) {
-    if (type != null) {
-      this.productService
-        .getSubtypesByParentId(type.id)
-        .subscribe((response) => {
-          this.subtypes = response;
-        });
-    }
   }
 
   listOfControl: Array<{ id: number; controlInstance: string }> = [];
@@ -104,7 +88,7 @@ export class UpsertTypesComponent {
     if (this.isEditMode == true) {
       this.callConfirmModal(
         'Warning.',
-        `Are you sure you want to delete ${this.currentType.name}?`
+        `Are you sure you want to delete ${this.currentRole.name}?`
       );
     } else {
       this.removeField(i);
@@ -112,50 +96,47 @@ export class UpsertTypesComponent {
   }
 
   submitForm(controlId: number) {
-    let typename: string = this.formGroup.get(
+    let rolename: string = this.formGroup.get(
       `${this.listOfControl.find((e) => e.id === controlId).controlInstance}`
     ).value;
 
     if (this.isEditMode == false) {
-      let type: InsertProductTypeBM = new InsertProductTypeBM(typename);
+      let role: InsertRoleBM = new InsertRoleBM(rolename);
 
-      this.productService.addNewType(type).subscribe(() => {
+      this.roleService.addNewRole(role).subscribe(() => {
         this.removeField(this.listOfControl.find((e) => e.id === controlId));
-        this.getProductTypes();
-        this.message.success(`Type ${typename} was successfully added.`);
+        this.getRoles();
+        this.message.success(`Role ${rolename} was successfully added.`);
       });
     } else {
-      let editType: ProductTypeBM = new ProductTypeBM(
-        this.currentType.id,
-        typename
-      );
+      let editRole: RoleDTO = new RoleDTO(this.currentRole.id, rolename);
 
-      this.productService.editType(editType).subscribe(() => {
+      this.roleService.editRole(editRole).subscribe(() => {
         this.removeField(this.listOfControl.find((e) => e.id === controlId));
-        this.getProductTypes();
-        this.message.success(`Type ${typename} was successfully edited.`);
+        this.getRoles();
+        this.message.success(`Role ${rolename} was successfully edited.`);
         this.isEditMode = false;
-        this.currentType = null;
+        this.currentRole = null;
       });
     }
   }
 
-  editForm(type: ProductTypeBM) {
+  editForm(role: RoleDTO) {
     this.isEditMode = true;
-    this.currentType = type;
-    this.types.splice(
-      this.types.findIndex((e) => e.id === type.id),
+    this.currentRole = role;
+    this.roles.splice(
+      this.roles.findIndex((e) => e.id === role.id),
       1
     );
-    this.addField(type.name);
+    this.addField(role.name);
     this.formGroup
       .get(
         `${
-          this.listOfControl.find((e) => e.controlInstance === type.name)
+          this.listOfControl.find((e) => e.controlInstance === role.name)
             .controlInstance
         }`
       )
-      .setValue(`${type.name}`);
+      .setValue(`${role.name}`);
   }
 
   goToBottom() {
@@ -174,24 +155,24 @@ export class UpsertTypesComponent {
       nzModalType: 'confirm',
       nzContent: text,
       nzOnOk: () => {
-        this.productService.removeType(this.currentType.id).subscribe(() => {
+        this.roleService.removeRole(this.currentRole.id).subscribe(() => {
           modal.destroy();
           this.message.success(
-            `Type ${this.currentType.name} was successfully removed.`
+            `Role ${this.currentRole.name} was successfully removed.`
           );
           this.removeField(
             this.listOfControl.find(
-              (e) => e.controlInstance === this.currentType.name
+              (e) => e.controlInstance === this.currentRole.name
             )
           );
           this.isEditMode = false;
         });
       },
       nzOnCancel: () => {
-        this.getProductTypes();
+        this.getRoles();
         this.removeField(
           this.listOfControl.find(
-            (e) => e.controlInstance === this.currentType.name
+            (e) => e.controlInstance === this.currentRole.name
           )
         );
       },
