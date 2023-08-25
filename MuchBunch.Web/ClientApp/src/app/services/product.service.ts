@@ -6,6 +6,7 @@ import { ProductBM } from '../models/BM/productBM.model';
 import { ProductTypeBM } from '../models/BM/productTypeBM.model';
 import { ProductSubtypeBM } from '../models/BM/productSubtypeBM.model';
 import { InsertProductTypeBM } from '../models/BM/insertProductTypeBM.model';
+import { InsertProductSubtypeBM } from '../models/BM/insertProductSubtypeBM.model';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,15 @@ export class ProductService {
     );
   }
 
+  addNewSubtype(
+    subtype: InsertProductSubtypeBM
+  ): Observable<InsertProductSubtypeBM> {
+    return this.http.post<InsertProductSubtypeBM>(
+      `${this.serviceBaseUrl}SubType`,
+      subtype
+    );
+  }
+
   editType(type: ProductTypeBM): Observable<ProductTypeBM> {
     return this.http.post<ProductTypeBM>(
       `${this.serviceBaseUrl}Type/edit`,
@@ -57,7 +67,18 @@ export class ProductService {
     );
   }
 
+  editSubtype(subtype: ProductSubtypeBM): Observable<ProductSubtypeBM> {
+    return this.http.post<ProductSubtypeBM>(
+      `${this.serviceBaseUrl}SubType/edit`,
+      subtype
+    );
+  }
+
   removeType(typeId: number): Observable<void> {
     return this.http.delete<void>(`${this.serviceBaseUrl}Type/${typeId}`);
+  }
+
+  removeSubtype(subtypeId: number): Observable<void> {
+    return this.http.delete<void>(`${this.serviceBaseUrl}SubType/${subtypeId}`);
   }
 }

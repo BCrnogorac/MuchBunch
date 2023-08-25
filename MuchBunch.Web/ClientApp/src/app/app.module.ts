@@ -23,6 +23,8 @@ import { InventoryComponent } from './account/inventory/inventory.component';
 import { AddComponent } from './add/add.component';
 import { AddNewProductModalComponentComponent } from './modals/add-new-product-modal-component/add-new-product-modal-component.component';
 import { CodebooksComponent } from './account/codebooks/codebooks.component';
+import { UpsertTypesComponent } from './account/codebooks/upsert-types/upsert-types.component';
+import { UpsertSubtypesComponent } from './account/codebooks/upsert-subtypes/upsert-subtypes.component';
 
 registerLocaleData(en);
 
@@ -41,6 +43,8 @@ registerLocaleData(en);
     AddComponent,
     AddNewProductModalComponentComponent,
     CodebooksComponent,
+    UpsertTypesComponent,
+    UpsertSubtypesComponent,
   ],
   imports: [
     BrowserModule,
