@@ -61,7 +61,7 @@ namespace MuchBunch.Service.Services
 
             var newType = dbContext.ProductTypes.Find(model.Type.Id);
 
-            var company = dbContext.Users.Find(model.CompanyId);
+            var company = dbContext.Users.Find(model.Company.Id);
 
             // In case of Update
             product?.SubTypes?.Clear();

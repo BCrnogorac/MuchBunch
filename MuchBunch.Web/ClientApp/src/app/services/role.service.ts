@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RoleDTO } from '../models/DTO/roleDto.model';
 import { InsertRoleBM } from '../models/BM/insertRoleBM.model';
+import { UserDTO } from '../models/DTO/userDto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,10 @@ export class RolesService {
 
   getRoles(): Observable<RoleDTO[]> {
     return this.http.get<RoleDTO[]>(`${this.serviceBaseUrl}`);
+  }
+
+  getUsersByRole(roleId: number): Observable<UserDTO[]> {
+    return this.http.get<UserDTO[]>(`${this.serviceBaseUrl}/${roleId}/users`);
   }
 
   addNewRole(role: InsertRoleBM): Observable<InsertRoleBM> {

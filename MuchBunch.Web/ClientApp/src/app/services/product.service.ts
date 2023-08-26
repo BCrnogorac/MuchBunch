@@ -7,6 +7,8 @@ import { ProductTypeBM } from '../models/BM/productTypeBM.model';
 import { ProductSubtypeBM } from '../models/BM/productSubtypeBM.model';
 import { InsertProductTypeBM } from '../models/BM/insertProductTypeBM.model';
 import { InsertProductSubtypeBM } from '../models/BM/insertProductSubtypeBM.model';
+import { ProductDTO } from '../models/DTO/productDto.model';
+import { EditProductBM } from '../models/BM/editProductBM.model';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +44,10 @@ export class ProductService {
 
   getProductsByType(id: number): Observable<ProductBM[]> {
     return this.http.get<ProductBM[]>(`${this.serviceBaseUrl}/type/${id}`);
+  }
+
+  editProduct(product: ProductDTO): Observable<ProductDTO> {
+    return this.http.post<ProductDTO>(`${this.serviceBaseUrl}/edit`, product);
   }
 
   addNewType(type: InsertProductTypeBM): Observable<InsertProductTypeBM> {

@@ -9,6 +9,6 @@
         public int Quantity { get; set; }
         public UserDTO Company { get; set; }
         public ProductTypeDTO Type { get; set; }
-        public IEnumerable<ProductTypeDTO> SubTypes { get; set; }
+        public IEnumerable<ProductSubTypeDTO> SubTypes { get; set; }
     }
 }

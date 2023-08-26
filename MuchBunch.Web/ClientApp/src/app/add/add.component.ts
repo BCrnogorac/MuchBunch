@@ -17,11 +17,24 @@ export class AddComponent implements OnInit {
       nzTitle: 'Create new Product.',
       nzCentered: true,
       nzContent: AddNewProductModalComponentComponent,
+      nzData: {
+        isEditMode: false,
+      },
       nzWidth: 900,
       nzFooter: null,
-      nzBodyStyle: {
-        height: '420px',
+    });
+  }
+
+  showEditModal() {
+    const modal: NzModalRef = this.modalService.create({
+      nzTitle: 'Edit Product.',
+      nzCentered: true,
+      nzContent: AddNewProductModalComponentComponent,
+      nzData: {
+        isEditMode: true,
       },
+      nzWidth: 900,
+      nzFooter: null,
     });
   }
 }

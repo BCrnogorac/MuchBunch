@@ -8,13 +8,16 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import { UserModel } from '../models/user.model';
 import { RoleDTO } from '../models/DTO/roleDto.model';
+import { UserDTO } from '../models/DTO/userDto.model';
+import { ProductBM } from '../models/BM/productBM.model';
+import { ProductDTO } from '../models/DTO/productDto.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private serviceBaseUrl = '';
-  public user = new BehaviorSubject<UserModel | null>(null);
+  public user = new BehaviorSubject<UserDTO | null>(null);
   RoleClaimName =
     'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
 
@@ -47,7 +50,7 @@ export class AuthService {
   autoLogin() {
     if (this.user.value == null) {
       if (localStorage.getItem('tokenInfo') != null) {
-        let currentUser: UserModel = JSON.parse(
+        let currentUser: UserDTO = JSON.parse(
           localStorage.getItem('tokenInfo')
         );
         this.user.next(currentUser);
@@ -66,8 +69,9 @@ export class AuthService {
 
   storeTokenToLocalStorage(token: string): void {
     let decodedToken = this.getDecodedAccessToken(token);
-    let currentUser: UserModel = new UserModel(
+    let currentUser: UserDTO = new UserDTO(
       decodedToken['sub'],
+      decodedToken['name'],
       decodedToken['email'],
       decodedToken[`${this.RoleClaimName}`]
     );
@@ -81,5 +85,11 @@ export class AuthService {
       return this.user.value[`${property}`];
     }
     return null;
+  }
+
+  getUserProducts(companyId: number): Observable<ProductDTO[]> {
+    return this.http.get<ProductDTO[]>(
+      `${this.serviceBaseUrl}/${companyId}/products`
+    );
   }
 }

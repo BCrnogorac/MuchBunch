@@ -8,4 +8,5 @@ export class ProductBM {
   subtypes: ProductSubtypeBM[];
   price: number;
   quantity: number;
+  companyId?: number;
 }

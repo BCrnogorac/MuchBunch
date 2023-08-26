@@ -1,89 +1,139 @@
-<form nz-form [formGroup]="formGroup">
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Product Name</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
-      <input nz-input formControlName="name" />
-    </nz-form-control>
-  </nz-form-item>
+<div>
+  <form nz-form [formGroup]="formGroup">
+    <nz-form-item *ngIf="isAdmin">
+      <nz-form-label [nzSpan]="7">Company Name</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Select a company name"
+          formControlName="companyId"
+          [(ngModel)]="selectedCompany"
+          (ngModelChange)="onSelectedCompany(selectedCompany)"
+        >
+          <nz-option
+            *ngFor="let company of companies"
+            [nzLabel]="company.name"
+            [nzValue]="company.id"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Image URL</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
-      <input
-        nz-input
-        formControlName="imageUrl"
-        placeholder="www.imgur.com/imageURL"
-      />
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Type</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
-      <nz-select
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="Select a product type"
-        formControlName="type"
-        [(ngModel)]="selectedType"
-        (ngModelChange)="onSelectedType(selectedType)"
-      >
-        <nz-option
-          *ngFor="let type of types"
-          [nzLabel]="type.name"
-          [nzValue]="type"
-        ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Sub-type</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
-      <nz-select
-        nzShowSearch
-        [nzShowArrow]="true"
-        nzAllowClear
-        nzMode="multiple"
-        nzPlaceHolder="Select a product sub-type"
-        formControlName="subtypes"
-      >
-        <nz-option
-          *ngFor="let subtype of subtypes"
-          [nzLabel]="subtype.name"
-          [nzValue]="subtype"
-        ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-
-  <div style="display: flex; margin-left: 170px">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Price</nz-form-label>
-      <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">
-        <div style="display: flex">
-          <input nz-input formControlName="price" type="number" />
-          <span
-            nz-icon
-            nzType="euro"
-            nzTheme="outline"
-            style="font-size: 24px; margin-top: 4px; margin-left: 5px"
-          ></span>
-        </div>
+    <nz-form-item *ngIf="nzModalData.isEditMode">
+      <nz-form-label [nzSpan]="7">Product Name</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Select a product"
+          formControlName="product"
+          [(ngModel)]="selectedProduct"
+          (ngModelChange)="onSelectedProduct(selectedProduct)"
+        >
+          <nz-option
+            *ngFor="let product of products"
+            [nzLabel]="product.name"
+            [nzValue]="product"
+          ></nz-option>
+        </nz-select>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Quantity</nz-form-label>
-      <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">
-        <input nz-input formControlName="quantity" type="number" />
+      <nz-form-label [nzSpan]="7" nzRequired>Product Name</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
+        <input nz-input formControlName="name" />
       </nz-form-control>
     </nz-form-item>
-  </div>
-</form>
 
-<nz-divider></nz-divider>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Image URL</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
+        <input
+          nz-input
+          formControlName="imageUrl"
+          placeholder="www.imgur.com/imageURL"
+        />
+      </nz-form-control>
+    </nz-form-item>
 
-<div nz-modal-footer style="float: right; height: 300px">
-  <button nz-button nzType="primary" (click)="getFormValues()">Submit</button>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Type</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Select a product type"
+          formControlName="type"
+          [(ngModel)]="selectedType"
+          (ngModelChange)="onSelectedType(selectedType)"
+        >
+          <nz-option
+            *ngFor="let type of types"
+            [nzLabel]="type.name"
+            [nzValue]="type"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Sub-type</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
+        <nz-select
+          nzShowSearch
+          [nzShowArrow]="true"
+          [(ngModel)]="selectedSubtypes"
+          nzAllowClear
+          nzMode="multiple"
+          nzPlaceHolder="Select a product sub-type"
+          formControlName="subtypes"
+        >
+          <nz-option
+            *ngFor="let subtype of subtypes"
+            [nzLabel]="subtype.name"
+            [nzValue]="subtype"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div style="display: flex; margin-left: 170px">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Price</nz-form-label>
+        <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">
+          <div style="display: flex">
+            <input nz-input formControlName="price" type="number" />
+            <span
+              nz-icon
+              nzType="euro"
+              nzTheme="outline"
+              style="font-size: 24px; margin-top: 4px; margin-left: 5px"
+            ></span>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Quantity</nz-form-label>
+        <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">
+          <input nz-input formControlName="quantity" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <nz-divider></nz-divider>
+    <nz-form-item style="margin-bottom: 0px">
+      <div style="width: 100%">
+        <button
+          nz-button
+          nzType="primary"
+          (click)="getFormValues()"
+          style="float: right"
+        >
+          Submit
+        </button>
+      </div>
+    </nz-form-item>
+  </form>
 </div>

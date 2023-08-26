@@ -1,8 +1,7 @@
 import { ProductSubtypeBM } from '../BM/productSubtypeBM.model';
 import { ProductTypeBM } from '../BM/productTypeBM.model';
-import { UserDTO } from './userDto.model';
 
-export class ProductDTO {
+export class EditProductBM {
   id: number;
   name: string;
   imageUrl: string;
@@ -10,5 +9,5 @@ export class ProductDTO {
   subTypes: ProductSubtypeBM[];
   price: number;
   quantity: number;
-  company: UserDTO;
+  companyId: number;
 }

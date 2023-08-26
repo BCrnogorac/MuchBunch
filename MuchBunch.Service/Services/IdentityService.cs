@@ -26,7 +26,8 @@ namespace MuchBunch.Service.Services
             // Create claims
             var claims = new List<Claim>
             {
-                new (JwtRegisteredClaimNames.Sub, user.Name),
+                new (JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new (JwtRegisteredClaimNames.Name, user.Name),
                 new (JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.Name)
             };

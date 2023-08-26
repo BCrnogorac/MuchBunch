@@ -82,9 +82,7 @@
       <li routerLink="/inventory" nz-menu-item *ngIf="companyRole || adminRole">
         Inventory
       </li>
-      <li routerLink="/codebooks" nz-menu-item *ngIf="companyRole || adminRole">
-        Codebooks
-      </li>
+      <li routerLink="/codebooks" nz-menu-item *ngIf="adminRole">Codebooks</li>
       <li routerLink="/" nz-menu-item>My MuchBunches</li>
       <nz-divider></nz-divider>
       <li nz-menu-item (click)="logout()">Logout</li>

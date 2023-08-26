@@ -35,7 +35,7 @@ namespace MuchBunch.Service.Validations
                     return exists;
                 }).WithMessage(InvalidId);
 
-            RuleFor(x => x.CompanyId)
+            RuleFor(x => x.Company.Id)
                 .MustAsync(async (id, ct) =>
                 {
                     var exists = await dbContext.Users.AnyAsync(u => u.Id == id, ct);

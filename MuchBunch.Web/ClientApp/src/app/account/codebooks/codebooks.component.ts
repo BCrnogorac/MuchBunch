@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-codebooks',
@@ -7,13 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./codebooks.component.css'],
 })
 export class CodebooksComponent implements OnInit {
-  isAdmin: boolean = false;
+  constructor() {}
 
-  constructor(private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.authService.user.subscribe((response) => {
-      this.isAdmin = this.authService.getUserProperty('role') == 'admin';
-    });
-  }
+  ngOnInit(): void {}
 }
