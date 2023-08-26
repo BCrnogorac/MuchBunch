@@ -93,7 +93,10 @@ export class AddNewProductModalComponentComponent implements OnInit {
       imageUrl: ['', Validators.required],
       type: [null, Validators.required],
       subtypes: [null, Validators.required],
-      price: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      price: [
+        '',
+        [Validators.required, Validators.pattern('^(?:\\d*\\.)?\\d+$')],
+      ],
       quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     });
   }

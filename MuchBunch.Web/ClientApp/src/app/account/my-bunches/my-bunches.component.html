@@ -1,0 +1,48 @@
+<br /><br />
+<h1 style="margin-left: 50px">Your Bunches.</h1>
+<br />
+
+<div style="margin-left: 70px">
+  <form nz-form [formGroup]="formGroup" *ngIf="isAdmin">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Company Name</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Select a company name"
+          formControlName="companyId"
+          [(ngModel)]="selectedCompany"
+          (ngModelChange)="onSelectedCompany(selectedCompany)"
+        >
+          <nz-option
+            *ngFor="let company of companies"
+            [nzLabel]="company.name"
+            [nzValue]="company.id"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <div style="display: flex">
+    <h1 *ngIf="shouldDisplayEmptyText">
+      You currenty have no Bunches. Let's add some!
+    </h1>
+    <nz-card
+      *ngFor="let bunch of bunches"
+      nzHoverable
+      style="width: 160px; margin-right: 20px"
+      [nzCover]="coverTemplate"
+      [nzActions]="[actionEdit]"
+    >
+      <ng-template #coverTemplate>
+        <img alt="example" [src]="bunch.imageUrl" style="height: 170px" />
+      </ng-template>
+      <ng-template #actionEdit>
+        <span nz-icon nzType="edit" (click)="onEditBunch(bunch)"></span>
+      </ng-template>
+
+      <nz-card-meta [nzTitle]="bunch.name"></nz-card-meta>
+    </nz-card>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import { InventoryComponent } from './account/inventory/inventory.component';
 import { AddComponent } from './add/add.component';
 import { productTypeResolver } from './resolvers/product-type.resolver';
 import { CodebooksComponent } from './account/codebooks/codebooks.component';
+import { MyBunchesComponent } from './account/my-bunches/my-bunches.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
     },
   },
   { path: 'codebooks', component: CodebooksComponent },
+  { path: 'my-bunches', component: MyBunchesComponent },
 ];
 
 @NgModule({

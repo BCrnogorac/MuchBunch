@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd/modal';
 import { AddNewProductModalComponentComponent } from '../modals/add-new-product-modal-component/add-new-product-modal-component.component';
+import { UpsertBunchModalComponent } from '../modals/upsert-bunch-modal/upsert-bunch-modal.component';
 
 @Component({
   selector: 'app-add',
@@ -26,11 +27,25 @@ export class AddComponent implements OnInit {
     });
   }
 
-  showEditModal() {
+  showEditProductModal() {
     const modal: NzModalRef = this.modalService.create({
       nzTitle: 'Edit Product.',
       nzCentered: true,
       nzContent: AddNewProductModalComponentComponent,
+      nzData: {
+        isEditMode: true,
+        product: null,
+      },
+      nzWidth: 900,
+      nzFooter: null,
+    });
+  }
+
+  showAddBunchModal() {
+    const modal: NzModalRef = this.modalService.create({
+      nzTitle: 'Add new MuchBunch.',
+      nzCentered: true,
+      nzContent: UpsertBunchModalComponent,
       nzData: {
         isEditMode: true,
         product: null,

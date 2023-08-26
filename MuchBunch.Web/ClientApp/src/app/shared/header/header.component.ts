@@ -153,6 +153,24 @@ export class HeaderComponent implements OnInit {
             this.loginRoute = false;
             this.profileRoute = true;
             break;
+          case '/my-bunches':
+            this.homeRoute = false;
+            this.browseRoute = false;
+            this.administrationRoute = false;
+            this.aboutRoute = false;
+            this.registerRoute = false;
+            this.loginRoute = false;
+            this.profileRoute = true;
+            break;
+          case '/inventory':
+            this.homeRoute = false;
+            this.browseRoute = false;
+            this.administrationRoute = false;
+            this.aboutRoute = false;
+            this.registerRoute = false;
+            this.loginRoute = false;
+            this.profileRoute = true;
+            break;
         }
       });
   }

@@ -23,6 +23,12 @@ namespace MuchBunch.Web.Controllers
             return Ok(bunchService.GetBunches());
         }
 
+        [HttpGet("user/{id}")]
+        public IActionResult GetBunchesByUserId(int id)
+        {
+            return Ok(bunchService.GetBunchesByUserId(id));
+        }
+
         [HttpPost]
         public async Task<IActionResult> InsertBunch([FromBody] InsertBunchBM model)
         {

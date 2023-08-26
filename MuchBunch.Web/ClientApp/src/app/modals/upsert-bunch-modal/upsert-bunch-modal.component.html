@@ -1,0 +1,126 @@
+<div>
+  <form nz-form [formGroup]="formGroup">
+    <nz-form-item *ngIf="!isCompany">
+      <nz-form-label [nzSpan]="7">Company</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Select a company"
+          formControlName="companyId"
+          [(ngModel)]="selectedCompanyId"
+          (ngModelChange)="onSelectedCompany(selectedCompanyId)"
+        >
+          <nz-option
+            *ngFor="let company of companies"
+            [nzLabel]="company.name"
+            [nzValue]="company.id"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Bunch Name</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
+        <input nz-input formControlName="name" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Image URL</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
+        <input
+          nz-input
+          formControlName="imageUrl"
+          placeholder="www.imgur.com/imageURL"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <label
+      nz-checkbox
+      formControlName="themeCheckbox"
+      [(ngModel)]="isThemedCheckbox"
+      (ngModelChange)="onSelectedThemeCheckbox(isThemedCheckbox)"
+      style="margin-left: 250px; margin-bottom: 20px"
+      >Is this Bunch themed?</label
+    >
+
+    <nz-form-item *ngIf="shouldShowThemeSelect">
+      <nz-form-label [nzSpan]="7">Theme</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
+        <nz-select
+          nzShowSearch
+          [nzShowArrow]="true"
+          nzAllowClear
+          nzPlaceHolder="Select a theme"
+          formControlName="themeId"
+        >
+          <nz-option
+            *ngFor="let theme of themes"
+            [nzLabel]="theme.name"
+            [nzValue]="theme.id"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Products</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
+        <nz-select
+          nzShowSearch
+          [nzShowArrow]="true"
+          nzAllowClear
+          nzMode="multiple"
+          nzPlaceHolder="Select a product"
+          formControlName="productIds"
+        >
+          <nz-option
+            *ngFor="let product of products"
+            [nzLabel]="product.name"
+            [nzValue]="product.id"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div style="display: flex; margin-left: 170px">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Price</nz-form-label>
+        <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">
+          <div style="display: flex">
+            <input nz-input formControlName="price" type="number" />
+            <span
+              nz-icon
+              nzType="euro"
+              nzTheme="outline"
+              style="font-size: 24px; margin-top: 4px; margin-left: 5px"
+            ></span>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Quantity</nz-form-label>
+        <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">
+          <input nz-input formControlName="quantity" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <nz-divider></nz-divider>
+    <nz-form-item style="margin-bottom: 0px">
+      <div style="width: 100%">
+        <button
+          nz-button
+          nzType="primary"
+          (click)="getFormValues()"
+          style="float: right"
+        >
+          Submit
+        </button>
+      </div>
+    </nz-form-item>
+  </form>
+</div>

@@ -1,12 +1,12 @@
-import { UserModel } from '../user.model';
 import { ProductDTO } from './productDto.model';
-import { ThemeDto } from './themeDto.model';
 
 export class BunchDTO {
   id: number;
   name: string;
   price: number;
-  theme: ThemeDto;
-  company: UserModel;
+  imageUrl: string;
+  themeId?: number;
+  companyId: number;
   products: ProductDTO[];
+  themeCheckbox?: any;
 }

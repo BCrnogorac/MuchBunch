@@ -25,6 +25,23 @@ namespace MuchBunch.Service.Services
             return mapper.Map<IEnumerable<BunchDTO>>(bunches);
         }
 
+        public IEnumerable<BunchDTO> GetBunchesByUserId(int id)
+        {
+            var user = dbContext.Users
+                .Include(u => u.Bunches)
+                    .ThenInclude(b => b.Products)
+                        .ThenInclude(p => p.Type)
+                .Include(u => u.Bunches)
+                    .ThenInclude(b => b.Products)
+                        .ThenInclude(p => p.SubTypes)
+                .Include(u => u.Bunches)
+                    .ThenInclude(b => b.Theme)
+                .FirstOrDefault(u => u.Id == id);
+
+            return mapper.Map<IEnumerable<BunchDTO>>(user?.Bunches);
+        }
+
+
         public void InsertBunch(InsertBunchBM model)
         {
             var data = mapper.Map<Bunch>(model);
