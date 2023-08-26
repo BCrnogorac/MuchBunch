@@ -27,6 +27,7 @@ import { UpsertTypesComponent } from './account/codebooks/upsert-types/upsert-ty
 import { UpsertSubtypesComponent } from './account/codebooks/upsert-subtypes/upsert-subtypes.component';
 import { UpsertThemesComponent } from './account/codebooks/upsert-themes/upsert-themes.component';
 import { UpsertRolesComponent } from './account/codebooks/upsert-roles/upsert-roles.component';
+import { UpsertBunchModalComponent } from './modals/upsert-bunch-modal/upsert-bunch-modal.component';
 
 registerLocaleData(en);
 
@@ -49,6 +50,7 @@ registerLocaleData(en);
     UpsertSubtypesComponent,
     UpsertThemesComponent,
     UpsertRolesComponent,
+    UpsertBunchModalComponent,
   ],
   imports: [
     BrowserModule,

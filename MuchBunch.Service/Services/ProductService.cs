@@ -22,9 +22,34 @@ namespace MuchBunch.Service.Services
 
         public IEnumerable<ProductDTO> GetProductsByTypeId(int id)
         {
-            var products = dbContext.Products.Where(p => p.TypeId == id).Include(p => p.SubTypes);
+            var products = dbContext.Products.Where(p => p.TypeId == id).Include(p => p.SubTypes).Include(p => p.Type).Include(p => p.Company);
 
             return mapper.Map<IEnumerable<ProductDTO>>(products);
+        }
+
+        public IEnumerable<TypeProductsDTO> GetProductsByTypeByCompanyId(int id)
+        {
+            var user = dbContext.Users
+                .Include(u => u.Products)
+                    .ThenInclude(p => p.Type)
+                .Include(u => u.Products)
+                    .ThenInclude(p => p.SubTypes)
+                .FirstOrDefault(u => u.Id == id);
+
+            if(user == null)
+            {
+                return Enumerable.Empty<TypeProductsDTO>();
+            }
+
+            var products = user.Products?.GroupBy(p => p.Type);
+            var typeProducts = products.Select(p => new TypeProductsDTO
+            {
+                Type = mapper.Map<ProductTypeDTO>(p.Key),
+                Products = mapper.Map<IEnumerable<ProductDTO>>(p.ToList())
+            });
+
+
+            return typeProducts;
         }
 
         public void InsertProduct(InsertProductBM model)

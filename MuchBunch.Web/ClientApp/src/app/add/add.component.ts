@@ -19,6 +19,7 @@ export class AddComponent implements OnInit {
       nzContent: AddNewProductModalComponentComponent,
       nzData: {
         isEditMode: false,
+        product: null,
       },
       nzWidth: 900,
       nzFooter: null,
@@ -32,6 +33,7 @@ export class AddComponent implements OnInit {
       nzContent: AddNewProductModalComponentComponent,
       nzData: {
         isEditMode: true,
+        product: null,
       },
       nzWidth: 900,
       nzFooter: null,

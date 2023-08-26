@@ -15,6 +15,7 @@ namespace MuchBunch.Service
             CreateMap<ProductSubType, ProductSubTypeDTO>();
             CreateMap<Product, ProductTypeBM>();
             CreateMap<Product, ProductDTO>();
+            CreateMap<Product, TypeProductsDTO>();
             CreateMap<Role, RoleDTO>();
             CreateMap<User, UserDTO>()
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name));

@@ -29,6 +29,12 @@ namespace MuchBunch.Web.Controllers
             return Ok(productService.GetProductsByTypeId(id));
         }
 
+        [HttpGet("company/{id}/type")]
+        public IActionResult GetProductsByTypeByCompanyId([FromRoute] int id)
+        {
+            return Ok(productService.GetProductsByTypeByCompanyId(id));
+        }
+
         [HttpPost]
         public async Task<IActionResult> InsertProduct([FromBody] InsertProductBM model)
         {

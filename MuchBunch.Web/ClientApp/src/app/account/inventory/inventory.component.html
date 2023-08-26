@@ -23,7 +23,7 @@
             <img alt="example" [src]="product.imageUrl" style="height: 170px" />
           </ng-template>
           <ng-template #actionEdit>
-            <span nz-icon nzType="edit"></span>
+            <span nz-icon nzType="edit" (click)="onEditProduct(product)"></span>
           </ng-template>
 
           <nz-card-meta [nzTitle]="product.name"></nz-card-meta>

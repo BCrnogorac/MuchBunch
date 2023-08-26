@@ -1,6 +1,6 @@
 <div>
   <form nz-form [formGroup]="formGroup">
-    <nz-form-item *ngIf="isAdmin">
+    <nz-form-item *ngIf="isAdmin && !nzModalData.product">
       <nz-form-label [nzSpan]="7">Company Name</nz-form-label>
       <nz-form-control [nzSpan]="12">
         <nz-select
@@ -20,8 +20,8 @@
       </nz-form-control>
     </nz-form-item>
 
-    <nz-form-item *ngIf="nzModalData.isEditMode">
-      <nz-form-label [nzSpan]="7">Product Name</nz-form-label>
+    <nz-form-item *ngIf="nzModalData.isEditMode && !nzModalData.product">
+      <nz-form-label [nzSpan]="7">Product</nz-form-label>
       <nz-form-control [nzSpan]="12">
         <nz-select
           nzShowSearch

@@ -9,6 +9,7 @@ import { InsertProductTypeBM } from '../models/BM/insertProductTypeBM.model';
 import { InsertProductSubtypeBM } from '../models/BM/insertProductSubtypeBM.model';
 import { ProductDTO } from '../models/DTO/productDto.model';
 import { EditProductBM } from '../models/BM/editProductBM.model';
+import { TypeProductDto } from '../models/DTO/typeProductsDto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +25,8 @@ export class ProductService {
     this.serviceBaseUrl = `${this.baseUrl}/api/product`;
   }
 
-  addNewProduct(product: ProductBM): Observable<ProductBM> {
-    return this.http.post<ProductBM>(`${this.serviceBaseUrl}`, product);
+  addNewProduct(product: ProductDTO): Observable<ProductDTO> {
+    return this.http.post<ProductDTO>(`${this.serviceBaseUrl}`, product);
   }
 
   getTypes(): Observable<ProductTypeBM[]> {
@@ -42,8 +43,14 @@ export class ProductService {
     return this.http.get<ProductBM[]>(`${this.serviceBaseUrl}`);
   }
 
-  getProductsByType(id: number): Observable<ProductBM[]> {
-    return this.http.get<ProductBM[]>(`${this.serviceBaseUrl}/type/${id}`);
+  getProductsByType(id: number): Observable<ProductDTO[]> {
+    return this.http.get<ProductDTO[]>(`${this.serviceBaseUrl}/type/${id}`);
+  }
+
+  getProductsByTypeByCompany(companyId: number): Observable<TypeProductDto[]> {
+    return this.http.get<TypeProductDto[]>(
+      `${this.serviceBaseUrl}/company/${companyId}/type`
+    );
   }
 
   editProduct(product: ProductDTO): Observable<ProductDTO> {

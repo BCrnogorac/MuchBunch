@@ -5,10 +5,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
-import { EditProductBM } from 'src/app/models/BM/editProductBM.model';
 import { ProductBM } from 'src/app/models/BM/productBM.model';
 import { ProductSubtypeBM } from 'src/app/models/BM/productSubtypeBM.model';
 import { ProductTypeBM } from 'src/app/models/BM/productTypeBM.model';
@@ -20,6 +18,7 @@ import { RolesService } from 'src/app/services/role.service';
 
 interface IModalData {
   isEditMode: boolean;
+  product?: ProductDTO;
 }
 
 @Component({
@@ -61,14 +60,22 @@ export class AddNewProductModalComponentComponent implements OnInit {
       this.isCompany = this.authService.getUserProperty('role') == 'company';
     });
 
-    if (this.isAdmin) {
+    if (this.isAdmin && !this.nzModalData.product) {
       //company role id is 2
       this.roleService.getUsersByRole(2).subscribe((response) => {
         this.companies = response;
       });
     }
+
     this.productService.getTypes().subscribe((response) => {
       this.types = response;
+
+      if (
+        this.nzModalData.product != null &&
+        this.nzModalData.isEditMode == true
+      ) {
+        this.initEditFormThroughInventory(this.nzModalData.product);
+      }
     });
 
     if (this.nzModalData.isEditMode == true) {
@@ -80,9 +87,9 @@ export class AddNewProductModalComponentComponent implements OnInit {
 
   initForm(): void {
     this.formGroup = this.fb.group({
-      name: ['', Validators.required],
       product: [''],
-      companyId: [''],
+      company: [''],
+      name: ['', Validators.required],
       imageUrl: ['', Validators.required],
       type: [null, Validators.required],
       subtypes: [null, Validators.required],
@@ -99,9 +106,30 @@ export class AddNewProductModalComponentComponent implements OnInit {
     );
 
     this.formGroup = this.fb.group({
-      name: [this.selectedProduct.name, Validators.required],
       product: [this.selectedProduct],
       company: [product.company],
+      name: [this.selectedProduct.name, Validators.required],
+      imageUrl: [product.imageUrl, Validators.required],
+      type: [this.selectedType, Validators.required],
+      subtypes: [product.subTypes, Validators.required],
+      price: [
+        product.price,
+        [Validators.required, Validators.pattern('^[0-9]*$')],
+      ],
+      quantity: [
+        product.quantity,
+        [Validators.required, Validators.pattern('^[0-9]*$')],
+      ],
+    });
+  }
+
+  initEditFormThroughInventory(product: ProductDTO): void {
+    this.selectedType = this.types.find((e) => e.id === product.type.id);
+
+    this.formGroup = this.fb.group({
+      product: [null],
+      company: [product.company],
+      name: [product.name, Validators.required],
       imageUrl: [product.imageUrl, Validators.required],
       type: [this.selectedType, Validators.required],
       subtypes: [product.subTypes, Validators.required],
@@ -140,11 +168,12 @@ export class AddNewProductModalComponentComponent implements OnInit {
 
   insertProduct() {
     if (this.formGroup.valid) {
-      let formModel: ProductBM = this.formGroup.getRawValue();
+      let formModel: ProductDTO = this.formGroup.getRawValue();
       let productName = formModel.name;
 
       if (this.isCompany) {
-        formModel.companyId = this.authService.user.value.id;
+        formModel.company = this.authService.user.value;
+        console.log(formModel);
       }
 
       this.productService.addNewProduct(formModel).subscribe(() => {
@@ -202,12 +231,20 @@ export class AddNewProductModalComponentComponent implements OnInit {
         .getSubtypesByParentId(type.id)
         .subscribe((response) => {
           this.subtypes = response;
-          var productSubtypesIds: number[] = this.selectedProduct.subTypes.map(
-            (st) => st.id
-          );
+          console.log('this.subtypes: ', this.subtypes);
+
+          if (this.nzModalData.product != null) {
+            var productSubtypesIds: number[] =
+              this.nzModalData.product?.subTypes.map((st) => st.id);
+          } else {
+            var productSubtypesIds: number[] =
+              this.selectedProduct?.subTypes.map((st) => st.id);
+          }
+
           this.selectedSubtypes = this.subtypes.filter((st) =>
-            productSubtypesIds.find((e) => e === st.id)
+            productSubtypesIds?.find((e) => e === st.id)
           );
+          console.log('this.selectedSubtypes: ', this.selectedSubtypes);
         });
     }
   }
