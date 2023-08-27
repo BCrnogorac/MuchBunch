@@ -78,7 +78,7 @@ export class AddNewProductModalComponentComponent implements OnInit {
       }
     });
 
-    if (this.nzModalData.isEditMode == true) {
+    if (this.nzModalData.isEditMode == true && !this.isAdmin) {
       this.getProductDetails();
     }
 
@@ -87,8 +87,8 @@ export class AddNewProductModalComponentComponent implements OnInit {
 
   initForm(): void {
     this.formGroup = this.fb.group({
-      product: [''],
-      company: [''],
+      product: [null],
+      companyId: [null],
       name: ['', Validators.required],
       imageUrl: ['', Validators.required],
       type: [null, Validators.required],
@@ -99,6 +99,8 @@ export class AddNewProductModalComponentComponent implements OnInit {
       ],
       quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     });
+
+    console.log('kraj inita');
   }
 
   initEditForm(product: ProductDTO): void {
@@ -176,7 +178,6 @@ export class AddNewProductModalComponentComponent implements OnInit {
 
       if (this.isCompany) {
         formModel.company = this.authService.user.value;
-        console.log(formModel);
       }
 
       this.productService.addNewProduct(formModel).subscribe(() => {
@@ -234,7 +235,6 @@ export class AddNewProductModalComponentComponent implements OnInit {
         .getSubtypesByParentId(type.id)
         .subscribe((response) => {
           this.subtypes = response;
-          console.log('this.subtypes: ', this.subtypes);
 
           if (this.nzModalData.product != null) {
             var productSubtypesIds: number[] =
@@ -247,7 +247,6 @@ export class AddNewProductModalComponentComponent implements OnInit {
           this.selectedSubtypes = this.subtypes.filter((st) =>
             productSubtypesIds?.find((e) => e === st.id)
           );
-          console.log('this.selectedSubtypes: ', this.selectedSubtypes);
         });
     }
   }

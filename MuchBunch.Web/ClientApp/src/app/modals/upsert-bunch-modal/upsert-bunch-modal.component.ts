@@ -3,21 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { EditBunchBM } from 'src/app/models/BM/editBunch.model';
-import { ProductSubtypeBM } from 'src/app/models/BM/productSubtypeBM.model';
-import { ProductTypeBM } from 'src/app/models/BM/productTypeBM.model';
 import { BunchDTO } from 'src/app/models/DTO/bunchDto.model';
 import { ProductDTO } from 'src/app/models/DTO/productDto.model';
 import { ThemeDto } from 'src/app/models/DTO/themeDto.model';
 import { UserDTO } from 'src/app/models/DTO/userDto.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { BunchService } from 'src/app/services/bunch.service';
-import { ProductService } from 'src/app/services/product.service';
 import { RolesService } from 'src/app/services/role.service';
 import { ThemesService } from 'src/app/services/themes.service';
 
 interface IModalData {
   isEditMode: boolean;
-  product?: ProductDTO;
+  bunch?: EditBunchBM;
+  companyId?: number;
 }
 
 @Component({
@@ -47,7 +45,6 @@ export class UpsertBunchModalComponent {
 
   constructor(
     private fb: FormBuilder,
-    private productService: ProductService,
     private modalRef: NzModalRef,
     private message: NzMessageService,
     private authService: AuthService,
@@ -79,13 +76,28 @@ export class UpsertBunchModalComponent {
         .subscribe((response) => {
           this.products = response;
         });
+    } else {
+      if (this.nzModalData.companyId != null) {
+        this.authService
+          .getUserProducts(this.nzModalData.companyId)
+          .subscribe((response) => {
+            this.products = response;
+
+            if (
+              this.nzModalData.bunch != null &&
+              this.nzModalData.isEditMode == true
+            ) {
+              this.initEditFormThroughInventory(this.nzModalData.bunch);
+            }
+          });
+      }
     }
+
+    this.initForm();
 
     if (this.nzModalData.isEditMode == true) {
       this.getUserBunches();
     }
-
-    this.initForm();
   }
 
   initForm(): void {
@@ -109,8 +121,6 @@ export class UpsertBunchModalComponent {
       this.isThemedCheckbox = true;
     }
 
-    console.log(this.products);
-
     this.selectedProducts = this.products.filter((p) =>
       bunch.products.find((e) => e.id === p.id)
     );
@@ -118,6 +128,32 @@ export class UpsertBunchModalComponent {
     this.formGroup = this.fb.group({
       companyId: [bunch.company.id],
       bunch: [bunch],
+      name: [bunch.name, Validators.required],
+      themeCheckbox: [],
+      themeId: [bunch.theme.id],
+      imageUrl: [bunch.imageUrl, Validators.required],
+      productIds: [this.selectedProducts.map((e) => e.id), Validators.required],
+      price: [
+        bunch.price,
+        [Validators.required, Validators.pattern('^(?:\\d*\\.)?\\d+$')],
+      ],
+    });
+  }
+
+  initEditFormThroughInventory(bunch: EditBunchBM): void {
+    if (bunch.theme.id != 0) {
+      this.isThemedCheckbox = true;
+    }
+
+    this.selectedProducts = this.products.filter((p) =>
+      bunch.products.find((e) => e.id === p.id)
+    );
+
+    console.log(bunch);
+
+    this.formGroup = this.fb.group({
+      companyId: [bunch.company.id],
+      bunch: [null],
       name: [bunch.name, Validators.required],
       themeCheckbox: [],
       themeId: [bunch.theme.id],
@@ -199,8 +235,6 @@ export class UpsertBunchModalComponent {
       if (this.isThemedCheckbox === false) {
         formModel.themeId = 0;
       }
-
-      console.log(formModel);
 
       if (this.isCompany) {
         formModel.companyId = this.authService.user.value.id;

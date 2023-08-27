@@ -48,7 +48,8 @@ export class AddComponent implements OnInit {
       nzContent: UpsertBunchModalComponent,
       nzData: {
         isEditMode: false,
-        product: null,
+        bunch: null,
+        companyId: null,
       },
       nzWidth: 900,
       nzFooter: null,
@@ -62,7 +63,8 @@ export class AddComponent implements OnInit {
       nzContent: UpsertBunchModalComponent,
       nzData: {
         isEditMode: true,
-        product: null,
+        bunch: null,
+        companyId: null,
       },
       nzWidth: 900,
       nzFooter: null,

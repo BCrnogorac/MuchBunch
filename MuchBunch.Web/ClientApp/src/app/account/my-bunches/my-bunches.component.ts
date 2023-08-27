@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { UpsertBunchModalComponent } from 'src/app/modals/upsert-bunch-modal/upsert-bunch-modal.component';
 import { BunchDTO } from 'src/app/models/DTO/bunchDto.model';
 import { UserDTO } from 'src/app/models/DTO/userDto.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -28,7 +30,8 @@ export class MyBunchesComponent implements OnInit {
     private bunchService: BunchService,
     private authService: AuthService,
     private fb: FormBuilder,
-    private roleService: RolesService
+    private roleService: RolesService,
+    private modalService: NzModalService
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +56,6 @@ export class MyBunchesComponent implements OnInit {
     } else {
       this.roleService.getUsersByRole(2).subscribe((response) => {
         this.companies = response;
-        console.log(response);
       });
     }
 
@@ -66,7 +68,21 @@ export class MyBunchesComponent implements OnInit {
     });
   }
 
-  onEditBunch(bunch: BunchDTO) {}
+  onEditBunch(bunch: BunchDTO) {
+    console.log(this.selectedCompany);
+    const modal: NzModalRef = this.modalService.create({
+      nzTitle: 'Edit Bunch.',
+      nzCentered: true,
+      nzContent: UpsertBunchModalComponent,
+      nzData: {
+        isEditMode: true,
+        bunch: bunch,
+        companyId: this.selectedCompany,
+      },
+      nzWidth: 900,
+      nzFooter: null,
+    });
+  }
 
   onSelectedCompany(selectedCompanyId: number) {
     if (selectedCompanyId) {
