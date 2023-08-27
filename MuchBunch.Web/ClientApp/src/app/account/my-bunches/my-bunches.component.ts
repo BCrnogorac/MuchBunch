@@ -45,7 +45,6 @@ export class MyBunchesComponent implements OnInit {
         .getBunchesByCompanyId(this.authService.user.value.id)
         .subscribe((response) => {
           this.bunches = response;
-          console.log(response);
 
           if (response.length == 0) {
             this.shouldDisplayEmptyText = true;
@@ -69,7 +68,6 @@ export class MyBunchesComponent implements OnInit {
   }
 
   onEditBunch(bunch: BunchDTO) {
-    console.log(this.selectedCompany);
     const modal: NzModalRef = this.modalService.create({
       nzTitle: 'Edit Bunch.',
       nzCentered: true,
@@ -91,14 +89,12 @@ export class MyBunchesComponent implements OnInit {
         .subscribe((response) => {
           this.shouldDisplayEmptyText = false;
           this.bunches = response;
-          console.log(response.length);
 
           if (response.length == 0) {
             this.shouldDisplayEmptyText = true;
           } else {
             this.shouldDisplayEmptyText = false;
           }
-          console.log(this.shouldDisplayEmptyText);
         });
     }
   }

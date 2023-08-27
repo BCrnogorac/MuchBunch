@@ -41,7 +41,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
       this.productService
         .getProductsByTypeByCompany(this.authService.user.value.id)
         .subscribe((response) => {
-          console.log(response);
           this.productsByCompany = response;
         });
     }
@@ -75,7 +74,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
   }
 
   onEditProduct(product: ProductDTO) {
-    console.log(product);
     const modal: NzModalRef = this.modalService.create({
       nzTitle: 'Edit Product.',
       nzCentered: true,

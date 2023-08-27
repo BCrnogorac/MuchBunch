@@ -149,8 +149,6 @@ export class UpsertBunchModalComponent {
       bunch.products.find((e) => e.id === p.id)
     );
 
-    console.log(bunch);
-
     this.formGroup = this.fb.group({
       companyId: [bunch.company.id],
       bunch: [null],

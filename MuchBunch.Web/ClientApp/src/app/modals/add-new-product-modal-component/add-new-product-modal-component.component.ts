@@ -99,8 +99,6 @@ export class AddNewProductModalComponentComponent implements OnInit {
       ],
       quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     });
-
-    console.log('kraj inita');
   }
 
   initEditForm(product: ProductDTO): void {
