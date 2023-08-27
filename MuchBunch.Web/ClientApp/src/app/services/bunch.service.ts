@@ -27,4 +27,8 @@ export class BunchService {
       `${this.serviceBaseUrl}/user/${companyId}`
     );
   }
+
+  editBunch(bunch: BunchDTO): Observable<BunchDTO> {
+    return this.http.post<BunchDTO>(`${this.serviceBaseUrl}/edit`, bunch);
+  }
 }

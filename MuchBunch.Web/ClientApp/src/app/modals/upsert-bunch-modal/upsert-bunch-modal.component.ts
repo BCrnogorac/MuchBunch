@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import { EditBunchBM } from 'src/app/models/BM/editBunch.model';
 import { ProductSubtypeBM } from 'src/app/models/BM/productSubtypeBM.model';
 import { ProductTypeBM } from 'src/app/models/BM/productTypeBM.model';
 import { BunchDTO } from 'src/app/models/DTO/bunchDto.model';
@@ -32,10 +33,13 @@ export class UpsertBunchModalComponent {
   public isCompany: boolean = false;
 
   public selectedCompanyId: any;
+  public selectedBunch: any;
+  public selectedProducts: any;
 
   public companies: UserDTO[];
   public products: ProductDTO[];
   public themes: ThemeDto[];
+  public bunches: BunchDTO[];
 
   public shouldShowThemeSelect: boolean = true;
 
@@ -63,15 +67,22 @@ export class UpsertBunchModalComponent {
       this.roleService.getUsersByRole(2).subscribe((response) => {
         this.companies = response;
       });
+    }
+    this.themeService.getThemes().subscribe((response) => {
+      this.themes = response;
+      this.themes.splice(0, 1);
+    });
 
-      this.themeService.getThemes().subscribe((response) => {
-        this.themes = response;
-        this.themes.splice(0, 1);
-      });
+    if (this.isCompany) {
+      this.authService
+        .getUserProducts(this.authService.user.value.id)
+        .subscribe((response) => {
+          this.products = response;
+        });
+    }
 
-      if (this.isCompany == true) {
-        this.authService.getUserProducts(this.authService.user.value.id);
-      }
+    if (this.nzModalData.isEditMode == true) {
+      this.getUserBunches();
     }
 
     this.initForm();
@@ -80,6 +91,7 @@ export class UpsertBunchModalComponent {
   initForm(): void {
     this.formGroup = this.fb.group({
       companyId: [null],
+      bunch: [''],
       name: ['', Validators.required],
       themeCheckbox: [],
       themeId: [null],
@@ -89,7 +101,32 @@ export class UpsertBunchModalComponent {
         '',
         [Validators.required, Validators.pattern('^(?:\\d*\\.)?\\d+$')],
       ],
-      quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+    });
+  }
+
+  initEditForm(bunch: EditBunchBM): void {
+    if (bunch.theme.id != 0) {
+      this.isThemedCheckbox = true;
+    }
+
+    console.log(this.products);
+
+    this.selectedProducts = this.products.filter((p) =>
+      bunch.products.find((e) => e.id === p.id)
+    );
+
+    this.formGroup = this.fb.group({
+      companyId: [bunch.company.id],
+      bunch: [bunch],
+      name: [bunch.name, Validators.required],
+      themeCheckbox: [],
+      themeId: [bunch.theme.id],
+      imageUrl: [bunch.imageUrl, Validators.required],
+      productIds: [this.selectedProducts.map((e) => e.id), Validators.required],
+      price: [
+        bunch.price,
+        [Validators.required, Validators.pattern('^(?:\\d*\\.)?\\d+$')],
+      ],
     });
   }
 
@@ -98,28 +135,35 @@ export class UpsertBunchModalComponent {
   }
 
   onSelectedCompany(selectedCompanyId: number) {
-    console.log(selectedCompanyId);
     if (selectedCompanyId) {
       this.authService
         .getUserProducts(selectedCompanyId)
         .subscribe((response) => {
           this.products = response;
         });
+
+      if (this.nzModalData.isEditMode) {
+        this.bunchService
+          .getBunchesByCompanyId(selectedCompanyId)
+          .subscribe((response) => {
+            this.bunches = response;
+          });
+      }
     }
   }
 
   getFormValues(): void {
-    // if (this.nzModalData.isEditMode == false) {
-    //   this.insertProduct();
-    // }
-    this.insertProduct();
+    if (this.nzModalData.isEditMode == false) {
+      this.insertBunch();
+    } else {
+      this.editBunch();
+    }
   }
 
-  insertProduct() {
+  insertBunch() {
     if (this.formGroup.valid) {
       let formModel: BunchDTO = this.formGroup.getRawValue();
       formModel.themeCheckbox = null;
-      console.log(formModel);
 
       if (this.isThemedCheckbox === false) {
         formModel.themeId = 0;
@@ -127,7 +171,6 @@ export class UpsertBunchModalComponent {
 
       if (this.isCompany) {
         formModel.companyId = this.authService.user.value.id;
-        console.log(formModel);
       }
 
       this.bunchService.insertBunch(formModel).subscribe(() => {
@@ -145,33 +188,52 @@ export class UpsertBunchModalComponent {
     }
   }
 
-  // editProduct() {
-  //   if (this.formGroup.valid) {
-  //     let formModel: ProductDTO = this.formGroup.getRawValue();
-  //     formModel.id = this.selectedProduct.id;
+  editBunch() {
+    if (this.formGroup.valid) {
+      let formModel: BunchDTO = this.formGroup.getRawValue();
 
-  //     if (this.isCompany) {
-  //       formModel.company = this.authService.user.value;
-  //     } else {
-  //       formModel.company = this.companies.find(
-  //         (e) => e.id === this.selectedCompany
-  //       );
-  //     }
+      formModel.id = formModel.bunch.id;
+      formModel.bunch = null;
+      formModel.themeCheckbox = null;
 
-  //     this.productService.editProduct(formModel).subscribe(() => {
-  //       this.modalRef.triggerOk();
-  //       this.modalRef.destroy();
-  //       this.message.success(
-  //         `Product ${formModel.name} was successfully edited.`
-  //       );
-  //     });
-  //   } else {
-  //     Object.values(this.formGroup.controls).forEach((control) => {
-  //       if (control.invalid) {
-  //         control.markAsDirty();
-  //         control.updateValueAndValidity({ onlySelf: true });
-  //       }
-  //     });
-  //   }
-  // }
+      if (this.isThemedCheckbox === false) {
+        formModel.themeId = 0;
+      }
+
+      console.log(formModel);
+
+      if (this.isCompany) {
+        formModel.companyId = this.authService.user.value.id;
+      }
+
+      this.bunchService.editBunch(formModel).subscribe(() => {
+        this.modalRef.triggerOk();
+        this.modalRef.destroy();
+        this.message.success(
+          `Bunch ${formModel.name} was successfully edited.`
+        );
+      });
+    } else {
+      Object.values(this.formGroup.controls).forEach((control) => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
+  }
+
+  getUserBunches() {
+    this.bunchService
+      .getBunchesByCompanyId(this.authService.user.value.id)
+      .subscribe((response) => {
+        this.bunches = response;
+      });
+  }
+
+  onSelectedBunch(selectedBunch: EditBunchBM) {
+    if (this.selectedBunch) {
+      this.initEditForm(selectedBunch);
+    }
+  }
 }

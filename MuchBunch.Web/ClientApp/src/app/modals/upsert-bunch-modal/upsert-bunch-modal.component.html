@@ -20,6 +20,26 @@
       </nz-form-control>
     </nz-form-item>
 
+    <nz-form-item *ngIf="nzModalData.isEditMode">
+      <nz-form-label [nzSpan]="7">Bunch</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Select a bunch"
+          formControlName="bunch"
+          [(ngModel)]="selectedBunch"
+          (ngModelChange)="onSelectedBunch(selectedBunch)"
+        >
+          <nz-option
+            *ngFor="let bunch of bunches"
+            [nzLabel]="bunch.name"
+            [nzValue]="bunch"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Bunch Name</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
@@ -99,13 +119,6 @@
               style="font-size: 24px; margin-top: 4px; margin-left: 5px"
             ></span>
           </div>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>Quantity</nz-form-label>
-        <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">
-          <input nz-input formControlName="quantity" type="number" />
         </nz-form-control>
       </nz-form-item>
     </div>

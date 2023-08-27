@@ -47,6 +47,20 @@ export class AddComponent implements OnInit {
       nzCentered: true,
       nzContent: UpsertBunchModalComponent,
       nzData: {
+        isEditMode: false,
+        product: null,
+      },
+      nzWidth: 900,
+      nzFooter: null,
+    });
+  }
+
+  showEditBunchModal() {
+    const modal: NzModalRef = this.modalService.create({
+      nzTitle: 'Add new MuchBunch.',
+      nzCentered: true,
+      nzContent: UpsertBunchModalComponent,
+      nzData: {
         isEditMode: true,
         product: null,
       },
