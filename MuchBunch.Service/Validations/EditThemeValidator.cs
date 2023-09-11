@@ -5,11 +5,11 @@ using MuchBunch.Service.Models.BM;
 
 namespace MuchBunch.Service.Validations
 {
-    public class EditThemeValidator : InsertThemeValidator<EditThemeBM>
+    public class EditThemeValidator : AbstractValidator<EditThemeBM>
     {
         private const string InvalidId = "Theme with given id does not exist!";
 
-        public EditThemeValidator(MBDBContext dbContext) : base(dbContext)
+        public EditThemeValidator(MBDBContext dbContext)
         {
             RuleFor(x => x.Id)
                 .MustAsync(async (themeId, ct) =>

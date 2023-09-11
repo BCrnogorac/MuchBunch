@@ -23,11 +23,11 @@ namespace MuchBunch.Web.Controllers
             return Ok(themeService.GetThemes());
         }
 
-        //[HttpGet("type/{id}")]
-        //public IActionResult GetProductsByTypeId([FromRoute] int id)
-        //{
-        //    return Ok(productService.GetProductsByTypeId(id));
-        //}
+        [HttpGet("{id}")]
+        public IActionResult GetThemeById(int id)
+        {
+            return Ok(themeService.GetThemeById(id));
+        }
 
         [HttpPost]
         public async Task<IActionResult> InsertProduct([FromBody] InsertThemeBM model)

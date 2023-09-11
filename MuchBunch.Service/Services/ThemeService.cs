@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MuchBunch.EF.Database;
 using MuchBunch.EF.Database.Models;
 using MuchBunch.Service.Models.BM;
@@ -17,6 +18,21 @@ namespace MuchBunch.Service.Services
             return mapper.Map<IEnumerable<ThemeDTO>>(dbContext.Themes);
         }
 
+        public ThemeDTO GetThemeById(int id)
+        {
+            var theme = dbContext.Themes
+                .Include(t => t.Bunches)
+                    .ThenInclude(b => b.Company)
+                .Include(t => t.Bunches)
+                    .ThenInclude(b => b.Products)
+                        .ThenInclude(p => p.Type)
+                .Include(t => t.Bunches)
+                    .ThenInclude(b => b.Products)
+                        .ThenInclude(p => p.SubTypes)
+                .FirstOrDefault(t => t.Id == id);
+            return mapper.Map<ThemeDTO>(theme);
+        }
+
         public void InsertTheme(InsertThemeBM model)
         {
             var data = mapper.Map<Theme>(model);
@@ -31,6 +47,7 @@ namespace MuchBunch.Service.Services
             if (theme != null)
             {
                 theme.Name = model.Name;
+                theme.IsActive = model.IsActive;
 
                 dbContext.Themes.Update(theme);
                 dbContext.SaveChanges();
