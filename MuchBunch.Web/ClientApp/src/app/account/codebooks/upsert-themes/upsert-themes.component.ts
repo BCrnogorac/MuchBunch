@@ -27,6 +27,8 @@ export class UpsertThemesComponent {
   public isEditMode: boolean = false;
   public currentTheme: EditThemeBM;
 
+  public isActive: boolean;
+
   constructor(
     private themeService: ThemesService,
     private fb: FormBuilder,
@@ -51,9 +53,13 @@ export class UpsertThemesComponent {
     });
   }
 
-  listOfControl: Array<{ id: number; controlInstance: string }> = [];
+  listOfControl: Array<{
+    id: number;
+    controlInstance: string;
+    isActive: boolean;
+  }> = [];
 
-  addField(controlInstance?: string): void {
+  addField(controlInstance?: string, isActive?: boolean): void {
     const id =
       this.listOfControl.length > 0
         ? this.listOfControl[this.listOfControl.length - 1].id + 1
@@ -62,6 +68,7 @@ export class UpsertThemesComponent {
     const control = {
       id,
       controlInstance: `${controlInstance}`,
+      isActive: isActive,
     };
 
     let index = this.listOfControl.push(control);
@@ -69,11 +76,15 @@ export class UpsertThemesComponent {
       this.listOfControl[index - 1].controlInstance,
       new FormControl('', Validators.required)
     );
+    this.formGroup.addControl(
+      this.listOfControl[index - 1].controlInstance + 'isActive',
+      new FormControl(false, Validators.required)
+    );
     this.goToBottom();
   }
 
   removeField(
-    i: { id: number; controlInstance: string },
+    i: { id: number; controlInstance: string; isActive: boolean },
     e?: MouseEvent
   ): void {
     e?.preventDefault();
@@ -85,7 +96,10 @@ export class UpsertThemesComponent {
     }
   }
 
-  deleteButton(i: { id: number; controlInstance: string }, e?: MouseEvent) {
+  deleteButton(
+    i: { id: number; controlInstance: string; isActive: boolean },
+    e?: MouseEvent
+  ) {
     e?.preventDefault();
 
     if (this.isEditMode == true) {
@@ -114,8 +128,11 @@ export class UpsertThemesComponent {
     } else {
       let editTheme: EditThemeBM = new EditThemeBM(
         this.currentTheme.id,
-        themename
+        themename,
+        this.isActive
       );
+
+      console.log(editTheme);
 
       this.themeService.editTheme(editTheme).subscribe(() => {
         this.removeField(this.listOfControl.find((e) => e.id === controlId));
@@ -134,7 +151,7 @@ export class UpsertThemesComponent {
       this.themes.findIndex((e) => e.id === theme.id),
       1
     );
-    this.addField(theme.name);
+    this.addField(theme.name, theme.isActive);
     this.formGroup
       .get(
         `${
@@ -143,6 +160,8 @@ export class UpsertThemesComponent {
         }`
       )
       .setValue(`${theme.name}`);
+
+    this.isActive = theme.isActive;
   }
 
   goToBottom() {

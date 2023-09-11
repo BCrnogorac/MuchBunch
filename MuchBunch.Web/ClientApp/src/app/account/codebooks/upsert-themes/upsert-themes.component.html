@@ -1,21 +1,34 @@
 <div style="width: 1000px">
   <nz-list nzBordered nzHeader="MuchBunch Themes">
     <cdk-virtual-scroll-viewport itemSize="73" class="demo-infinite-container">
-      <nz-list-item *ngFor="let theme of themes">
-        {{ theme.name }}
-        <button
-          nz-button
-          nzType="default"
-          nzShape="circle"
-          (click)="editForm(theme)"
-        >
+      <nz-list-item
+        *ngFor="let theme of themes"
+        style="justify-content: space-between"
+      >
+        <div>
+          {{ theme.name }}
+        </div>
+        <div>
           <span
-            nz-icon
-            nzType="edit"
-            nzTheme="outline"
-            style="align-items: right"
-          ></span>
-        </button>
+            *ngIf="!isEditMode && theme.isActive"
+            style="margin-right: 10px; font-weight: bold; color: lightgray"
+            >Active Theme</span
+          >
+
+          <button
+            nz-button
+            nzType="default"
+            nzShape="circle"
+            (click)="editForm(theme)"
+          >
+            <span
+              nz-icon
+              nzType="edit"
+              nzTheme="outline"
+              style="align-items: right"
+            ></span>
+          </button>
+        </div>
       </nz-list-item>
       <nz-list-item *ngFor="let control of listOfControl; let i = index">
         <form
@@ -23,16 +36,27 @@
           [formGroup]="formGroup"
           style="display: flex; width: 100%; margin-bottom: -20px"
         >
+          <nz-form-item style="width: 140px">
+            <nz-form-control>
+              <label
+                nz-checkbox
+                [(ngModel)]="isActive"
+                [formControlName]="control.controlInstance + 'isActive'"
+                >Is Active?</label
+              >
+            </nz-form-control>
+          </nz-form-item>
+
           <nz-form-item style="width: inherit">
             <nz-form-control nzRequired>
               <input
-                class="passenger-input"
                 nz-input
                 [formControlName]="control.controlInstance"
                 style="margin-right: 10px"
               />
             </nz-form-control>
           </nz-form-item>
+
           <nz-form-item>
             <nz-form-control>
               <button

@@ -176,7 +176,12 @@ export class AddNewProductModalComponentComponent implements OnInit {
 
       if (this.isCompany) {
         formModel.company = this.authService.user.value;
+      } else {
+        formModel.company = this.companies.find(
+          (e) => e.id === this.selectedCompany
+        );
       }
+      console.log(formModel.company);
 
       this.productService.addNewProduct(formModel).subscribe(() => {
         this.modalRef.triggerOk();

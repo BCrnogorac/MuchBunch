@@ -31,4 +31,8 @@ export class BunchService {
   editBunch(bunch: BunchDTO): Observable<BunchDTO> {
     return this.http.post<BunchDTO>(`${this.serviceBaseUrl}/edit`, bunch);
   }
+
+  getBunches() {
+    return this.http.get<BunchDTO[]>(`${this.serviceBaseUrl}`);
+  }
 }

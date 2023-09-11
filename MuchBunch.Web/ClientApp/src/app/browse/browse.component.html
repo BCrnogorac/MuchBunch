@@ -1,1 +1,43 @@
-<p>browse works!</p>
+<br /><br />
+<h1 style="margin-left: 50px">Manage Bunches</h1>
+
+<br /><br />
+<div style="margin-left: 70px">
+  <nz-card style="margin-bottom: 20px; margin-right: 500px">
+    <p>
+      Our Bundles are limited-time collections of games, books, software, and
+      more. Simply pay what you want and choose where your money goes, including
+      to charity. Most Bundles come in tiers starting at only $1 - the more you
+      give, the more you get!
+    </p>
+  </nz-card>
+</div>
+
+<div style="margin-left: 70px">
+  <nz-card style="margin-bottom: 20px; margin-right: 70px">
+    <h1 style="justify-content: center; align-items: center; display: flex">
+      THEMED MUCHBUNCH
+    </h1>
+    <nz-carousel nzAutoPlay style="background-color: aquamarine; height: 430px">
+      <div nz-carousel-content *ngFor="let bunch of bunches">
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+          "
+        >
+          <nz-card nzHoverable style="width: 200px" [nzCover]="coverTemplate">
+            <ng-template #coverTemplate>
+              <img alt="example" [src]="bunch.imageUrl" style="height: 250px" />
+            </ng-template>
+
+            <nz-card-meta [nzTitle]="bunch.name"></nz-card-meta>
+            <p>{{ bunch.price }} €</p>
+          </nz-card>
+        </div>
+      </div>
+    </nz-carousel>
+  </nz-card>
+</div>
