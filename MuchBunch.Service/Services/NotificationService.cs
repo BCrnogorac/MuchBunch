@@ -29,10 +29,10 @@ namespace MuchBunch.Service.Services
         public async Task SetupThemeNotification(ThemeNotificationBM data)
         {
             var upcomingThemeEmail = GetThemeEmailText(EmailTemplate.UpcomingTheme, EmailTemplate.UpcomingThemeTitle, data);
-            SendInitialEmails(upcomingThemeEmail);
+            SendUpcomingThemeMail(upcomingThemeEmail);
 
             var liveThemeEmail = GetThemeEmailText(EmailTemplate.LiveTheme, EmailTemplate.LiveThemeTitle, data);
-            SetupReminder(liveThemeEmail, data.ThemeId);
+            SetupLiveTheme(liveThemeEmail, data.ThemeId);
         }
 
         public EmailText GetThemeEmailText(string templateName, string title, ThemeNotificationBM data)
@@ -64,7 +64,7 @@ namespace MuchBunch.Service.Services
             };
         }
 
-        public void SendInitialEmails(EmailText model)
+        public void SendUpcomingThemeMail(EmailText model)
         {
             var smtpConfig = _configuration.GetSection<SmtpConfig>(GlobalConstants.SMTP_CONFIG_KEY);
             var companyUsers = userService.GetCompanyUsers().ToList();
@@ -84,10 +84,10 @@ namespace MuchBunch.Service.Services
             }
         }
 
-        public void SendReminderEmails(EmailText model)
+        public void SendLiveThemeEmail(EmailText model)
         {
             var smtpConfig = _configuration.GetSection<SmtpConfig>(GlobalConstants.SMTP_CONFIG_KEY);
-            var users = userService.GetUsers().ToList();
+            var users = userService.GetSubscribers().ToList();
             users.Add(CreateTestAccount(smtpConfig));
 
             foreach (var user in users)
@@ -117,7 +117,7 @@ namespace MuchBunch.Service.Services
             Console.WriteLine(DateTime.UtcNow.ToString());
         }
 
-        private async Task SetupReminder(EmailText model, int themeId)
+        private async Task SetupLiveTheme(EmailText model, int themeId)
         {
             //DateTime scheduledTime = DateTime.UtcNow.Date.AddMonths(1);
             DateTime scheduledTime = DateTime.UtcNow.AddSeconds(20);
@@ -149,7 +149,7 @@ namespace MuchBunch.Service.Services
                     var themeService = scope.ServiceProvider.GetRequiredService<ThemeService>();
 
                     themeService.SetThemeAsActive(themeId);
-                    notificationService.SendReminderEmails(model);
+                    notificationService.SendLiveThemeEmail(model);
                 }
                 ((Timer)state).Dispose();
             });

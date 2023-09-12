@@ -31,6 +31,7 @@ namespace MuchBunch.Web
             builder.Services.AddScoped<ThemeService>();
             builder.Services.AddScoped<BunchService>();
             builder.Services.AddScoped<NotificationService>();
+            builder.Services.AddScoped<OrderService>();
 
             var jwtSettings = builder.Configuration.GetSection<JwtSettings>(GlobalConstants.JWT_SETTINGS_KEY);
 

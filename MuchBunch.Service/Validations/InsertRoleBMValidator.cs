@@ -5,7 +5,7 @@ using MuchBunch.Service.Models.BM;
 
 namespace MuchBunch.Service.Validations
 {
-    public class InsertRoleBMValidator<T> : AbstractValidator<T> where T : RoleBM
+    public class InsertRoleBMValidator : AbstractValidator<RoleBM>
     {
         private const string InvalidName = "Given name is already taken!";
         public InsertRoleBMValidator(MBDBContext dbContext)

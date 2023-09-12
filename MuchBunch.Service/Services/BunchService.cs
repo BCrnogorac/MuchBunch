@@ -96,5 +96,13 @@ namespace MuchBunch.Service.Services
                 dbContext.SaveChanges();
             }
         }
+
+        public void PlaceOrder(OrderBM model)
+        {
+            var order = mapper.Map<Order>(model);
+            order.OrderedAt = DateTime.UtcNow;
+            dbContext.Order.Add(order);
+            dbContext.SaveChanges();
+        }
     }
 }

@@ -5,7 +5,7 @@ using MuchBunch.Service.Models.BM;
 
 namespace MuchBunch.Service.Validations
 {
-    public class InsertBunchValidator<T> : AbstractValidator<T> where T : InsertBunchBM
+    public class InsertBunchValidator : AbstractValidator<InsertBunchBM>
     {
         private const string InvalidThemeId = "Theme with given id does not exist!";
         private const string InvalidCompanyId = "Company with given id does not exist!";

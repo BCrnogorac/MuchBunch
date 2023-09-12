@@ -12,6 +12,7 @@ namespace MuchBunch.EF.Database
         public DbSet<Role> Roles { get; set; }
         public DbSet<Bunch> Bunches { get; set; }
         public DbSet<Theme> Themes { get; set; }
+        public DbSet<Order> Order { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -44,6 +45,11 @@ namespace MuchBunch.EF.Database
                 .WithMany(e => e.Bunches)
                 .HasForeignKey(e => e.CompanyId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.BoughtBunches)
+                .WithMany(e => e.Buyers)
+                .UsingEntity<Order>();
         }
     }
 }

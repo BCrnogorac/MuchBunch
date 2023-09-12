@@ -23,7 +23,37 @@ namespace MuchBunch.Service.Services
 
         public IEnumerable<UserDTO> GetCompanyUsers()
         {
-            return mapper.Map<IEnumerable<UserDTO>>(dbContext.Users.Include(u => u.Role).Where(u => u.Role.Name == Enums.Role.Company));
+            var companyUsers = dbContext.Users
+                .Include(u => u.Role)
+                .Where(u => u.Role.Name == Enums.Role.Company);
+
+            return mapper.Map<IEnumerable<UserDTO>>(companyUsers);
+        }
+
+        public IEnumerable<UserDTO> GetSubscribers()
+        {
+            var users = dbContext.Users
+                .Include(u => u.Role)
+                .Where(u => u.IsSubscribed);
+
+            return mapper.Map<IEnumerable<UserDTO>>(users);
+        }
+
+        public IEnumerable<UserOrderDTO> GetOrders(int id)
+        {
+            var user = dbContext.Users
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.Bunch)
+                        .ThenInclude(b => b.Company)
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.Bunch)
+                        .ThenInclude(b => b.Theme)
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.Bunch)
+                        .ThenInclude(b => b.Products)
+                .First(u => u.Id == id);
+
+            return mapper.Map<IEnumerable<UserOrderDTO>>(user.Orders);
         }
 
         public IEnumerable<ProductDTO> GetCompanyProducts(int id)

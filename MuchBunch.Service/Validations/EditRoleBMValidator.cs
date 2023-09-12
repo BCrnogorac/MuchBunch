@@ -5,11 +5,11 @@ using MuchBunch.Service.Models.BM;
 
 namespace MuchBunch.Service.Validations
 {
-    internal class EditRoleBMValidator : InsertRoleBMValidator<EditRoleBM>
+    internal class EditRoleBMValidator : AbstractValidator<EditRoleBM>
     {
         private const string InvalidId = "Role with given role id does not exist!";
 
-        public EditRoleBMValidator(MBDBContext dbContext) : base(dbContext)
+        public EditRoleBMValidator(MBDBContext dbContext)
         {
             RuleFor(x => x.Id)
                 .MustAsync(async (roleId, ct) =>

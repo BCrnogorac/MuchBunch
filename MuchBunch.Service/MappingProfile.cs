@@ -22,8 +22,11 @@ namespace MuchBunch.Service
             CreateMap<Bunch, BunchDTO>();
             CreateMap<Theme, ThemeDTO>();
             CreateMap<Theme, ThemeSimpleDTO>();
+            CreateMap<Order, UserOrderDTO>();
+            CreateMap<Order, OrderDTO>();
 
             CreateMap<InsertThemeBM, Theme>();
+            CreateMap<OrderBM, Order>();
             CreateMap<InsertBunchBM, Bunch>()
                 .ForMember(dest => dest.Products, opt => opt.Ignore());
 

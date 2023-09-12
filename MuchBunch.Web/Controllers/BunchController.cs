@@ -71,5 +71,20 @@ namespace MuchBunch.Web.Controllers
             bunchService.DeleteBunch(id);
             return NoContent();
         }
+
+        [HttpPost("order")]
+        public async Task<IActionResult> OrderBunch([FromBody] OrderBM model)
+        {
+            var result = await validationService.ValidateInsertOrder(model);
+
+            if (!result.IsValid)
+            {
+                return BadRequest(result);
+            }
+
+            bunchService.PlaceOrder(model);
+
+            return Ok();
+        }
     }
 }

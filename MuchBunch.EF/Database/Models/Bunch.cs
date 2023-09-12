@@ -11,5 +11,7 @@
         public int? CompanyId { get; set; }
         public User? Company { get; set; }
         public ICollection<Product>? Products { get; set; }
+        public ICollection<User>? Buyers { get; set; }
+        public ICollection<Order>? Orders { get; set; }
     }
 }

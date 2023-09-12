@@ -5,7 +5,7 @@ using MuchBunch.Service.Models.BM;
 
 namespace MuchBunch.Service.Validations
 {
-    public class InsertThemeValidator<T> : AbstractValidator<T> where T : InsertThemeBM
+    public class InsertThemeValidator : AbstractValidator<InsertThemeBM>
     {
         private const string InvalidName = "Given name is already taken!";
 

@@ -54,6 +54,12 @@ namespace MuchBunch.Web.Controllers
             return Ok(userService.GetUsers());
         }
 
+        [HttpGet("{id}/orders")]
+        public IActionResult GetOrders([FromRoute] int id)
+        {
+            return Ok(userService.GetOrders(id));
+        }
+
         //[Authorize(Roles = Role.Company)]
         [HttpGet("{id}/products")]
         public IActionResult GetCompanyProductsByUserId(int id)
