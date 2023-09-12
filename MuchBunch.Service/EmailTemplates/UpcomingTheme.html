@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>There's a new MucBunch Theme in Town</title>
+    <style>
+        /* Reset some default styles */
+        body, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Set a background color */
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Container for the email content */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header styling */
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Content section styling */
+        .content {
+            padding: 20px;
+        }
+
+        /* Button styling */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome the upcoming MuchBunch Theme!</h1>
+
+        </div>
+        <div class="content">
+            <p>Hello,</p>
+            <br><br>
+            <p>Next month, we are rolling out a new MuchBunch Theme: {{ theme name }}!</p>
+            <br>
+            <p>Here are themed MuchBunch requirements: </p>
+            <br>
+            <p>There should be {{ products quantity }} products in the Bunch. Product types are the following: {{ board game count }} Board game(s), {{ accessories quantity }} Accessories, {{ books quantity }} Books and {{ miniatures quantity }} Miniatures.</p>
+            <p>The price of this MuchBunch should be {{ price }} Euros.</p>
+            <br>
+            <p>Now, let's go and create that themed MuchBunch!</p>
+            <br><br>
+            <p>Kind regards,</p><br>
+            <p>MuchBunch team.</p>
+        </div>
+    </div>
+</body>
+</html>

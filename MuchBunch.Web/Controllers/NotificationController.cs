@@ -16,10 +16,10 @@ namespace MuchBunch.Web.Controllers
             this.notificationService = notificationService;
         }
 
-        [HttpPost]
-        public IActionResult Index([FromBody] EmailBM notification)
+        [HttpPost("theme")]
+        public IActionResult SetupThemeNotification([FromBody] ThemeNotificationBM notification)
         {
-            notificationService.SetupNotification(notification);
+            notificationService.SetupThemeNotification(notification);
             return Ok();
         }
     }

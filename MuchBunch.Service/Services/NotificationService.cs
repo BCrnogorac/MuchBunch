@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MimeKit;
 using MimeKit.Text;
 using MuchBunch.EF.Database;
+using MuchBunch.Service.Enums;
 using MuchBunch.Service.Extensions;
 using MuchBunch.Service.Models;
 using MuchBunch.Service.Models.BM;
@@ -17,19 +18,53 @@ namespace MuchBunch.Service.Services
     {
         public readonly IConfiguration _configuration;
         public readonly UserService userService;
-        public NotificationService(MBDBContext dbContext, IMapper mapperConfiguration, IConfiguration config, UserService userService) : base(dbContext, mapperConfiguration)
+        public readonly ThemeService themeService;
+        public NotificationService(MBDBContext dbContext, IMapper mapperConfiguration, IConfiguration config, UserService userService, ThemeService themeService) : base(dbContext, mapperConfiguration)
         {
             _configuration = config;
             this.userService = userService;
+            this.themeService = themeService;
         }
 
-        public async Task SetupNotification(EmailBM model)
+        public async Task SetupThemeNotification(ThemeNotificationBM data)
         {
-            SendInitialEmails(model);
-            SetupReminder(model);
+            var upcomingThemeEmail = GetThemeEmailText(EmailTemplate.UpcomingTheme, EmailTemplate.UpcomingThemeTitle, data);
+            SendInitialEmails(upcomingThemeEmail);
+
+            var liveThemeEmail = GetThemeEmailText(EmailTemplate.LiveTheme, EmailTemplate.LiveThemeTitle, data);
+            SetupReminder(liveThemeEmail, data.ThemeId);
         }
 
-        public void SendInitialEmails(EmailBM model)
+        public EmailText GetThemeEmailText(string templateName, string title, ThemeNotificationBM data)
+        {
+            var baseDirectory = Directory.GetCurrentDirectory();
+            var relativePath = EmailTemplate.GetRelativePath(templateName);
+
+            // Combine the base directory with the relative path
+            var absolutePath = Path.Combine(baseDirectory, relativePath);
+            if (!File.Exists(absolutePath))
+            {
+                return null;
+            }
+
+            var html = File.ReadAllText(absolutePath);
+            var theme = themeService.GetThemeById(data.ThemeId);
+            var emailBody = html.Replace(ThemeEmailIdentifiers.GetHTMLIdentifier(ThemeEmailIdentifiers.ThemeName), theme.Name)
+                .Replace(ThemeEmailIdentifiers.GetHTMLIdentifier(ThemeEmailIdentifiers.ProductsQuantity), data.ProductsQuantity.ToString())
+                .Replace(ThemeEmailIdentifiers.GetHTMLIdentifier(ThemeEmailIdentifiers.BgQuantity), data.BgQuantity.ToString())
+                .Replace(ThemeEmailIdentifiers.GetHTMLIdentifier(ThemeEmailIdentifiers.MiniaturesQuantity), data.MiniaturesQuantity.ToString())
+                .Replace(ThemeEmailIdentifiers.GetHTMLIdentifier(ThemeEmailIdentifiers.BooksQuantity), data.BooksQuantity.ToString())
+                .Replace(ThemeEmailIdentifiers.GetHTMLIdentifier(ThemeEmailIdentifiers.AccessoriesQuantity), data.AccessoriesQuantity.ToString())
+                .Replace(ThemeEmailIdentifiers.GetHTMLIdentifier(ThemeEmailIdentifiers.Price), data.Price.ToString());
+
+            return new EmailText()
+            {
+                Body = emailBody,
+                Title = title
+            };
+        }
+
+        public void SendInitialEmails(EmailText model)
         {
             var smtpConfig = _configuration.GetSection<SmtpConfig>(GlobalConstants.SMTP_CONFIG_KEY);
             var companyUsers = userService.GetCompanyUsers().ToList();
@@ -37,10 +72,10 @@ namespace MuchBunch.Service.Services
 
             foreach (var companyUser in companyUsers)
             {
-                var emailInfo = new EmailInfo()
+                var emailInfo = new Email()
                 {
-                    Title = model.EventTitle,
-                    Body = model.EventBody,
+                    Title = model.Title,
+                    Body = model.Body,
                     Sender = smtpConfig.Username,
                     Recepient = companyUser.Email
                 };
@@ -49,7 +84,7 @@ namespace MuchBunch.Service.Services
             }
         }
 
-        public void SendReminderEmails(EmailBM model)
+        public void SendReminderEmails(EmailText model)
         {
             var smtpConfig = _configuration.GetSection<SmtpConfig>(GlobalConstants.SMTP_CONFIG_KEY);
             var users = userService.GetUsers().ToList();
@@ -57,10 +92,10 @@ namespace MuchBunch.Service.Services
 
             foreach (var user in users)
             {
-                var emailInfo = new EmailInfo()
+                var emailInfo = new Email()
                 {
-                    Title = model.ReminderTitle,
-                    Body = model.ReminderBody,
+                    Title = model.Title,
+                    Body = model.Body,
                     Sender = smtpConfig.Username,
                     Recepient = user.Email
                 };
@@ -69,7 +104,7 @@ namespace MuchBunch.Service.Services
             }
         }
 
-        private static void SendMail(EmailInfo emailInfo, SmtpConfig smtpConfig)
+        private static void SendMail(Email emailInfo, SmtpConfig smtpConfig)
         {
             using var smtp = new SmtpClient();
             smtp.Connect(smtpConfig.Host, smtpConfig.Port, SecureSocketOptions.StartTls);
@@ -82,7 +117,7 @@ namespace MuchBunch.Service.Services
             Console.WriteLine(DateTime.UtcNow.ToString());
         }
 
-        private async Task SetupReminder(EmailBM model)
+        private async Task SetupReminder(EmailText model, int themeId)
         {
             //DateTime scheduledTime = DateTime.UtcNow.Date.AddMonths(1);
             DateTime scheduledTime = DateTime.UtcNow.AddSeconds(20);
@@ -113,7 +148,7 @@ namespace MuchBunch.Service.Services
                     var notificationService = scope.ServiceProvider.GetRequiredService<NotificationService>();
                     var themeService = scope.ServiceProvider.GetRequiredService<ThemeService>();
 
-                    themeService.SetThemeAsActive(model.ThemeId);
+                    themeService.SetThemeAsActive(themeId);
                     notificationService.SendReminderEmails(model);
                 }
                 ((Timer)state).Dispose();
@@ -121,7 +156,7 @@ namespace MuchBunch.Service.Services
             timer.Change(delay, TimeSpan.Zero);
         }
 
-        private static MimeMessage CreateEmail(EmailInfo info)
+        private static MimeMessage CreateEmail(Email info)
         {
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(info.Sender));

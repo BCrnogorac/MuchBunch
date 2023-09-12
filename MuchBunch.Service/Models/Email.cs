@@ -1,6 +1,6 @@
 ﻿namespace MuchBunch.Service.Models
 {
-    public class EmailInfo
+    public class Email
     {
         public string Title { get; set; }
         public string Body { get; set; }
