@@ -40,6 +40,18 @@ namespace MuchBunch.Service.Services
             dbContext.SaveChanges();
         }
 
+        public void SetThemeAsActive(int themeId)
+        {
+            var theme = dbContext.Themes.Find(themeId);
+
+            if (theme != null)
+            {
+                theme.IsActive = true;
+                dbContext.Themes.Update(theme);
+                dbContext.SaveChanges();
+            }
+        }
+
         public void EditTheme(EditThemeBM model)
         {
             var theme = dbContext.Themes.Find(model.Id);

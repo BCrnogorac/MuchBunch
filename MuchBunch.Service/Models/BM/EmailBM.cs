@@ -2,7 +2,10 @@
 {
     public class EmailBM
     {
-        public string Title { get; set; }
-        public string Body { get; set; }
+        public int ThemeId { get; set; }
+        public string EventTitle { get; set; }
+        public string EventBody { get; set; }
+        public string ReminderTitle { get; set; }
+        public string ReminderBody { get; set; }
     }
 }

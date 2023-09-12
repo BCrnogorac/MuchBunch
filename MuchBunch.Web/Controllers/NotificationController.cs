@@ -19,7 +19,7 @@ namespace MuchBunch.Web.Controllers
         [HttpPost]
         public IActionResult Index([FromBody] EmailBM notification)
         {
-            notificationService.SendMail(notification);
+            notificationService.SetupNotification(notification);
             return Ok();
         }
     }
