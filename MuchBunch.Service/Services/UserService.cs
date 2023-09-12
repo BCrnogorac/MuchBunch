@@ -10,7 +10,7 @@ namespace MuchBunch.Service.Services
 {
     public class UserService : BaseService
     {
-        private IdentityService identityService;
+        private readonly IdentityService identityService;
         public UserService(IdentityService identityService, MBDBContext dbContext, IMapper mapperConfiguration) : base(dbContext, mapperConfiguration)
         {
             this.identityService = identityService;
@@ -21,6 +21,10 @@ namespace MuchBunch.Service.Services
             return mapper.Map<IEnumerable<UserDTO>>(dbContext.Users.Include(u => u.Role));
         }
 
+        public IEnumerable<UserDTO> GetCompanyUsers()
+        {
+            return mapper.Map<IEnumerable<UserDTO>>(dbContext.Users.Include(u => u.Role).Where(u => u.Role.Name == Enums.Role.Company));
+        }
 
         public IEnumerable<ProductDTO> GetCompanyProducts(int id)
         {
