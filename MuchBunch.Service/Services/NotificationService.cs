@@ -87,7 +87,10 @@ namespace MuchBunch.Service.Services
         public void SendLiveThemeEmail(EmailText model)
         {
             var smtpConfig = _configuration.GetSection<SmtpConfig>(GlobalConstants.SMTP_CONFIG_KEY);
-            var users = userService.GetSubscribers().ToList();
+            var buyers = userService.GetSubscribers();
+            var companyUsers = userService.GetCompanyUsers();
+
+            var users = buyers.Union(companyUsers).ToList();
             users.Add(CreateTestAccount(smtpConfig));
 
             foreach (var user in users)
