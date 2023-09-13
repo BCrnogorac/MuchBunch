@@ -99,8 +99,19 @@ namespace MuchBunch.Service.Services
 
         public void PlaceOrder(OrderBM model)
         {
+            var bunch = dbContext.Bunches
+                .Include(b => b.Products)
+                .FirstOrDefault(b => b.Id == model.BunchId);
+
+            var products = bunch.Products.ToList();
+
+            products.ForEach(p => p.Quantity--);
+
+            dbContext.Products.UpdateRange(products);
+
             var order = mapper.Map<Order>(model);
             order.OrderedAt = DateTime.UtcNow;
+
             dbContext.Order.Add(order);
             dbContext.SaveChanges();
         }

@@ -60,6 +60,13 @@ namespace MuchBunch.Web.Controllers
             return Ok(userService.GetOrders(id));
         }
 
+        [HttpPost("subscribe")]
+        public IActionResult UpdateSubscribeStatus([FromBody] SubscribeBM model)
+        {
+            userService.UpdateSubscribeStatus(model);
+            return Ok();
+        }
+
         //[Authorize(Roles = Role.Company)]
         [HttpGet("{id}/products")]
         public IActionResult GetCompanyProductsByUserId(int id)

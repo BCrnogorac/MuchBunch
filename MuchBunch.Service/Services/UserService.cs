@@ -39,6 +39,21 @@ namespace MuchBunch.Service.Services
             return mapper.Map<IEnumerable<UserDTO>>(users);
         }
 
+        public void UpdateSubscribeStatus(SubscribeBM model)
+        {
+            var user = dbContext.Users.FirstOrDefault(u => u.Id == model.UserId);
+
+            if (user == null)
+            {
+                return;
+            }
+
+            user.IsSubscribed = model.IsSubscribed;
+
+            dbContext.Users.Update(user);
+            dbContext.SaveChanges();
+        }
+
         public IEnumerable<UserOrderDTO> GetOrders(int id)
         {
             var user = dbContext.Users
