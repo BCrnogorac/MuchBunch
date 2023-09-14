@@ -10,11 +10,13 @@ namespace MuchBunch.Web.Controllers
     {
         private readonly BunchService bunchService;
         private readonly ValidationService validationService;
+        private readonly NotificationService notificationService;
 
-        public BunchController(BunchService bunchService, ValidationService validationService)
+        public BunchController(BunchService bunchService, ValidationService validationService, NotificationService notificationService)
         {
             this.bunchService = bunchService;
             this.validationService = validationService;
+            this.notificationService = notificationService;
         }
 
         [HttpGet]
@@ -83,6 +85,7 @@ namespace MuchBunch.Web.Controllers
             }
 
             bunchService.PlaceOrder(model);
+            notificationService.SendOrderMail(model);
 
             return Ok();
         }
