@@ -1,0 +1,15 @@
+::ng-deep .ant-list-split .ant-list-item {
+  border-bottom: 1px solid #c4b7e5;
+}
+
+::ng-deep .ant-list-items {
+  background-color: #c4b7e5;
+  border-radius: 20px;
+}
+::ng-deep .ant-card {
+  background-color: transparent;
+}
+
+.ant-card-bordered {
+  border: 1px solid black;
+}

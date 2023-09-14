@@ -207,6 +207,7 @@ export class UpsertBunchModalComponent {
         formModel.companyId = this.authService.user.value.id;
       }
 
+      console.log(formModel);
       this.bunchService.insertBunch(formModel).subscribe(() => {
         this.modalRef.triggerOk();
         this.modalRef.destroy();

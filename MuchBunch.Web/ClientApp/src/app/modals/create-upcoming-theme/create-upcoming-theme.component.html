@@ -1,0 +1,118 @@
+<h1 style="font-family: Gilgan; font-size: 26px; margin-bottom: 50px">
+  Create Upcoming MuchBunch Theme.
+</h1>
+
+<div style="font-family: gilgan">
+  <form nz-form [formGroup]="formGroup">
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 100px;
+      "
+    >
+      <nz-form-item>
+        <nz-form-label>Upcoming Theme</nz-form-label>
+        <nz-form-control>
+          <nz-select
+            nzShowSearch
+            [nzShowArrow]="true"
+            nzAllowClear
+            formControlName="themeId"
+            [(ngModel)]="selectedTheme"
+            style="width: 500px"
+          >
+            <nz-option
+              *ngFor="let theme of themes"
+              [nzLabel]="theme.name"
+              [nzValue]="theme.id"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>How many products in this MuchBunch?</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="productsQuantity"
+            type="number"
+            style="width: 340px"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <nz-form-item>
+        <nz-form-label>How many Board games?</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="bgQuantity"
+            type="number"
+            style="width: 440px"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>How many Accessories?</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="accessoriesQuantity"
+            type="number"
+            style="width: 440px; margin-left: 10px"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>How many Books?</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="booksQuantity"
+            type="number"
+            style="width: 450px; margin-left: 42px"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>How many Miniatures?</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="miniaturesQuantity"
+            type="number"
+            style="width: 450px; margin-left: 13px"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <nz-form-item>
+        <nz-form-label>Price of this MuchBunch? (in Euros)</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="price"
+            type="number"
+            style="width: 370px"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item style="margin-bottom: 0px; width: 84%">
+        <div style="display: flex; width: 100%; justify-content: flex-end">
+          <button nz-button nzType="primary" (click)="submit()">Submit</button>
+        </div>
+      </nz-form-item>
+    </div>
+  </form>
+</div>

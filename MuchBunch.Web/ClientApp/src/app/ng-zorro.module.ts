@@ -21,6 +21,7 @@ import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 import {
   StepBackwardOutline,
@@ -69,6 +70,7 @@ const icons: IconDefinition[] = [
     ScrollingModule,
     NzMenuModule,
     NzCheckboxModule,
+    NzSwitchModule,
     NzIconModule.forChild(icons),
   ],
   exports: [
@@ -94,6 +96,7 @@ const icons: IconDefinition[] = [
     NzTableModule,
     ScrollingModule,
     NzCheckboxModule,
+    NzSwitchModule,
   ],
 })
 export class NgZorroModule {}

@@ -1,9 +1,16 @@
 <div class="form">
+  <img
+    src="https://i.imgur.com/KzA5MhT.png"
+    style="height: 200px; margin-bottom: 100px"
+  />
+
+  <h1 style="font-family: gilgan; margin-bottom: 50px">Let's login.</h1>
   <form
     nz-form
     [formGroup]="formGroup"
     class="login-form"
     (ngSubmit)="submitForm()"
+    style="font-family: gilgan"
   >
     <nz-form-item>
       <nz-form-control nzErrorTip="Please input your email!">
@@ -13,6 +20,7 @@
             nz-input
             formControlName="email"
             placeholder="email"
+            style="width: 400px"
           />
         </nz-input-group>
       </nz-form-control>
@@ -37,9 +45,10 @@
       [nzType]="'primary'"
       [nzLoading]="btnLoading"
     >
-      Log in
+      <span style="font-size: 18px">Log in</span>
     </button>
-    Or
-    <a routerLink="/register">register now!</a>
+    <span style="font-size: 18px"> Or </span>
+
+    <a routerLink="/register" style="font-size: 18px">register now!</a>
   </form>
 </div>

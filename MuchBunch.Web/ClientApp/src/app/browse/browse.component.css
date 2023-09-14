@@ -1,0 +1,42 @@
+::ng-deep .ant-card-meta-title {
+  margin-bottom: 10px;
+  white-space: normal;
+}
+
+.bgImage {
+  background-image: url("https://i.imgur.com/e3FWFd5.png"); /* The image used */
+  background-color: #cccccc; /* Used if the image is unavailable */
+
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+}
+::ng-deep .ant-card {
+  background-color: transparent;
+}
+
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
+  border-color: white;
+  box-shadow: 0 0 0 2px white;
+}
+
+::ng-deep .ant-select-dropdown {
+  background-color: #c4b7e5;
+  color: white;
+  font-family: Gilgan;
+}
+
+::ng-deep .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: #e7dbff;
+  color: black;
+  font-family: Gilgan;
+}
+
+::ng-deep .ant-select-single.ant-select-show-arrow .ant-select-selection-item,
+.ant-select-single.ant-select-show-arrow .ant-select-selection-placeholder {
+  display: flex;
+  align-items: center;
+}

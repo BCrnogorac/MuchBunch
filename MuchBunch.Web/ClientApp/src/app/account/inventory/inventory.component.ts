@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
 import { AddNewProductModalComponentComponent } from 'src/app/modals/add-new-product-modal-component/add-new-product-modal-component.component';
@@ -29,7 +30,8 @@ export class InventoryComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private route: ActivatedRoute,
     private modalService: NzModalService,
-    private authService: AuthService
+    private authService: AuthService,
+    private message: NzMessageService
   ) {}
 
   ngOnInit() {
@@ -75,7 +77,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
 
   onEditProduct(product: ProductDTO) {
     const modal: NzModalRef = this.modalService.create({
-      nzTitle: 'Edit Product.',
       nzCentered: true,
       nzContent: AddNewProductModalComponentComponent,
       nzData: {
@@ -84,6 +85,51 @@ export class InventoryComponent implements OnInit, OnDestroy {
       },
       nzWidth: 900,
       nzFooter: null,
+    });
+  }
+
+  onDeleteProduct(product: ProductDTO) {
+    this.callConfirmModal(
+      'Warning.',
+      `Are you sure you want to delete ${product.name}?`,
+      product
+    );
+  }
+
+  callConfirmModal(title: string, text: string, product: ProductDTO) {
+    const modal: NzModalRef = this.modalService.create({
+      nzTitle: title,
+      nzCentered: true,
+      nzModalType: 'confirm',
+      nzContent: text,
+      nzOnOk: () => {
+        this.productService.deleteProduct(product.id).subscribe(() => {
+          modal.destroy();
+          this.message.success(
+            `Type ${product.name} was successfully removed.`
+          );
+
+          if (this.isAdmin) {
+            this.productService
+              .getProductsByType(product.type.id)
+              .subscribe((response) => {
+                this.products = response;
+              });
+          } else {
+            this.productService
+              .getProductsByTypeByCompany(this.authService.user.value.id)
+              .subscribe((response) => {
+                this.productsByCompany = response;
+
+                this.products = this.productsByCompany.find(
+                  (e) => e.type.id === product.type.id
+                )?.products;
+
+                console.log(this.products);
+              });
+          }
+        });
+      },
     });
   }
 }

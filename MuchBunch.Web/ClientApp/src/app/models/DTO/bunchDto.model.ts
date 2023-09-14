@@ -7,7 +7,7 @@ export class BunchDTO {
   imageUrl: string;
   themeId?: number;
   companyId: number;
-  productIds: number[];
+  products: ProductDTO[];
   themeCheckbox?: any;
   bunch?: any;
 }

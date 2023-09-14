@@ -3,3 +3,36 @@
   border: 1px solid #e8e8e8;
   border-radius: 4px;
 }
+
+::ng-deep .ant-list-bordered {
+  border: 1px solid black;
+}
+
+::ng-deep .ant-list-split .ant-list-item {
+  border-bottom: 1px solid black;
+}
+
+::ng-deep .ant-list-split .ant-list-header,
+.ant-list-split.ant-list-something-after-last-item
+  .ant-spin-container
+  > .ant-list-items
+  > .ant-list-item:last-child {
+  border-bottom: 1px solid black;
+  background-color: #c4b7e5;
+}
+
+.demo-infinite-container[_ngcontent-ng-c2039776829] {
+  border: 0px;
+}
+
+::ng-deep .ant-btn-dashed {
+  border-color: black;
+  background: #c4b7e5;
+  color: white;
+}
+
+::ng-deep .ant-select-single.ant-select-show-arrow .ant-select-selection-item,
+.ant-select-single.ant-select-show-arrow .ant-select-selection-placeholder {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,98 @@
+<div style="background-color: #e7dbff">
+  <div>
+    <h1 style="font-family: Gilgan; font-size: 36px">
+      {{ nzModalData?.bunch.name }}
+    </h1>
+  </div>
+
+  <div style="display: flex; justify-content: space-between">
+    <div>
+      <nz-card style="margin-right: 10px">
+        <img
+          [src]="nzModalData?.bunch.imageUrl"
+          style="
+            height: 400px;
+            width: 700px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+          "
+        />
+      </nz-card>
+    </div>
+
+    <div style="margin-bottom: 40px">
+      <nz-card style="height: 350px; width: 380px">
+        <div>
+          <h3 style="font-family: Gilgan; font-size: 20px">
+            Products in this MuchBunch:
+          </h3>
+          <div
+            *ngFor="let product of products"
+            style="overflow-y: auto; overflow-x: hidden"
+          >
+            <h4
+              style="font-weight: lighter; font-family: Gilgan; font-size: 13px"
+            >
+              {{ product.name }}
+            </h4>
+          </div>
+        </div>
+
+        <div>
+          <nz-divider></nz-divider>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <h3 style="font-family: Gilgan; font-size: 20px">Price:</h3>
+            <h3 style="font-family: Gilgan; font-size: 20px">
+              {{ nzModalData?.bunch.price }}€
+            </h3>
+          </div>
+        </div>
+      </nz-card>
+      <button
+        nz-button
+        nzType="dashed"
+        style="
+          width: -webkit-fill-available;
+          margin-top: 10px;
+          height: 100px;
+          font-family: Gilgan;
+          font-size: 24px;
+        "
+        [disabled]="shouldDisableBuyButton || !isAvailable"
+        (click)="onBuyBunch(nzModalData?.bunch)"
+      >
+        {{
+          isAvailable
+            ? shouldDisableBuyButton
+              ? "Already bought"
+              : "Buy"
+            : "Out of stock"
+        }}
+      </button>
+    </div>
+  </div>
+
+  <h3 style="font-family: Gilgan; font-size: 22px">
+    If you buy this MuchBunch, you get:
+  </h3>
+  <nz-carousel nzAutoPlay>
+    <div
+      nz-carousel-content
+      *ngFor="let product of products"
+      style="
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      "
+    >
+      <img [src]="product.imageUrl" style="height: 300px" />
+    </div>
+  </nz-carousel>
+</div>

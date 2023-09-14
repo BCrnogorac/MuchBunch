@@ -6,11 +6,10 @@ import { RegisterBM } from '../models/BM/registerBM.model';
 import { TokenDto } from '../models/DTO/tokenDto.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
-import { UserModel } from '../models/user.model';
-import { RoleDTO } from '../models/DTO/roleDto.model';
 import { UserDTO } from '../models/DTO/userDto.model';
-import { ProductBM } from '../models/BM/productBM.model';
 import { ProductDTO } from '../models/DTO/productDto.model';
+import { UserOrderDto } from '../models/DTO/UserOrderDto.model';
+import { SubscribeBM } from '../models/BM/subscribeBM.model';
 
 @Injectable({
   providedIn: 'root',
@@ -69,15 +68,24 @@ export class AuthService {
 
   storeTokenToLocalStorage(token: string): void {
     let decodedToken = this.getDecodedAccessToken(token);
-    let currentUser: UserDTO = new UserDTO(
-      decodedToken['sub'],
-      decodedToken['name'],
-      decodedToken['email'],
-      decodedToken[`${this.RoleClaimName}`]
-    );
-    this.user.next(currentUser);
-    localStorage.setItem('tokenInfo', JSON.stringify(currentUser));
-    console.log('Stored');
+
+    let userOders: UserOrderDto[] = [];
+    this.getUserOrders(decodedToken['sub']).subscribe((response) => {
+      userOders = response;
+
+      let currentUser: UserDTO = new UserDTO(
+        decodedToken['sub'],
+        decodedToken['name'],
+        decodedToken['email'],
+        decodedToken[`${this.RoleClaimName}`],
+        decodedToken['IsSubscribed'] === 'True',
+        userOders
+      );
+
+      this.user.next(currentUser);
+      localStorage.setItem('tokenInfo', JSON.stringify(currentUser));
+      console.log('Stored');
+    });
   }
 
   getUserProperty(property?: string): string {
@@ -90,6 +98,19 @@ export class AuthService {
   getUserProducts(companyId: number): Observable<ProductDTO[]> {
     return this.http.get<ProductDTO[]>(
       `${this.serviceBaseUrl}/${companyId}/products`
+    );
+  }
+
+  getUserOrders(userId: number) {
+    return this.http.get<UserOrderDto[]>(
+      `${this.serviceBaseUrl}/${userId}/orders`
+    );
+  }
+
+  updateSubscribeStatus(subscription: SubscribeBM): Observable<void> {
+    return this.http.post<void>(
+      `${this.serviceBaseUrl}/subscribe`,
+      subscription
     );
   }
 }

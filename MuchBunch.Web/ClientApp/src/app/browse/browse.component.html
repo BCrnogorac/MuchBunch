@@ -1,25 +1,72 @@
 <br /><br />
-<h1 style="margin-left: 50px">Manage Bunches</h1>
+<h1 style="margin-left: 50px; font-family: Gilgan; font-size: 44px">
+  Browse Bunches
+</h1>
 
 <br /><br />
-<div style="margin-left: 70px">
-  <nz-card style="margin-bottom: 20px; margin-right: 500px">
-    <p>
-      Our Bundles are limited-time collections of games, books, software, and
-      more. Simply pay what you want and choose where your money goes, including
-      to charity. Most Bundles come in tiers starting at only $1 - the more you
-      give, the more you get!
+<div
+  style="
+    margin-left: 70px;
+    margin-right: 70px;
+
+    height: 100px;
+    margin-bottom: 50px;
+  "
+>
+  <div style="margin-bottom: 20px">
+    <p style="font-family: Gilgan; font-size: 18px; color: black">
+      Our Bunches are limited-time themed collections of board games, books,
+      accessories, and miniatures. Simply buy what you want and subscribe to
+      newsletter to get be one of the first themed MuchBunch owners. But, of
+      course, there's more. Buy other Bundles not in the themed section if you
+      are really looking for something specific. We have anything you need from
+      board games.
     </p>
-  </nz-card>
+  </div>
+</div>
+
+<img
+  src="https://i.imgur.com/QnJLoZw.png"
+  style="width: 100%; height: 300px; margin-top: 100px; margin-bottom: 100px"
+/>
+
+<div
+  style="
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 50px;
+    margin-bottom: 20px;
+  "
+>
+  <span style="font-family: Gilgan; font-size: 36px"
+    >Looking for some Themes? Browse our current one.</span
+  >
 </div>
 
 <div style="margin-left: 70px">
-  <nz-card style="margin-bottom: 20px; margin-right: 70px">
-    <h1 style="justify-content: center; align-items: center; display: flex">
-      THEMED MUCHBUNCH
+  <nz-card
+    style="
+      margin-bottom: 20px;
+      margin-right: 70px;
+      background-image: url(https://i.imgur.com/e3FWFd5.png);
+      background-size: 400px 400px;
+      background-repeat: no-repeat;
+    "
+  >
+    <h1
+      style="
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        font-family: Halloween;
+        font-size: 36px;
+      "
+    >
+      {{ currentThemeName }}
     </h1>
-    <nz-carousel nzAutoPlay style="background-color: aquamarine; height: 430px">
-      <div nz-carousel-content *ngFor="let bunch of bunches">
+    <nz-carousel nzAutoPlay style="height: 450px">
+      <div nz-carousel-content *ngFor="let bunch of themedBunches">
         <div
           style="
             display: flex;
@@ -28,16 +75,105 @@
             flex-wrap: wrap;
           "
         >
-          <nz-card nzHoverable style="width: 200px" [nzCover]="coverTemplate">
+          <nz-card
+            nzHoverable
+            style="width: 350px"
+            [nzCover]="coverTemplate"
+            (click)="onViewBunch(bunch)"
+          >
             <ng-template #coverTemplate>
               <img alt="example" [src]="bunch.imageUrl" style="height: 250px" />
             </ng-template>
 
-            <nz-card-meta [nzTitle]="bunch.name"></nz-card-meta>
-            <p>{{ bunch.price }} €</p>
+            <nz-card-meta
+              [nzTitle]="bunch.name"
+              style="font-family: Gilgan"
+            ></nz-card-meta>
+            <p style="font-family: Gilgan; justify-content: center">
+              {{ bunch.price }} €
+            </p>
           </nz-card>
         </div>
       </div>
     </nz-carousel>
+  </nz-card>
+</div>
+
+<div
+  style="
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    margin-top: 100px;
+  "
+>
+  <span style="font-family: Gilgan; font-size: 36px"
+    >Or maybe some specific Bunches?</span
+  >
+</div>
+
+<div style="display: flex">
+  <div style="font-family: gilgan; margin-left: 100px; margin-bottom: 50px">
+    <label style="margin-right: 10px; margin-left: 50px"
+      >Filter by Product Type in Bunch:
+    </label>
+    <nz-select
+      nzShowSearch
+      nzAllowClear
+      [(ngModel)]="selectedType"
+      (ngModelChange)="onSelectedType(selectedType)"
+      style="width: 300px"
+    >
+      <nz-option
+        *ngFor="let type of types"
+        [nzLabel]="type.name"
+        [nzValue]="type.id"
+      ></nz-option>
+    </nz-select>
+  </div>
+
+  <div style="font-family: gilgan; margin-left: 100px; margin-bottom: 50px">
+    <label style="margin-right: 10px; margin-left: 50px"
+      >Filter by Product Subtype in Bunch:
+    </label>
+    <nz-select
+      nzShowSearch
+      nzAllowClear
+      [(ngModel)]="selectedSubtype"
+      (ngModelChange)="onSelectedSubtype(selectedSubtype)"
+      style="width: 300px"
+    >
+      <nz-option
+        *ngFor="let subtype of subtypes"
+        [nzLabel]="subtype.name"
+        [nzValue]="subtype"
+      ></nz-option>
+    </nz-select>
+  </div>
+</div>
+
+<div style="margin-left: 70px">
+  <nz-card style="margin-bottom: 20px; margin-right: 70px">
+    <div style="display: flex; margin-top: 20px; flex-wrap: wrap">
+      <nz-card
+        nzHoverable
+        style="width: 350px; margin-right: 20px"
+        [nzCover]="coverTemplate"
+        *ngFor="let bunch of bunches"
+        (click)="onViewBunch(bunch)"
+      >
+        <ng-template #coverTemplate>
+          <img alt="example" [src]="bunch.imageUrl" style="height: 250px" />
+        </ng-template>
+
+        <nz-card-meta
+          style="font-family: Gilgan"
+          [nzTitle]="bunch.name"
+        ></nz-card-meta>
+        <p style="font-family: Gilgan">{{ bunch.price }}€</p>
+      </nz-card>
+    </div>
   </nz-card>
 </div>

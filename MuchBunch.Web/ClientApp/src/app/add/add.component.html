@@ -1,54 +1,120 @@
-<br /><br />
-<h1 style="margin-left: 50px">Control your inventory. In one step.</h1>
+<div
+  style="
+    background-image: url(https://i.imgur.com/7hBqtN2.png);
+    background-size: 100% 400px;
+    background-repeat: no-repeat;
+    background-position: right 15px top 100px;
+  "
+>
+  <br /><br />
+  <h1 style="margin-left: 50px; font-family: Gilgan; font-size: 44px">
+    Control your inventory. In one step.
+  </h1>
 
-<br /><br />
+  <br /><br />
 
-<h2 style="margin-left: 70px">Manage MuchBunches.</h2>
-<div style="margin-left: 70px">
-  <button
-    style="height: 250px; width: 250px; margin-right: 40px"
-    nz-button
-    nzSize="large"
-    nzType="dashed"
-    (click)="showAddBunchModal()"
-  >
-    <span nz-icon nzType="plus" nzTheme="outline"></span>
-    Add new MuchBunch.
-  </button>
+  <h2 style="margin-left: 70px; font-family: Gilgan; font-size: 26px">
+    Manage MuchBunches.
+  </h2>
+  <div style="margin-left: 70px">
+    <button
+      style="
+        height: 250px;
+        width: 250px;
+        margin-right: 40px;
+        font-family: Gilgan;
+        font-size: 15px;
+      "
+      nz-button
+      nzSize="large"
+      nzType="dashed"
+      (click)="showAddBunchModal()"
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+      Add new MuchBunch.
+    </button>
 
-  <button
-    style="height: 250px; width: 250px; margin-right: 40px"
-    nz-button
-    nzSize="large"
-    nzType="dashed"
-    (click)="showEditBunchModal()"
-  >
-    <span nz-icon nzType="plus" nzTheme="outline"></span>
-    Edit MuchBunch.
-  </button>
-</div>
-<br />
-<h2 style="margin-left: 70px">Manage Your Products.</h2>
-<div style="margin-left: 70px">
-  <button
-    style="height: 250px; width: 250px; margin-right: 40px"
-    nz-button
-    nzSize="large"
-    nzType="dashed"
-    (click)="addNewProduct()"
-  >
-    <span nz-icon nzType="plus" nzTheme="outline"></span>
-    Add new Product.
-  </button>
+    <button
+      style="
+        height: 250px;
+        width: 250px;
+        margin-right: 40px;
+        font-family: Gilgan;
+        font-size: 15px;
+      "
+      nz-button
+      nzSize="large"
+      nzType="dashed"
+      (click)="showEditBunchModal()"
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+      Edit MuchBunch.
+    </button>
+  </div>
 
-  <button
-    style="height: 250px; width: 250px; margin-right: 40px"
-    nz-button
-    nzSize="large"
-    nzType="dashed"
-    (click)="showEditProductModal()"
-  >
-    <span nz-icon nzType="plus" nzTheme="outline"></span>
-    Edit Product.
-  </button>
+  <br />
+  <h2 style="margin-left: 70px; font-family: Gilgan; font-size: 26px">
+    Manage Your Products.
+  </h2>
+  <div style="margin-left: 70px">
+    <button
+      style="
+        height: 250px;
+        width: 250px;
+        margin-right: 40px;
+        font-family: Gilgan;
+        font-size: 15px;
+      "
+      nz-button
+      nzSize="large"
+      nzType="dashed"
+      (click)="addNewProduct()"
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+      Add new Product.
+    </button>
+
+    <button
+      style="
+        height: 250px;
+        width: 250px;
+        margin-right: 40px;
+        font-family: Gilgan;
+        font-size: 15px;
+      "
+      nz-button
+      nzSize="large"
+      nzType="dashed"
+      (click)="showEditProductModal()"
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+      Edit Product.
+    </button>
+  </div>
+
+  <br />
+
+  <h2 style="margin-left: 70px; font-family: Gilgan; font-size: 26px">
+    Manage MuchBunch Themes.
+  </h2>
+  <div style="margin-left: 70px">
+    <button
+      style="
+        height: 250px;
+        width: 250px;
+        margin-right: 40px;
+        font-family: Gilgan;
+        font-size: 15px;
+      "
+      nz-button
+      nzSize="large"
+      nzType="dashed"
+      (click)="createUpcomingTheme()"
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+      Create Upcoming Theme.
+    </button>
+  </div>
+  <span style="margin-bottom: 200px"></span>
+  <br /><br />
 </div>

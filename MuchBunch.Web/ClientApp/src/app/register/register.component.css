@@ -1,11 +1,50 @@
-[nz-form] {
-  max-width: 800px;
-  margin: 0 auto;
+.form {
+  margin-top: 80px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.ant-input-affix-wrapper {
+  width: 100%;
+  min-width: 0;
+  padding: 4px 11px;
+  color: #000000d9;
+  font-size: 20px;
+  line-height: 1.5715;
+  background-image: none;
+  border: 1px solid black;
+  border-radius: 20px;
+  transition: all 0.3s;
+  display: inline-flex;
+  background-color: white;
 }
 
-.form {
-  position: relative;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.ant-input,
+.ant-input-number-affix-wrapper {
+  background-image: none;
+  line-height: 1.5715;
+  background-color: white;
+}
+
+::ng-deep .ant-btn-primary {
+  color: white;
+  border-radius: 20px;
+  border-color: transparent;
+  background-color: #c4b7e5;
+  height: 50px;
+  width: 100px;
+  font-size: 20px;
+}
+
+::ng-deep .ant-input {
+  border-radius: 20px;
+  border: 1px solid black;
+  width: 400px;
+}
+
+::ng-deep .ant-form {
+  font-family: gilgan;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }

@@ -29,6 +29,9 @@ export class ProductService {
     return this.http.post<ProductDTO>(`${this.serviceBaseUrl}`, product);
   }
 
+  deleteProduct(productId: number): Observable<void> {
+    return this.http.delete<void>(`${this.serviceBaseUrl}/${productId}`);
+  }
   getTypes(): Observable<ProductTypeBM[]> {
     return this.http.get<ProductTypeBM[]>(`${this.serviceBaseUrl}type`);
   }

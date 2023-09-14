@@ -1,20 +1,29 @@
 <div class="form">
+  <img
+    src="https://i.imgur.com/KzA5MhT.png"
+    style="height: 200px; margin-bottom: 100px"
+  />
+
+  <h1 style="font-family: gilgan; margin-bottom: 50px">
+    Register your MuchBunch account.
+  </h1>
   <form
     nz-form
     [nzAutoTips]="autoTips"
     [formGroup]="formGroup"
     (ngSubmit)="submitForm()"
+    style="font-family: gilgan"
   >
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Username</nz-form-label>
-      <nz-form-control [nzSpan]="12">
+      <nz-form-label nzRequired>Username</nz-form-label>
+      <nz-form-control>
         <input nz-input formControlName="username" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>E-mail</nz-form-label>
-      <nz-form-control [nzSpan]="12">
+      <nz-form-label nzRequired>E-mail</nz-form-label>
+      <nz-form-control>
         <input
           nz-input
           formControlName="email"
@@ -25,7 +34,7 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Password</nz-form-label>
+      <nz-form-label nzRequired>Password</nz-form-label>
       <nz-form-control
         [nzSpan]="12"
         nzDisableAutoTips
@@ -41,7 +50,7 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSpan]="7" nzRequired>Confirm Password</nz-form-label>
+      <nz-form-label nzRequired>Confirm Password</nz-form-label>
       <nz-form-control
         [nzSpan]="12"
         nzDisableAutoTips

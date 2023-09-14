@@ -1,0 +1,5 @@
+::ng-deep .ant-btn-dashed {
+  border-color: black;
+  background: #c4b7e5;
+  color: white;
+}

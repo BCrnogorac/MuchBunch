@@ -128,6 +128,7 @@ export class AddNewProductModalComponentComponent implements OnInit {
 
   initEditFormThroughInventory(product: ProductDTO): void {
     this.selectedType = this.types.find((e) => e.id === product.type.id);
+    this.selectedProduct = product;
 
     this.formGroup = this.fb.group({
       product: [null],
@@ -201,6 +202,7 @@ export class AddNewProductModalComponentComponent implements OnInit {
   editProduct() {
     if (this.formGroup.valid) {
       let formModel: ProductDTO = this.formGroup.getRawValue();
+      console.log(this.selectedProduct);
       formModel.id = this.selectedProduct.id;
 
       if (this.isCompany) {
