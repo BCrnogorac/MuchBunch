@@ -74,7 +74,6 @@ namespace MuchBunch.Service.Services
             var products = dbContext.Products.Where(p => model.ProductIds.Contains(p.Id)).ToList();
 
             bunch.Products.Clear();
-
             bunch.Name = model.Name;
             bunch.Price = model.Price;
             bunch.ImageUrl = model.ImageUrl;
@@ -86,11 +85,15 @@ namespace MuchBunch.Service.Services
             dbContext.SaveChanges();
         }
 
-        public void DeleteBunch(int id)
+        public void DeleteBunch(int id, int userId)
         {
             var bunch = dbContext.Bunches.Find(id);
+            var isAdmin = dbContext.Users
+                .Include(u => u.Role)
+                .Where(u => u.Role.Name == Enums.Role.Admin)
+                .Any(u => u.Id == userId);
 
-            if (bunch != null)
+            if (bunch != null && (isAdmin || bunch.CompanyId == userId))
             {
                 dbContext.Remove(bunch);
                 dbContext.SaveChanges();

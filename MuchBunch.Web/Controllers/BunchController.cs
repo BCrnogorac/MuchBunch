@@ -68,7 +68,8 @@ namespace MuchBunch.Web.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct([FromRoute] int id)
         {
-            bunchService.DeleteBunch(id);
+            var userId = int.Parse(User.FindFirst("sub")?.Value);
+            bunchService.DeleteBunch(id, userId);
             return NoContent();
         }
 
