@@ -1,36 +1,82 @@
-<br />
-<nz-alert
-  nzType="warning"
-  [nzMessage]="alertTitle"
-  [nzDescription]="alertDecription"
-  [nzAction]="actionTemplate1"
-  *ngIf="companyRole || adminRole"
->
-  <ng-template #actionTemplate1>
-    <button routerLink="/add" nz-button nzType="primary" nzShape="circle">
-      <span nz-icon nzType="plus" nzTheme="outline"></span>
-    </button>
-  </ng-template>
-</nz-alert>
+<div style="background-color: #e7dbff">
+  <br />
 
-<br />
-<div>
-  <nz-carousel nzAutoPlay>
-    <div nz-carousel-content *ngFor="let index of array">
-      <h3>{{ bundleTitle }}</h3>
-      <nz-card
-        nzHoverable
-        style="width: 240px; margin: auto"
-        [nzCover]="coverTemplate"
-      >
-        <nz-card-meta
-          [nzTitle]="bundleTitle"
-          nzDescription="www.instagram.com"
-        ></nz-card-meta>
-      </nz-card>
-      <ng-template #coverTemplate>
-        <img alt="board game" [src]="imgSrc" />
-      </ng-template>
+  <div style="display: flex">
+    <div>
+      <h1 class="homepageTitle">Welcome to MuchBunch.</h1>
+
+      <h1 class="homepageDescription">
+        Your one and only source of bundled Board Games and other accessories.
+        Looking for a Halloween, or perhaps a Nature inspired bundles of Board
+        Games?
+      </h1>
+      <h1 class="homepageDescription">It's all here.</h1>
     </div>
-  </nz-carousel>
+
+    <div
+      style="
+        background-color: black;
+        width: 1px;
+        height: 350px;
+        margin-top: 100px;
+      "
+    ></div>
+
+    <div style="width: 800px">
+      <h1 class="partnersTitle">Our partners.</h1>
+      <div style="display: flex; flex-wrap: wrap">
+        <div
+          *ngFor="let company of companies"
+          style="
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+          "
+        >
+          <div style="white-space: nowrap">
+            <span class="homepageDescription" style="white-space: nowrap">{{
+              company.name
+            }}</span>
+            <span style="margin-left: 40px; margin-right: 20px"> ◆ </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <img
+    src="https://i.imgur.com/kLPs4Ad.png"
+    style="width: 100%; height: 350px; margin-top: 200px"
+  />
+
+  <div style="margin-top: 200px">
+    <h1 class="partnersTitle">Some of our MuchBunches.</h1>
+    <nz-card>
+      <nz-carousel nzAutoPlay>
+        <div nz-carousel-content *ngFor="let bunch of themedBunches">
+          <nz-card
+            nzHoverable
+            style="width: 500px; margin: auto"
+            [nzCover]="coverTemplate"
+            (click)="onViewBunch(bunch)"
+          >
+            <nz-card-meta
+              [nzTitle]="bunch.name"
+              style="font-family: Gilgan"
+              [nzDescription]="descriptionTemplate"
+            ></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate>
+            <img
+              alt="board game"
+              [src]="bunch.imageUrl"
+              style="height: 400px"
+            />
+          </ng-template>
+          <ng-template #descriptionTemplate> {{ bunch.price }}€ </ng-template>
+        </div>
+      </nz-carousel>
+    </nz-card>
+  </div>
 </div>

@@ -1,4 +1,7 @@
-<div>
+<h1 style="font-family: Gilgan; font-size: 26px; margin-bottom: 50px">
+  {{ nzModalData.isEditMode ? "Edit MuchBunch." : "Create new MuchBunch." }}
+</h1>
+<div style="font-family: gilgan; font-size: 18px">
   <form nz-form [formGroup]="formGroup">
     <nz-form-item *ngIf="!isCompany && !nzModalData.bunch">
       <nz-form-label [nzSpan]="7">Company</nz-form-label>
@@ -6,15 +9,16 @@
         <nz-select
           nzShowSearch
           nzAllowClear
-          nzPlaceHolder="Select a company"
           formControlName="companyId"
           [(ngModel)]="selectedCompanyId"
           (ngModelChange)="onSelectedCompany(selectedCompanyId)"
+          style="font-family: Gilgan"
         >
           <nz-option
             *ngFor="let company of companies"
             [nzLabel]="company.name"
             [nzValue]="company.id"
+            style="font-family: Gilgan"
           ></nz-option>
         </nz-select>
       </nz-form-control>
@@ -26,7 +30,6 @@
         <nz-select
           nzShowSearch
           nzAllowClear
-          nzPlaceHolder="Select a bunch"
           formControlName="bunch"
           [(ngModel)]="selectedBunch"
           (ngModelChange)="onSelectedBunch(selectedBunch)"
@@ -50,11 +53,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Image URL</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
-        <input
-          nz-input
-          formControlName="imageUrl"
-          placeholder="www.imgur.com/imageURL"
-        />
+        <input nz-input formControlName="imageUrl" />
       </nz-form-control>
     </nz-form-item>
 
@@ -74,7 +73,6 @@
           nzShowSearch
           [nzShowArrow]="true"
           nzAllowClear
-          nzPlaceHolder="Select a theme"
           formControlName="themeId"
         >
           <nz-option
@@ -94,7 +92,6 @@
           [nzShowArrow]="true"
           nzAllowClear
           nzMode="multiple"
-          nzPlaceHolder="Select a product"
           formControlName="productIds"
         >
           <nz-option

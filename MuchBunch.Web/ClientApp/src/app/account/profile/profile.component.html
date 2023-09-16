@@ -1,1 +1,152 @@
-<p>profile works!</p>
+<br /><br />
+<h1
+  style="
+    margin-left: 50px;
+    font-family: Gilgan;
+    font-size: 44px;
+    margin-bottom: 100px;
+  "
+>
+  Hello, {{ user?.name }}
+</h1>
+
+<div style="display: flex; width: 100%; justify-content: space-evenly">
+  <div>
+    <nz-card style="margin-left: 100px; height: 820px">
+      <img src="https://i.imgur.com/BSIzj1j.png" />
+      <div
+        style="
+          margin-left: 50px;
+          font-family: Gilgan;
+          font-size: 32px;
+          margin-bottom: 30px;
+        "
+      >
+        Hello, my name is...
+      </div>
+      <nz-divider style="margin-bottom: 30px"></nz-divider>
+      <div
+        style="
+          margin-left: 50px;
+          font-family: Gilgan;
+          font-size: 18px;
+          margin-bottom: 7px;
+        "
+      >
+        Username: {{ user?.name }}
+      </div>
+      <div
+        style="
+          margin-left: 50px;
+          font-family: Gilgan;
+          font-size: 18px;
+          margin-bottom: 7px;
+        "
+      >
+        Email: {{ user?.email }}
+      </div>
+      <div
+        style="
+          margin-left: 50px;
+          font-family: Gilgan;
+          font-size: 18px;
+          margin-bottom: 7px;
+        "
+      >
+        MuchBunch orders placed: {{ ordersCount }}
+      </div>
+    </nz-card>
+  </div>
+
+  <div>
+    <nz-card
+      style="
+        margin-left: 100px;
+        margin-bottom: 20px;
+        width: 900px;
+        height: 500px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background-image: url(https://i.imgur.com/ZbyC3Ai.png);
+        background-size: 60px 60px;
+        background-repeat: no-repeat;
+        background-position: right 15px top 10px;
+      "
+    >
+      <div style="margin-left: 20px; font-family: Gilgan; font-size: 32px">
+        My Orders.
+      </div>
+      <div style="margin-left: 10px; font-family: Gilgan; font-size: 32px">
+        <ul nz-list [nzDataSource]="orders" nzBordered nzSize="large">
+          <li nz-list-item *ngFor="let order of orders">
+            <ul nz-list-item-actions>
+              <nz-list-item-action>
+                <span style="font-family: Gilgan"
+                  >{{ order?.bunch.price }}€</span
+                >
+              </nz-list-item-action>
+              <nz-list-item-action>
+                <span style="font-family: Gilgan">{{
+                  order?.orderedAt | date : "short"
+                }}</span>
+              </nz-list-item-action>
+            </ul>
+            <div>
+              <img
+                [src]="order?.bunch.imageUrl"
+                style="width: 50px; margin-right: 10px; margin-left: 10px"
+              />
+              <span style="font-weight: bold">{{ order?.bunch.name }} </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nz-card>
+
+    <nz-card
+      style="
+        margin-left: 100px;
+        width: 900px;
+        height: 300px;
+        background-image: url(https://i.imgur.com/hIUZfWi.png);
+        background-size: 80px 80px;
+        background-repeat: no-repeat;
+        background-position: right top;
+      "
+    >
+      <div style="margin-left: 20px; font-family: Gilgan; font-size: 32px">
+        My Subscription.
+        <nz-switch
+          [(ngModel)]="isSubscribed"
+          (ngModelChange)="onSubscriptionChange(isSubscribed)"
+        ></nz-switch>
+      </div>
+      <div style="margin-left: 50px; font-family: Gilgan; font-size: 18px">
+        {{
+          user.isSubscribed
+            ? "You are subscribed! So sit back and relax."
+            : "You are currently not subscribed."
+        }}
+      </div>
+      <div
+        style="
+          margin-left: 50px;
+          font-family: Gilgan;
+          font-size: 18px;
+          margin-top: 20px;
+        "
+      >
+        What are Subscription benefits, anyway?
+      </div>
+      <div style="margin-left: 50px; font-family: Gilgan; font-size: 14px">
+        Well, every month we get new themed MuchBunches. If you are subscribed,
+        you will be notified via e-mail about our new themed MuchBunches, so you
+        can go grab one before anyone else. This gives You an advantage because
+        You get to buy them before they run out of stock. So, there's no need to
+        sit and click that F5 button or visit everyday to see if a new MuchBunch
+        dropped. We will simply let you know first! Don't worry, we don't spam
+        with e-mails. We promise.
+      </div>
+    </nz-card>
+  </div>
+</div>

@@ -1,91 +1,120 @@
-<ul nz-menu nzMode="horizontal" style="background-color: #dbd9db">
-  <span style="margin-left: 10px">MuchBunch</span>
-
-  <li routerLink="/home" nz-menu-item [nzSelected]="homeRoute">
-    <span nz-icon nzType="home" nzTheme="outline"></span>
-    Home
-  </li>
-
-  <li routerLink="/browse" nz-menu-item [nzSelected]="browseRoute">
-    <span nz-icon nzType="search" nzTheme="outline"></span>
-    Browse
-  </li>
-
-  <li
-    routerLink="/administration"
-    *ngIf="companyRole || adminRole"
-    nz-menu-item
-    [nzSelected]="administrationRoute"
+<div style="margin-top: 40px; margin-bottom: 40px">
+  <ul
+    nz-menu
+    nzMode="horizontal"
+    style="background-color: #e7dbff; margin-bottom: 40px"
   >
-    <span nz-icon nzType="control" nzTheme="outline"></span>
-    Administration
-  </li>
+    <img
+      style="margin-left: 10px; height: 60px"
+      src="https://i.imgur.com/UBsUujy.png"
+    />
 
-  <li routerLink="/about" nz-menu-item [nzSelected]="aboutRoute">
-    <span nz-icon nzType="info-circle" nzTheme="outline"></span>
-    About
-  </li>
+    <li routerLink="/home" nz-menu-item [nzSelected]="homeRoute">
+      <span nz-icon nzType="home" nzTheme="outline"></span>
+      <span style="font-family: Gilgan; font-size: 18px"> Home </span>
+    </li>
 
-  <span>
-    <nz-select
-      nzShowSearch
-      nzServerSearch
-      nzPlaceHolder="input search text"
-      [(ngModel)]="selectedValue"
-      [nzShowArrow]="false"
-      [nzFilterOption]="nzFilterOption"
-      (nzOnSearch)="search($event)"
-      style="margin-left: 50px"
+    <li routerLink="/browse" nz-menu-item [nzSelected]="browseRoute">
+      <span nz-icon nzType="search" nzTheme="outline"></span>
+      <span style="font-family: Gilgan; font-size: 18px"> Browse </span>
+    </li>
+
+    <li
+      routerLink="/administration"
+      *ngIf="companyRole || adminRole"
+      nz-menu-item
+      [nzSelected]="administrationRoute"
     >
-      <nz-option
-        *ngFor="let o of listOfOption"
-        [nzLabel]="o.text"
-        [nzValue]="o.value"
-      ></nz-option>
-    </nz-select>
-  </span>
+      <span nz-icon nzType="control" nzTheme="outline"></span>
+      <span style="font-family: Gilgan; font-size: 18px"> Administration </span>
+    </li>
 
-  <li
-    routerLink="/register"
-    nz-menu-item
-    style="float: right"
-    *ngIf="!isAuthed"
-    [nzSelected]="registerRoute"
-  >
-    <span nz-icon nzType="mail"></span>
-    Register
-  </li>
+    <!-- <li routerLink="/about" nz-menu-item [nzSelected]="aboutRoute">
+      <span nz-icon nzType="info-circle" nzTheme="outline"></span>
+      About
+    </li> -->
 
-  <li
-    routerLink="/auth"
-    nz-menu-item
-    style="float: right"
-    *ngIf="!isAuthed"
-    [nzSelected]="loginRoute"
-  >
-    <span nz-icon nzType="login" nzTheme="outline"></span>
-    Sign In
-  </li>
+    <span>
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        [(ngModel)]="selectedValue"
+        (ngModelChange)="onSelectedBunch(selectedValue)"
+        [nzShowArrow]="true"
+        style="margin-left: 50px"
+        [nzSuffixIcon]="templateIcon"
+      >
+        <ng-template #templateIcon
+          ><span
+            nz-icon
+            nzType="search"
+            nzTheme="outline"
+            style="font-size: 18px; columns: black"
+          ></span
+        ></ng-template>
 
-  <li
-    nz-submenu
-    nz-menu-item
-    [nzSelected]="profileRoute"
-    nzTitle="{{ username }}"
-    nzIcon="user"
-    nzPlacement="bottomRight"
-    style="float: right"
-    *ngIf="isAuthed"
-  >
-    <ul>
-      <li routerLink="/profile" nz-menu-item>Account</li>
-      <li routerLink="/inventory" nz-menu-item *ngIf="companyRole || adminRole">
-        Inventory
-      </li>
-      <li routerLink="/codebooks" nz-menu-item *ngIf="adminRole">Codebooks</li>
-      <li routerLink="/my-bunches" nz-menu-item>My MuchBunches</li>
-      <nz-divider></nz-divider>
-      <li nz-menu-item (click)="logout()">Logout</li>
-    </ul>
-  </li>
-</ul>
+        <nz-option
+          *ngFor="let bunch of bunches"
+          [nzLabel]="bunch.name"
+          [nzValue]="bunch"
+        ></nz-option>
+      </nz-select>
+    </span>
+
+    <li
+      routerLink="/register"
+      nz-menu-item
+      style="float: right; font-family: Gilgan; font-size: 18px"
+      *ngIf="!isAuthed"
+      [nzSelected]="registerRoute"
+    >
+      <span nz-icon nzType="mail"></span>
+      Register
+    </li>
+
+    <li
+      routerLink="/auth"
+      nz-menu-item
+      style="float: right; font-family: Gilgan; font-size: 18px"
+      *ngIf="!isAuthed"
+      [nzSelected]="loginRoute"
+    >
+      <span nz-icon nzType="login" nzTheme="outline"></span>
+      Sign In
+    </li>
+
+    <li
+      nz-submenu
+      nz-menu-item
+      [nzSelected]="profileRoute"
+      nzTitle="{{ username }}"
+      nzIcon="user"
+      nzPlacement="bottomRight"
+      style="float: right; font-family: Gilgan; font-size: 18px"
+      *ngIf="isAuthed"
+    >
+      <ul>
+        <li routerLink="/profile" nz-menu-item>Account</li>
+        <li
+          routerLink="/inventory"
+          nz-menu-item
+          *ngIf="companyRole || adminRole"
+        >
+          Inventory
+        </li>
+        <li routerLink="/codebooks" nz-menu-item *ngIf="adminRole">
+          Codebooks
+        </li>
+        <li
+          routerLink="/my-bunches"
+          nz-menu-item
+          *ngIf="companyRole || adminRole"
+        >
+          My MuchBunches
+        </li>
+        <nz-divider></nz-divider>
+        <li nz-menu-item (click)="logout()">Logout</li>
+      </ul>
+    </li>
+  </ul>
+</div>

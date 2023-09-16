@@ -45,7 +45,7 @@ export class RegisterComponent {
 
   submitForm(): void {
     let formModel: RegisterBM = this.formGroup.getRawValue();
-    formModel.role = 'company';
+    formModel.role = 'customer';
 
     if (this.formGroup.valid) {
       this.authService.register(formModel).subscribe((token) => {

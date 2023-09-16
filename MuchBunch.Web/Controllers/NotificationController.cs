@@ -22,5 +22,12 @@ namespace MuchBunch.Web.Controllers
             notificationService.SetupThemeNotification(notification);
             return Ok();
         }
+
+        [HttpGet()]
+        public IActionResult SendOrderMail()
+        {
+            notificationService.SendOrderMail(new OrderBM { BunchId = 3003, UserId = 3002});
+            return Ok();
+        }
     }
 }

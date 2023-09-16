@@ -1,0 +1,36 @@
+[nz-carousel-content] {
+  text-align: center;
+  height: 350px;
+  line-height: 160px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+}
+
+::ng-deep .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: inherit;
+}
+
+::ng-deep .ant-modal-content {
+  background-color: #e7dbff;
+}
+
+::ng-deep .ant-btn-dashed[disabled] {
+  border-color: #b4b4b4;
+  background: #b4b4b4;
+  color: #909090;
+}
+
+::ng-deep .ant-btn-dashed {
+  border-color: black;
+  background: #c4b7e5;
+  color: white;
+}
+
+::ng-deep .ant-modal-header {
+  background: #e7dbff;
+  border-bottom: 1px solid black;
+}

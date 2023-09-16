@@ -4,6 +4,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { filter } from 'rxjs';
+import { BunchDTO } from 'src/app/models/DTO/bunchDto.model';
+import { BunchService } from 'src/app/services/bunch.service';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { ViewBunchComponent } from 'src/app/modals/view-bunch/view-bunch.component';
 
 @Component({
   selector: 'app-header',
@@ -11,29 +15,30 @@ import { filter } from 'rxjs';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  selectedValue = null;
-  listOfOption: Array<{ value: string; text: string }> = [];
-  nzFilterOption = (): boolean => true;
+  public bunches: BunchDTO[] = [];
+
+  public selectedValue: any;
 
   //user or roles info
-  isAuthed: boolean = false;
-  companyRole: boolean = false;
-  adminRole: boolean = false;
-  username: string = '';
+  public isAuthed: boolean = false;
+  public companyRole: boolean = false;
+  public adminRole: boolean = false;
+  public username: string = '';
 
-  homeRoute: boolean = true;
-  browseRoute: boolean = false;
-  administrationRoute: boolean = false;
-  aboutRoute: boolean = false;
-  registerRoute: boolean = false;
-  loginRoute: boolean = false;
-  profileRoute: boolean = false;
+  public homeRoute: boolean = true;
+  public browseRoute: boolean = false;
+  public administrationRoute: boolean = false;
+  public aboutRoute: boolean = false;
+  public registerRoute: boolean = false;
+  public loginRoute: boolean = false;
+  public profileRoute: boolean = false;
 
   constructor(
-    private httpClient: HttpClient,
     private authService: AuthService,
     private router: Router,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private bunchService: BunchService,
+    private modalService: NzModalService
   ) {}
 
   ngOnInit() {
@@ -49,25 +54,27 @@ export class HeaderComponent implements OnInit {
       this.adminRole = this.authService.getUserProperty('role') == 'admin';
 
       this.routeResolver();
+
+      this.bunchService.getBunches().subscribe((response) => {
+        this.bunches = response;
+      });
     });
   }
 
-  search(value: string): void {
-    this.httpClient
-      .jsonp<{ result: Array<[string, string]> }>(
-        `https://suggest.taobao.com/sug?code=utf-8&q=${value}`,
-        'callback'
-      )
-      .subscribe((data) => {
-        const listOfOption: Array<{ value: string; text: string }> = [];
-        data.result.forEach((item) => {
-          listOfOption.push({
-            value: item[0],
-            text: item[0],
-          });
-        });
-        this.listOfOption = listOfOption;
+  onSelectedBunch(selectedBunch: BunchDTO) {
+    if (selectedBunch != null) {
+      const modal: NzModalRef = this.modalService.create({
+        nzTitle: '',
+        nzCentered: true,
+        nzContent: ViewBunchComponent,
+        nzData: {
+          isEditMode: false,
+          bunch: selectedBunch,
+        },
+        nzWidth: 1200,
+        nzFooter: null,
       });
+    }
   }
 
   logout() {

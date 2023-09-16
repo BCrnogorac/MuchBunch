@@ -1,3 +1,67 @@
 nz-select {
   width: 500px;
 }
+
+::ng-deep .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-open,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover,
+.ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow,
+.ant-menu-submenu:hover
+  > .ant-menu-submenu-title
+  > .ant-menu-submenu-expand-icon,
+.ant-menu-vertical .ant-menu-submenu-selected,
+.ant-menu-vertical-left .ant-menu-submenu-selected,
+.ant-menu-vertical-right .ant-menu-submenu-selected {
+  color: white;
+  font-weight: bold;
+}
+
+::ng-deep
+  .ant-menu-horizontal:not(.ant-menu-dark)
+  > .ant-menu-item-active:after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-open:after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected:after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover:after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active:after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open:after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected:after,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover:after {
+  border-bottom: 4px solid white;
+}
+
+::ng-deep .ant-menu-horizontal {
+  border-bottom: 0px solid transparent;
+}
+
+::ng-deep .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+::ng-deep
+  .ant-select-single:not(.ant-select-customize-input)
+  .ant-select-selector {
+  height: 44px;
+}
+
+::ng-deep .ant-menu-submenu-popup > .ant-menu {
+  background-color: #c4b7e5;
+  color: black;
+  border-radius: 20px;
+  font-family: gilgan;
+  font-size: 16px;
+}
+
+::ng-deep .ant-menu-light .ant-menu-item-active,
+.ant-menu-light .ant-menu-item:hover,
+.ant-menu-light .ant-menu-submenu-active,
+.ant-menu-light .ant-menu-submenu-title:hover,
+.ant-menu-light .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open {
+  color: #e7dbff;
+}

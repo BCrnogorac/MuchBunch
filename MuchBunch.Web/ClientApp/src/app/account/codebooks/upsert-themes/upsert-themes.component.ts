@@ -78,8 +78,9 @@ export class UpsertThemesComponent {
     );
     this.formGroup.addControl(
       this.listOfControl[index - 1].controlInstance + 'isActive',
-      new FormControl(false, Validators.required)
+      new FormControl(isActive, Validators.required)
     );
+    this.isActive = isActive;
     this.goToBottom();
   }
 
@@ -118,7 +119,7 @@ export class UpsertThemesComponent {
     ).value;
 
     if (this.isEditMode == false) {
-      let theme: ThemeBM = new ThemeBM(themename);
+      let theme: ThemeBM = new ThemeBM(themename, this.isActive);
 
       this.themeService.addNewTheme(theme).subscribe(() => {
         this.removeField(this.listOfControl.find((e) => e.id === controlId));

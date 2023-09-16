@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ThemeBM } from '../models/BM/themeBM.model';
 import { EditThemeBM } from '../models/BM/editThemeBM.model';
 import { ThemeDto } from '../models/DTO/themeDto.model';
+import { EmailUpcomingThemeTemplate } from '../models/emailUpcomingThemeTemplate.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,5 +35,18 @@ export class ThemesService {
 
   removeTheme(themeId: number): Observable<void> {
     return this.http.delete<void>(`${this.serviceBaseUrl}/${themeId}`);
+  }
+
+  getBunchesByThemeId(themeId: number): Observable<ThemeDto> {
+    return this.http.get<ThemeDto>(`${this.serviceBaseUrl}/${themeId}`);
+  }
+
+  swtupThemeNotification(
+    emailTemplate: EmailUpcomingThemeTemplate
+  ): Observable<void> {
+    return this.http.post<void>(
+      `${this.baseUrl}/api/notification/theme`,
+      emailTemplate
+    );
   }
 }

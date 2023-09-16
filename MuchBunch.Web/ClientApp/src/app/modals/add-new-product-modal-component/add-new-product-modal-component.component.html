@@ -1,4 +1,7 @@
-<div>
+<h1 style="font-family: Gilgan; font-size: 26px; margin-bottom: 50px">
+  {{ nzModalData.isEditMode ? "Edit Product." : "Create new Product." }}
+</h1>
+<div style="font-family: Gilgan">
   <form nz-form [formGroup]="formGroup">
     <nz-form-item *ngIf="isAdmin && !nzModalData.product">
       <nz-form-label [nzSpan]="7">Company Name</nz-form-label>
@@ -6,7 +9,6 @@
         <nz-select
           nzShowSearch
           nzAllowClear
-          nzPlaceHolder="Select a company name"
           formControlName="companyId"
           [(ngModel)]="selectedCompany"
           (ngModelChange)="onSelectedCompany(selectedCompany)"
@@ -26,7 +28,6 @@
         <nz-select
           nzShowSearch
           nzAllowClear
-          nzPlaceHolder="Select a product"
           formControlName="product"
           [(ngModel)]="selectedProduct"
           (ngModelChange)="onSelectedProduct(selectedProduct)"
@@ -50,11 +51,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>Image URL</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Required field.">
-        <input
-          nz-input
-          formControlName="imageUrl"
-          placeholder="www.imgur.com/imageURL"
-        />
+        <input nz-input formControlName="imageUrl" />
       </nz-form-control>
     </nz-form-item>
 
@@ -64,7 +61,6 @@
         <nz-select
           nzShowSearch
           nzAllowClear
-          nzPlaceHolder="Select a product type"
           formControlName="type"
           [(ngModel)]="selectedType"
           (ngModelChange)="onSelectedType(selectedType)"
@@ -87,7 +83,6 @@
           [(ngModel)]="selectedSubtypes"
           nzAllowClear
           nzMode="multiple"
-          nzPlaceHolder="Select a product sub-type"
           formControlName="subtypes"
         >
           <nz-option
@@ -99,7 +94,7 @@
       </nz-form-control>
     </nz-form-item>
 
-    <div style="display: flex; margin-left: 170px">
+    <div style="display: flex; margin-left: 160px">
       <nz-form-item>
         <nz-form-label [nzSpan]="7" nzRequired>Price</nz-form-label>
         <nz-form-control [nzSpan]="10" nzErrorTip="Must be a positive number.">

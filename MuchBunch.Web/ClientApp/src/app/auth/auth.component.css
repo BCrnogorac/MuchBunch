@@ -16,8 +16,43 @@
 }
 
 .form {
-  position: relative;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-top: 80px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-image: url(https://i.imgur.com/7hBqtN2.png);
+  background-size: 100% 300px;
+  background-repeat: no-repeat;
+  background-position: right 15px top 300px;
+}
+.ant-input-affix-wrapper {
+  width: 100%;
+  min-width: 0;
+  padding: 4px 11px;
+  color: #000000d9;
+  font-size: 20px;
+  line-height: 1.5715;
+  background-image: none;
+  border: 1px solid black;
+  border-radius: 20px;
+  transition: all 0.3s;
+  display: inline-flex;
+  background-color: white;
+}
+
+.ant-input,
+.ant-input-number-affix-wrapper {
+  background-image: none;
+  line-height: 1.5715;
+  background-color: white;
+}
+
+::ng-deep .ant-btn-primary {
+  color: white;
+  border-radius: 20px;
+  border-color: transparent;
+  background-color: #c4b7e5;
+  height: 50px;
+  width: 100px;
+  font-size: 20px;
 }

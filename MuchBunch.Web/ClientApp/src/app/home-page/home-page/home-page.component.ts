@@ -1,6 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { ViewBunchComponent } from 'src/app/modals/view-bunch/view-bunch.component';
+import { BunchDTO } from 'src/app/models/DTO/bunchDto.model';
+import { ThemeDto } from 'src/app/models/DTO/themeDto.model';
+import { UserDTO } from 'src/app/models/DTO/userDto.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { RolesService } from 'src/app/services/role.service';
+import { ThemesService } from 'src/app/services/themes.service';
 
 @Component({
   selector: 'app-home-page',
@@ -8,25 +15,21 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
-  //info about bundle
-  array = [1, 2, 3, 4];
-  imgSrc =
-    'https://www.catan.com/sites/default/files/2021-08/3DBox_CATAN_0.png';
-  bundleTitle = 'Bundle title';
-
-  //info about alert txt
-  alertTitle: string = 'Hello Company,';
-  alertDecription: string =
-    'The next month we are rolling out brand new MuchBunch themed Halloween. Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum';
-
   //info about user
-  isAuthed: boolean = false;
-  companyRole: boolean = false;
-  adminRole: boolean = false;
+  public isAuthed: boolean = false;
+  public companyRole: boolean = false;
+  public adminRole: boolean = false;
+
+  public companies: UserDTO[];
+  public themedBunches: BunchDTO[] = [];
+  public themes: ThemeDto[] = [];
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private roleService: RolesService,
+    private themeService: ThemesService,
+    private modalService: NzModalService
   ) {}
 
   ngOnInit() {
@@ -34,6 +37,33 @@ export class HomePageComponent {
       this.isAuthed = this.authService.getUserProperty('role') != null;
       this.companyRole = this.authService.getUserProperty('role') == 'company';
       this.adminRole = this.authService.getUserProperty('role') == 'admin';
+    });
+
+    this.roleService.getUsersByRole(2).subscribe((response) => {
+      this.companies = response;
+    });
+
+    this.themeService.getThemes().subscribe((response) => {
+      this.themes = response;
+
+      this.themeService
+        .getBunchesByThemeId(this.themes.find((e) => e.isActive === true).id)
+        .subscribe((response) => {
+          this.themedBunches = response.bunches;
+        });
+    });
+  }
+
+  onViewBunch(bunch: BunchDTO) {
+    const modal: NzModalRef = this.modalService.create({
+      nzCentered: true,
+      nzContent: ViewBunchComponent,
+      nzData: {
+        isEditMode: true,
+        bunch: bunch,
+      },
+      nzWidth: 1200,
+      nzFooter: null,
     });
   }
 }

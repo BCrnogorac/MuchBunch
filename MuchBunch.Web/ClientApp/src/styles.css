@@ -2,3 +2,26 @@
 .ant-modal-confirm-btns {
   float: right !important;
 }
+
+body {
+  background-color: #e7dbff;
+}
+
+@font-face {
+  font-family: Bonello;
+  src: url(assets/fonts/Bonello-Regular.otf) format("opentype");
+}
+
+@font-face {
+  font-family: Gilgan;
+  src: url(assets/fonts/Gilgan.otf) format("opentype");
+}
+
+@font-face {
+  font-family: Halloween;
+  src: url(assets/fonts/Scary-Halloween-Font.ttf) format("truetype");
+}
+
+.ant-card-bordered {
+  border: 1px solid black;
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your MuchBunch Order.</title>
+    <style>
+        /* Reset some default styles */
+        body, p {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Set a background color */
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Container for the email content */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header styling */
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        /* Content section styling */
+        .content {
+            padding: 20px;
+        }
+        
+        /* Button styling */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+		
+		.bordered-div {
+            border: 2px solid #000; /* Border style and color */
+            padding: 10px; /* Optional padding inside the div */
+			display: flex;
+			align-items: center;
+        }
+		
+		.bordered-div-products {
+            border: 1px solid #000; /* Border style and color */
+            padding: 10px; /* Optional padding inside the div */
+	
+        }
+		
+		.productParent {
+			display: flex;
+			align-items: center;
+		}
+		
+		.img {
+			height: 50px;
+            margin-right: 20px;
+		}
+		
+		.marginTop {
+			margin-top: 20px;
+		}
+		
+		
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Your MuchBunch Order!</h1>
+			
+        </div>
+        <div class="content">
+            <p>Hello,</p>
+			<br><br>
+            <p>This is your MuchBunch receipt. The order details are below:</p>
+			<br>
+            <p></p>
+			    <div class="bordered-div">
+				
+					<img class="img" src="https://i.imgur.com/Ni9r1Xz.png">
+					<p>{{ bunch.name }} {{ bunch.price }}€</p>
+					
+				</div>
+				<p class="marginTop">This MuchBunch contains:</p>
+				<div class="bordered-div-products">
+							{{ products }}
+				</div>
+			<br><br>
+			<p>Kind regards,</p><br>
+			<p>MuchBunch team.</p>
+        </div>
+    </div>
+</body>
+</html>

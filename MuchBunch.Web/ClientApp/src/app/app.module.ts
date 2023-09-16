@@ -29,6 +29,8 @@ import { UpsertThemesComponent } from './account/codebooks/upsert-themes/upsert-
 import { UpsertRolesComponent } from './account/codebooks/upsert-roles/upsert-roles.component';
 import { UpsertBunchModalComponent } from './modals/upsert-bunch-modal/upsert-bunch-modal.component';
 import { MyBunchesComponent } from './account/my-bunches/my-bunches.component';
+import { ViewBunchComponent } from './modals/view-bunch/view-bunch.component';
+import { CreateUpcomingThemeComponent } from './modals/create-upcoming-theme/create-upcoming-theme.component';
 
 registerLocaleData(en);
 
@@ -53,6 +55,8 @@ registerLocaleData(en);
     UpsertRolesComponent,
     UpsertBunchModalComponent,
     MyBunchesComponent,
+    ViewBunchComponent,
+    CreateUpcomingThemeComponent,
   ],
   imports: [
     BrowserModule,
